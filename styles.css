@@ -18,7 +18,7 @@ body {
     color: var(--text);
     line-height: 1.6;
     background-color: #181818 !important;
-    background-image: url('assets/Background1.png') !important;
+    background-image: url('assets/background1.png') !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;
