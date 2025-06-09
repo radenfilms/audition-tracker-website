@@ -1,8 +1,5 @@
-HEAD
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
 
-013c91d (Make hero logo smaller and improve mobile appearance)
 /* Global Styles */
 :root {
     --background: #181818;
@@ -327,8 +324,6 @@ section.bg-light {
     }
 }
 
-HEAD
-
 @media (max-width: 600px) {
     .hero-content img[alt="Audition Tracker Logo"] {
         max-width: 160px !important;
@@ -337,7 +332,6 @@ HEAD
     }
 }
 
-013c91d (Make hero logo smaller and improve mobile appearance)
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -354,11 +348,6 @@ HEAD
     animation: fadeIn 1s ease-out;
 }
 
-HEAD
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
-
-
- 013c91d (Make hero logo smaller and improve mobile appearance)
 .pretty-card {
     background: none !important;
     border-radius: 20px;
@@ -516,4 +505,19 @@ HEAD
 #authForm .form-control::placeholder, #authForm input::placeholder, #authForm textarea::placeholder {
     color: #bbb !important;
     opacity: 1;
+}
+
+.hero-main-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 260px;
+    width: 100%;
+    height: auto;
+}
+@media (max-width: 600px) {
+    .hero-main-logo {
+        max-width: 120px !important;
+        margin-bottom: 1rem !important;
+    }
 } 
