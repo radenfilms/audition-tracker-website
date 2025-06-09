@@ -7,12 +7,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="#hero">
                 <img src="assets/at-logo.png" alt="Audition Tracker Logo" height="40">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -32,7 +37,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero position-relative">
+    <section id="hero" class="hero position-relative">
         <div class="hero-pattern"></div>
         <div class="container position-relative" style="z-index:2;">
             <div class="row align-items-center min-vh-100">
@@ -122,17 +127,20 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="authForm">
+                    <form id="signupForm" class="needs-validation" novalidate>
                         <div class="mb-3">
-                            <input type="email" class="form-control" id="authEmail" placeholder="Email" required>
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="authUsername" placeholder="Username" required>
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
                         </div>
                         <div class="mb-3">
-                            <input type="password" class="form-control" id="authPassword" placeholder="Password" required>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Sign Up / Log In</button>
+                        <div class="mb-3">
+                            <div class="g-recaptcha" data-sitekey="6LfXQJEpAAAAAOGQZQZQZQZQZQZQZQZQZQZQZQZQ"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                     </form>
                     <div id="emailValidationMsg" class="mt-3 text-success" style="display:none;"></div>
                 </div>
@@ -251,16 +259,74 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         // Initialize EmailJS
-        (function(){
-            try {
-                emailjs.init('j0rh4rsmRwCHTKbja'); // Your User ID (Public Key)
-                console.log('EmailJS initialized successfully');
-            } catch (error) {
-                console.error('Failed to initialize EmailJS:', error);
-            }
+        (function() {
+            emailjs.init("j0rh4rsmRwCHTKbja");
         })();
+
+        // Function to handle form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get reCAPTCHA response
+            const recaptchaResponse = grecaptcha.getResponse();
+            console.log('reCAPTCHA Response:', recaptchaResponse); // Debug log
+            
+            if (!recaptchaResponse) {
+                alert('Please complete the reCAPTCHA verification');
+                return;
+            }
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Store user data in localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            users.push({
+                email: email,
+                password: password, // In production, this should be hashed
+                validated: false
+            });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Prepare template parameters
+            const templateParams = {
+                to_email: email,
+                verification_link: `https://auditiontracker.co.uk/verify.html?email=${encodeURIComponent(email)}&recaptcha_response=${encodeURIComponent(recaptchaResponse)}`,
+                from_name: "Audition Tracker"
+            };
+
+            // Send verification email
+            emailjs.send('service_auditiontracker', 'template_auditiontracker', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Verification email sent! Please check your inbox.');
+                    $('#authModal').modal('hide');
+                    // Reset reCAPTCHA
+                    grecaptcha.reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('Failed to send verification email. Please try again.');
+                    // Reset reCAPTCHA
+                    grecaptcha.reset();
+                });
+        }
+
+        // Add event listener to the form
+        document.getElementById('signupForm').addEventListener('submit', handleSubmit);
+
+        // Reset reCAPTCHA when modal is closed
+        $('#authModal').on('hidden.bs.modal', function () {
+            grecaptcha.reset();
+        });
 
         // User Auth Logic (localStorage demo with real email validation)
         function getCurrentUser() {
@@ -326,16 +392,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOM loaded, initializing auth...');
             updateAuthUI();
-            document.getElementById('authForm').onsubmit = function(e) {
+            document.getElementById('signupForm').onsubmit = function(e) {
                 e.preventDefault();
                 console.log('Auth form submitted');
-                const email = document.getElementById('authEmail').value.trim();
-                const username = document.getElementById('authUsername').value.trim();
-                const password = document.getElementById('authPassword').value;
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
                 
-                console.log('Form data:', { email, username, password: '***' });
+                console.log('Form data:', { email, password: '***' });
                 
-                if (!email || !username || !password) {
+                if (!email || !password) {
                     console.log('Missing required fields');
                     document.getElementById('emailValidationMsg').innerHTML = 
                         'Please fill in all fields.';
@@ -353,14 +418,13 @@
                 const hashedPassword = btoa(password); // This is just for demo - use proper hashing in production
                 setCurrentUser({ 
                     email, 
-                    username, 
                     password: hashedPassword,
                     validated: false,
                     validationToken: validationToken
                 });
 
                 console.log('User stored in localStorage');
-                sendValidationEmail(email, username, validation_link);
+                sendValidationEmail(email, '', validation_link);
             };
             document.getElementById('navbarLoginBtn').onclick = function() {
                 const modal = new bootstrap.Modal(document.getElementById('authModal'));
