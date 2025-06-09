@@ -60,7 +60,7 @@ body > * {
 
 /* Hero Section */
 .hero {
-    background-image: url('/assets/Background.png');
+    background-image: url('/assets/Background1.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
