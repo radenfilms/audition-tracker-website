@@ -6,7 +6,7 @@
     <title>Audition Tracker - Your Ultimate Audition Management Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -56,25 +56,25 @@
             <p class="text-center mb-5" style="color:#bbb; font-size:1.15rem;">A glimpse of how easy it is to stay organized and own the room.</p>
             <div class="screenshots-scroll">
                 <div class="screenshot-frame">
-                    <img src="assets/Screenshots/Audition Tracker.png" alt="Audition Tracker screenshot 1" class="img-fluid rounded shadow">
+                    <img src="assets/screenshots/Audition Tracker.png" alt="Audition Tracker screenshot 1" class="img-fluid rounded shadow">
                 </div>
                 <div class="screenshot-frame">
-                    <img src="assets/Screenshots/2.png" alt="Audition Tracker screenshot 2" class="img-fluid rounded shadow">
+                    <img src="assets/screenshots/2.png" alt="Audition Tracker screenshot 2" class="img-fluid rounded shadow">
                 </div>
                 <div class="screenshot-frame">
-                    <img src="assets/Screenshots/3.png" alt="Audition Tracker screenshot 3" class="img-fluid rounded shadow">
+                    <img src="assets/screenshots/3.png" alt="Audition Tracker screenshot 3" class="img-fluid rounded shadow">
                 </div>
                 <div class="screenshot-frame">
-                    <img src="assets/Screenshots/4.png" alt="Audition Tracker screenshot 4" class="img-fluid rounded shadow">
+                    <img src="assets/screenshots/4.png" alt="Audition Tracker screenshot 4" class="img-fluid rounded shadow">
                 </div>
                 <div class="screenshot-frame">
-                    <img src="assets/Screenshots/5.png" alt="Audition Tracker screenshot 5" class="img-fluid rounded shadow">
+                    <img src="assets/screenshots/5.png" alt="Audition Tracker screenshot 5" class="img-fluid rounded shadow">
                 </div>
                 <div class="screenshot-frame">
-                    <img src="assets/Screenshots/6.png" alt="Audition Tracker screenshot 6" class="img-fluid rounded shadow">
+                    <img src="assets/screenshots/6.png" alt="Audition Tracker screenshot 6" class="img-fluid rounded shadow">
                 </div>
                 <div class="screenshot-frame">
-                    <img src="assets/Screenshots/7.png" alt="Audition Tracker screenshot 7" class="img-fluid rounded shadow">
+                    <img src="assets/screenshots/7.png" alt="Audition Tracker screenshot 7" class="img-fluid rounded shadow">
                 </div>
             </div>
         </div>
@@ -254,7 +254,12 @@
     <script>
         // Initialize EmailJS
         (function(){
-            emailjs.init('j0rh4rsmRwCHTKbja'); // Your User ID (Public Key)
+            try {
+                emailjs.init('j0rh4rsmRwCHTKbja'); // Your User ID (Public Key)
+                console.log('EmailJS initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize EmailJS:', error);
+            }
         })();
 
         // User Auth Logic (localStorage demo with real email validation)
@@ -297,33 +302,65 @@
             }
         }
         function sendValidationEmail(to_email, to_name, validation_link) {
+            console.log('Attempting to send validation email to:', to_email);
+            console.log('Using template:', 'template_4wtv9pg');
+            console.log('Using service:', 'service_wo4bgaa');
+            
             emailjs.send('service_wo4bgaa', 'template_4wtv9pg', {
                 to_email: to_email,
                 to_name: to_name,
                 validation_link: validation_link
             })
             .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
                 document.getElementById('emailValidationMsg').innerHTML = 
                     `A validation email has been sent to <b>${to_email}</b>. Please check your inbox.`;
                 document.getElementById('emailValidationMsg').style.display = '';
             }, function(error) {
+                console.error('FAILED...', error);
                 document.getElementById('emailValidationMsg').innerHTML = 
-                    `There was an error sending the validation email. Please try again.`;
+                    `Error: ${error.text || 'Failed to send validation email. Please try again.'}`;
                 document.getElementById('emailValidationMsg').style.display = '';
             });
         }
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, initializing auth...');
             updateAuthUI();
             document.getElementById('authForm').onsubmit = function(e) {
                 e.preventDefault();
+                console.log('Auth form submitted');
                 const email = document.getElementById('authEmail').value.trim();
                 const username = document.getElementById('authUsername').value.trim();
-                if (email && username) {
-                    // Generate a simple validation link (for demo)
-                    const validation_link = window.location.origin + window.location.pathname + '?validate=' + btoa(email);
-                    sendValidationEmail(email, username, validation_link);
-                    setCurrentUser({ email, username, validated: false });
+                const password = document.getElementById('authPassword').value;
+                
+                console.log('Form data:', { email, username, password: '***' });
+                
+                if (!email || !username || !password) {
+                    console.log('Missing required fields');
+                    document.getElementById('emailValidationMsg').innerHTML = 
+                        'Please fill in all fields.';
+                    document.getElementById('emailValidationMsg').style.display = '';
+                    return;
                 }
+
+                // Generate a more secure validation token
+                const validationToken = btoa(email + ':' + Date.now());
+                const validation_link = window.location.origin + window.location.pathname + '?validate=' + validationToken;
+                
+                console.log('Generated validation link:', validation_link);
+                
+                // Store user with hashed password (in a real app, use proper password hashing)
+                const hashedPassword = btoa(password); // This is just for demo - use proper hashing in production
+                setCurrentUser({ 
+                    email, 
+                    username, 
+                    password: hashedPassword,
+                    validated: false,
+                    validationToken: validationToken
+                });
+
+                console.log('User stored in localStorage');
+                sendValidationEmail(email, username, validation_link);
             };
             document.getElementById('navbarLoginBtn').onclick = function() {
                 const modal = new bootstrap.Modal(document.getElementById('authModal'));
