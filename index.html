@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audition Tracker - Your Ultimate Audition Management Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="assets/at-logo.png" alt="Audition Tracker Logo" height="40">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#message-board">Message Board</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-2" href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank">Download on App Store</a></li>
+                </ul>
+                <button id="navbarLoginBtn" class="btn btn-outline-primary ms-3" style="color:#fff;">Sign Up / Log In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero position-relative">
+        <div class="hero-pattern"></div>
+        <div class="container position-relative" style="z-index:2;">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-7 mx-auto text-center">
+                    <div class="hero-content text-center" style="width: 100%;">
+                        <h1 class="h2 fw-bold mb-4" style="max-width: 700px; margin: 0 auto; text-align: center; font-size: 1.6rem;">Track Your Journey to Success</h1>
+                        <img src="assets/at-logo.png" alt="Audition Tracker Logo" class="mb-3" style="max-width: 400px;">
+                        <div class="tagline mb-4" style="font-size:2rem;font-weight:600;color:var(--primary);">Your Casting Call Companion</div>
+                    </div>
+                    <p class="lead mb-5">Audition Tracker helps you stay organized, track auditions, and manage your acting journey—all in one beautiful app.</p>
+                    <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="btn btn-primary btn-lg px-5 py-3 mb-3">Download on App Store</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="py-5 screenshots-bg">
+        <div class="container">
+            <h2 class="text-center mb-3 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">See Audition Tracker in Action</h2>
+            <p class="text-center mb-5" style="color:#bbb; font-size:1.15rem;">A glimpse of how easy it is to stay organized and own the room.</p>
+            <div class="screenshots-scroll">
+                <div class="screenshot-frame">
+                    <img src="assets/Screenshots/Audition Tracker.png" alt="Audition Tracker screenshot 1" class="img-fluid rounded shadow">
+                </div>
+                <div class="screenshot-frame">
+                    <img src="assets/Screenshots/2.png" alt="Audition Tracker screenshot 2" class="img-fluid rounded shadow">
+                </div>
+                <div class="screenshot-frame">
+                    <img src="assets/Screenshots/3.png" alt="Audition Tracker screenshot 3" class="img-fluid rounded shadow">
+                </div>
+                <div class="screenshot-frame">
+                    <img src="assets/Screenshots/4.png" alt="Audition Tracker screenshot 4" class="img-fluid rounded shadow">
+                </div>
+                <div class="screenshot-frame">
+                    <img src="assets/Screenshots/5.png" alt="Audition Tracker screenshot 5" class="img-fluid rounded shadow">
+                </div>
+                <div class="screenshot-frame">
+                    <img src="assets/Screenshots/6.png" alt="Audition Tracker screenshot 6" class="img-fluid rounded shadow">
+                </div>
+                <div class="screenshot-frame">
+                    <img src="assets/Screenshots/7.png" alt="Audition Tracker screenshot 7" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5 testimonials-bg">
+        <div class="container">
+            <h2 class="text-center mb-5 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">What Actors Are Saying</h2>
+            <div class="row justify-content-center g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card pretty-card h-100 p-4 text-center">
+                        <div class="testimonial-avatar mb-3 mx-auto" style="background:#19e3e3;">PA</div>
+                        <p class="mb-3">"Finally, an app that understands what actors need. The custom reminders feature is a game-changer!"</p>
+                        <div class="testimonial-author fw-bold">Professional Actor</div>
+                        <div class="testimonial-location">London, UK</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card pretty-card h-100 p-4 text-center">
+                        <div class="testimonial-avatar mb-3 mx-auto" style="background:#ff5e9b;">TA</div>
+                        <p class="mb-3">"The ability to track everything in one place has made my audition process so much smoother."</p>
+                        <div class="testimonial-author fw-bold">Theatre Actor</div>
+                        <div class="testimonial-location">Manchester, UK</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card pretty-card h-100 p-4 text-center">
+                        <div class="testimonial-avatar mb-3 mx-auto" style="background:#a1001a;">FA</div>
+                        <p class="mb-3">"Perfect for both iPhone and iPad. The sorting features help me stay organized during busy audition seasons."</p>
+                        <div class="testimonial-author fw-bold">Film Actor</div>
+                        <div class="testimonial-location">Edinburgh, UK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign Up / Log In Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background:rgba(35,35,35,0.97); color:#fff;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="authModalLabel">Sign Up / Log In</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="authForm">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="authEmail" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="authUsername" placeholder="Username" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="authPassword" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up / Log In</button>
+                    </form>
+                    <div id="emailValidationMsg" class="mt-3 text-success" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Board Section -->
+    <section id="message-board" class="py-5" style="background:rgba(24,24,24,0.7);">
+        <div class="container">
+            <h2 class="text-center mb-4 display-6 fw-bold" style="font-family:'Montserrat',sans-serif;">Community Message Board</h2>
+            <p class="text-center mb-4" style="color:#bbb; font-size:1.1rem;">Ask questions, suggest features, and connect with other users.</p>
+            <div class="text-center mb-3">
+                <span id="userStatus" style="color:#fff;font-size:1.1rem;"></span>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="messageForm" class="pretty-card p-4 mb-4" style="background:rgba(35,35,35,0.85);display:none;">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-6 mb-3">
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <select id="type" name="type" class="form-control" required>
+                                    <option value="question">Question</option>
+                                    <option value="suggestion">Suggestion</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <textarea id="message" name="message" class="form-control" placeholder="Your Message" rows="4" style="min-height:120px;resize:vertical;" required></textarea>
+                            </div>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button type="submit" class="btn btn-primary">Post Message</button>
+                        </div>
+                    </form>
+                    <div id="messagesContainer">
+                        <!-- Messages will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-5 pricing-bg">
+        <div class="container">
+            <h2 class="text-center mb-5 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">Simple, One-Time Purchase</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="pricing-card pretty-card h-100 p-5 text-center">
+                        <h3 class="fw-bold mb-3" style="font-family:'Montserrat',sans-serif;">Audition Tracker Pro</h3>
+                        <div class="price mb-2" style="color:#ff5e9b; font-size:3rem; font-weight:900;">£4.99</div>
+                        <p class="text-muted mb-4">One-time purchase, no subscriptions</p>
+                        <ul class="features-list mb-4 text-start mx-auto" style="max-width:320px;">
+                            <li>Track unlimited auditions</li>
+                            <li>Manage self-tapes and headshots</li>
+                            <li>Custom reminders for each audition</li>
+                            <li>Sort by upcoming, date, or project</li>
+                            <li>Works on iPhone and iPad</li>
+                            <li>Family Sharing enabled</li>
+                        </ul>
+                        <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="btn btn-pink btn-lg px-5 py-3 mb-2">Download on App Store</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Get in Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form id="contact-form">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-modern py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center gy-3">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                    <div class="footer-copyright" style="font-family:'Montserrat',sans-serif; font-size:1.05rem; color:var(--text);">
+                        &copy; 2024 Raden Films. All rights reserved.
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="footer-link me-4">Privacy Policy</a>
+                    <a href="#" class="footer-link me-4">Terms of Service</a>
+                    <a href="#contact" class="footer-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="text-center my-5">
+        <h3 style="font-family:'Montserrat',sans-serif;">Get the App Instantly</h3>
+        <img src="assets/qr-appstore.svg" alt="Download Audition Tracker QR" style="width:180px;max-width:100%;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.13);margin:1.5rem auto;">
+        <p style="color:#bbb;">Scan to download Audition Tracker on the App Store</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        (function(){
+            emailjs.init('j0rh4rsmRwCHTKbja'); // Your User ID (Public Key)
+        })();
+
+        // User Auth Logic (localStorage demo with real email validation)
+        function getCurrentUser() {
+            const user = JSON.parse(localStorage.getItem('at_user')) || null;
+            return user;
+        }
+        function setCurrentUser(userObj) {
+            localStorage.setItem('at_user', JSON.stringify(userObj));
+        }
+        function clearCurrentUser() {
+            localStorage.removeItem('at_user');
+        }
+        function isEmailValidated() {
+            const user = getCurrentUser();
+            return user && user.validated;
+        }
+        function updateAuthUI() {
+            const user = getCurrentUser();
+            const status = document.getElementById('userStatus');
+            const form = document.getElementById('messageForm');
+            const loginBtn = document.getElementById('navbarLoginBtn');
+            if (user) {
+                if (user.validated) {
+                    status.innerHTML = `Signed in as <b>${user.username}</b> <button id='logoutBtn' class='btn btn-sm btn-outline-light ms-2'>Log out</button>`;
+                    form.style.display = '';
+                } else {
+                    status.innerHTML = `Signed in as <b>${user.username}</b> (Email not validated) <button id='logoutBtn' class='btn btn-sm btn-outline-light ms-2'>Log out</button>`;
+                    form.style.display = 'none';
+                }
+                loginBtn.style.display = 'none';
+                document.getElementById('logoutBtn').onclick = () => {
+                    clearCurrentUser();
+                    updateAuthUI();
+                };
+            } else {
+                status.innerHTML = 'Not signed in';
+                form.style.display = 'none';
+                loginBtn.style.display = '';
+            }
+        }
+        function sendValidationEmail(to_email, to_name, validation_link) {
+            emailjs.send('service_wo4bgaa', 'template_4wtv9pg', {
+                to_email: to_email,
+                to_name: to_name,
+                validation_link: validation_link
+            })
+            .then(function(response) {
+                document.getElementById('emailValidationMsg').innerHTML = 
+                    `A validation email has been sent to <b>${to_email}</b>. Please check your inbox.`;
+                document.getElementById('emailValidationMsg').style.display = '';
+            }, function(error) {
+                document.getElementById('emailValidationMsg').innerHTML = 
+                    `There was an error sending the validation email. Please try again.`;
+                document.getElementById('emailValidationMsg').style.display = '';
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            document.getElementById('authForm').onsubmit = function(e) {
+                e.preventDefault();
+                const email = document.getElementById('authEmail').value.trim();
+                const username = document.getElementById('authUsername').value.trim();
+                if (email && username) {
+                    // Generate a simple validation link (for demo)
+                    const validation_link = window.location.origin + window.location.pathname + '?validate=' + btoa(email);
+                    sendValidationEmail(email, username, validation_link);
+                    setCurrentUser({ email, username, validated: false });
+                }
+            };
+            document.getElementById('navbarLoginBtn').onclick = function() {
+                const modal = new bootstrap.Modal(document.getElementById('authModal'));
+                modal.show();
+                document.getElementById('emailValidationMsg').style.display = 'none';
+            };
+            // Handle validation link
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('validate')) {
+                const user = getCurrentUser();
+                if (user && btoa(user.email) === params.get('validate')) {
+                    user.validated = true;
+                    setCurrentUser(user);
+                    alert('Your email has been validated! You can now post messages.');
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    updateAuthUI();
+                }
+            }
+        });
+        // Update name field with current user
+        function updateNameField() {
+            const user = getCurrentUser();
+            const nameInput = document.getElementById('name');
+            if (user && nameInput) {
+                nameInput.value = user.username;
+            } else if (nameInput) {
+                nameInput.value = '';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', updateNameField);
+        // Sample messages data (in a real application, this would come from a backend)
+        const messages = [
+            {
+                id: 1,
+                author: "Sarah Johnson",
+                type: "question",
+                content: "Is there a way to export my audition history to PDF?",
+                date: "2024-03-15",
+                likes: 5,
+                replies: 2
+            },
+            {
+                id: 2,
+                author: "Michael Chen",
+                type: "suggestion",
+                content: "It would be great to have a feature to track callback rates and success statistics!",
+                date: "2024-03-14",
+                likes: 8,
+                replies: 3
+            }
+        ];
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+        function renderMessages() {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = messages.map(message => `
+                <div class="pretty-card mb-3 p-3" style="background:rgba(35,35,35,0.85);">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <span class="badge ${message.type === 'question' ? 'bg-primary' : 'bg-pink'} me-2">
+                                ${message.type.charAt(0).toUpperCase() + message.type.slice(1)}
+                            </span>
+                            <span class="fw-bold">${message.author}</span>
+                        </div>
+                        <span class="text-muted" style="font-size:0.95em;">${formatDate(message.date)}</span>
+                    </div>
+                    <div class="mb-2" style="color:#eee;">${message.content}</div>
+                    <div class="d-flex gap-3">
+                        <button class="btn btn-sm btn-outline-primary" disabled><i class="fas fa-thumbs-up"></i> ${message.likes}</button>
+                        <button class="btn btn-sm btn-outline-secondary" disabled><i class="fas fa-reply"></i> ${message.replies} Replies</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        document.getElementById('messageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = getCurrentUser();
+            if (!user) return;
+            const type = document.getElementById('type').value;
+            const message = document.getElementById('message').value;
+            alert('Thank you for your message! In a real application, this would be saved to a database.');
+            this.reset();
+            updateNameField();
+        });
+        document.addEventListener('DOMContentLoaded', updateNameField);
+        renderMessages();
+    </script>
+</body>
+</html> 
