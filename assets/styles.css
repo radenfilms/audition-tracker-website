@@ -60,7 +60,7 @@ body > * {
 
 /* Hero Section */
 .hero {
-    background-image: url('background1.png');
+    background-image: url('/assets/background1.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -68,6 +68,7 @@ body > * {
     display: flex;
     align-items: center;
     position: relative;
+    background-color: #000; /* Fallback color */
 }
 
 .hero::before {
@@ -87,6 +88,7 @@ body > * {
     color: white;
     text-align: center;
     padding: 2rem;
+    width: 100%;
 }
 
 .hero-pattern {
