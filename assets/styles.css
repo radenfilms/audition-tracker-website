@@ -576,8 +576,11 @@ section.bg-light {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('pattern.png') left top/120px 120px no-repeat;
+    background: url('pattern.png') left top/contain no-repeat;
     transform: scaleX(-1);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
     opacity: 0.3;
     pointer-events: none;
     z-index: 1;
