@@ -23,6 +23,7 @@ body {
     background-repeat: no-repeat !important;
     background-position: center center !important;
     background-attachment: fixed !important;
+    font-size: 1rem;
 }
 body::before {
     content: "";
@@ -87,7 +88,7 @@ body > * {
     z-index: 2;
     color: white;
     text-align: center;
-    padding: 2rem;
+    padding: 2rem 1rem;
     width: 100%;
 }
 
@@ -115,7 +116,7 @@ body > * {
 .hero h1, .hero .display-2 {
     font-family: 'Montserrat', 'Poppins', 'Inter', sans-serif;
     font-weight: 900;
-    font-size: 3.5rem;
+    font-size: 2.2rem;
     letter-spacing: -1px;
     color: var(--text);
     position: relative;
@@ -123,7 +124,7 @@ body > * {
 }
 
 .hero .lead {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: var(--text);
     opacity: 0.92;
     margin-bottom: 2.5rem;
@@ -161,6 +162,8 @@ body > * {
     margin-bottom: 1.5rem;
     position: relative;
     transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s cubic-bezier(.4,2,.6,1);
+    padding: 1.2rem 0.7rem;
+    font-size: 1rem;
 }
 
 .testimonial-card:hover {
@@ -170,13 +173,13 @@ body > * {
 }
 
 .testimonial-avatar {
-    width: 56px;
-    height: 56px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 900;
     color: #fff;
     margin-bottom: 1rem;
@@ -199,7 +202,7 @@ body > * {
 /* Pricing Cards */
 .pricing-card {
     background: none !important;
-    padding: 2rem;
+    padding: 1.5rem 0.7rem;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.18);
     text-align: center;
@@ -251,10 +254,11 @@ body > * {
 
 /* Buttons */
 .btn {
-    padding: 0.75rem 1.5rem;
+    padding: 0.7rem 1.2rem;
     border-radius: 8px;
     font-weight: 600;
     transition: all 0.3s ease;
+    font-size: 1rem;
 }
 
 .btn-primary {
@@ -354,6 +358,36 @@ section.bg-light {
         height: auto !important;
         margin-bottom: 1rem !important;
     }
+    .hero-content {
+        padding: 1rem 0.2rem;
+    }
+    .hero h1, .hero .display-2 {
+        font-size: 1.3rem;
+    }
+    .hero-main-logo {
+        max-width: 120px !important;
+        margin-bottom: 1rem !important;
+    }
+    .screenshots-scroll {
+        gap: 4px;
+    }
+    .screenshot-frame {
+        min-width: 120px;
+        max-width: 180px;
+        padding: 0.3rem 0.1rem;
+    }
+    .testimonial-card, .pricing-card {
+        padding: 0.7rem 0.2rem;
+        font-size: 0.95rem;
+    }
+    #contact-form .form-control {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.6rem;
+    }
+    .btn, .btn-primary, .btn-pink {
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+    }
 }
 
 /* Animations */
@@ -451,19 +485,19 @@ section.bg-light {
 .screenshots-scroll {
     display: flex;
     overflow-x: auto;
-    gap: 16px;
-    padding-bottom: 12px;
+    gap: 8px;
+    padding-bottom: 8px;
     scroll-snap-type: x mandatory;
 }
 .screenshot-frame {
     flex: 0 0 23%; /* 4 per screen with some gap */
-    min-width: 260px;
-    max-width: 320px;
+    min-width: 180px;
+    max-width: 260px;
     scroll-snap-align: start;
     background: none !important;
     border-radius: 28px;
     box-shadow: 0 6px 32px rgba(25, 227, 227, 0.07), 0 1.5px 6px rgba(0,0,0,0.10);
-    padding: 1.2rem 0.7rem;
+    padding: 0.7rem 0.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -581,9 +615,70 @@ section.bg-light {
     opacity: 0.3;
     pointer-events: none;
     z-index: 2;
+    background-size: cover;
 }
 #contact > .container {
     position: relative;
     z-index: 3;
     background: transparent !important;
+}
+
+/* Responsive improvements for all sections */
+html {
+    scroll-behavior: smooth;
+}
+
+.container, .container-fluid {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Navigation: stack on mobile */
+@media (max-width: 991px) {
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar-nav .nav-item {
+        margin-bottom: 0.5rem;
+    }
+    .navbar-collapse {
+        background: rgba(0,0,0,0.95);
+        padding: 1rem;
+    }
+}
+
+/* Contact section: ensure pattern covers all sizes */
+#contact::before {
+    background-size: cover;
+}
+
+/* Ensure testimonial avatars and icons scale */
+.testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+}
+@media (max-width: 600px) {
+    .testimonial-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Footer responsive */
+.footer-modern .row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+@media (min-width: 768px) {
+    .footer-modern .row {
+        flex-direction: row;
+        text-align: left;
+    }
 } 
