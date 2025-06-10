@@ -5,7 +5,7 @@
     --background: #181818;
     --card-bg: #232323;
     --text: #ffffff;
-    --primary: #19e3e3;
+    --primary: #1de9b6;
     --pink: #ff5e9b;
     --deep-red: #a1001a;
     --input-bg: #232323;
@@ -182,6 +182,7 @@ body > * {
     margin-bottom: 1rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     letter-spacing: 1px;
+    background: #1de9b6;
 }
 
 .testimonial-author {
@@ -374,7 +375,7 @@ section.bg-light {
 .pretty-card {
     background: none !important;
     border-radius: 20px;
-    box-shadow: 0 6px 32px rgba(25, 227, 227, 0.07), 0 1.5px 6px rgba(0,0,0,0.10);
+    box-shadow: 0 6px 32px rgba(29, 233, 182, 0.07), 0 1.5px 6px rgba(0,0,0,0.10);
     transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s cubic-bezier(.4,2,.6,1);
     border: none;
     margin-bottom: 1.5rem;
@@ -382,7 +383,7 @@ section.bg-light {
 }
 .pretty-card:hover {
     transform: translateY(-6px) scale(1.025);
-    box-shadow: 0 12px 40px rgba(25, 227, 227, 0.13), 0 2px 8px rgba(0,0,0,0.13);
+    box-shadow: 0 12px 40px rgba(29, 233, 182, 0.13), 0 2px 8px rgba(0,0,0,0.13);
     z-index: 2;
 }
 .feature-icon {
@@ -401,7 +402,7 @@ section.bg-light {
 }
 
 .pricing-bg {
-    background: linear-gradient(120deg, rgba(255,94,155,0.10) 0%, rgba(25,227,227,0.05) 100%);
+    background: linear-gradient(120deg, rgba(255,94,155,0.10) 0%, rgba(29,233,182,0.05) 100%);
 }
 .btn-pink {
     background: #ff5e9b;
@@ -430,7 +431,7 @@ section.bg-light {
     letter-spacing: 0.01em;
 }
 .footer-link {
-    color: #19e3e3;
+    color: var(--primary);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.18s;
@@ -445,7 +446,7 @@ section.bg-light {
 }
 
 .screenshots-bg {
-    background: linear-gradient(120deg, rgba(255,94,155,0.07) 0%, rgba(25,227,227,0.07) 100%);
+    background: linear-gradient(120deg, rgba(255,94,155,0.07) 0%, rgba(29,233,182,0.07) 100%);
 }
 .screenshots-scroll {
     display: flex;
