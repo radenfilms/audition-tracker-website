@@ -569,7 +569,7 @@ section.bg-light {
 /* Get in Touch (Contact) section background: black with pattern.png at 30% opacity */
 #contact {
     position: relative;
-    background: #000 url('pattern.png') center center/cover no-repeat !important;
+    background: #000 url('pattern.png') center center/100% auto no-repeat !important;
     overflow: hidden;
 }
 #contact > .container {
