@@ -569,14 +569,14 @@ section.bg-light {
 /* Get in Touch (Contact) section background: black with pattern.png at 30% opacity */
 #contact {
     position: relative;
-    background: #000 url('pattern horisontal.png') center center/100% auto no-repeat !important;
+    background: #000 !important;
     overflow: hidden;
 }
-#contact::after {
+#contact::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: inherit;
+    background: url('pattern-horisontal-v2.png') center center/100% auto no-repeat;
     opacity: 0.3;
     pointer-events: none;
     z-index: 2;
