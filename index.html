@@ -31,7 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="#message-board">Message Board</a></li>
                     <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-2" href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank">Download on App Store</a></li>
                 </ul>
-                <button id="navbarLoginBtn" class="btn btn-outline-primary ms-3" style="color:#fff;">Sign Up / Log In</button>
+                <button id="navbarLoginBtn" class="btn btn-outline-primary ms-3" style="color:#fff; display:none;">Sign Up / Log In</button>
             </div>
         </div>
     </nav>
@@ -137,6 +137,9 @@
                         <div class="mb-3">
                             <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
                         </div>
+                        <div class="mb-2 text-end">
+                            <a href="#" id="forgotPasswordLink" style="font-size:0.95em;">Forgot Password?</a>
+                        </div>
                         <div class="mb-3">
                             <div class="g-recaptcha" data-sitekey="6LcVVVsrAAAAAO8uIydSKbqLC4WdfQyxe_XcfavT"></div>
                         </div>
@@ -148,8 +151,29 @@
         </div>
     </div>
 
+    <!-- Password Reset Modal -->
+    <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetModalLabel">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="resetForm">
+                        <div class="mb-3">
+                            <label for="resetEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="resetEmail" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Message Board Section -->
-    <section id="message-board" class="py-5" style="background:rgba(24,24,24,0.7);">
+    <section id="message-board" class="py-5" style="display:none; background:rgba(24,24,24,0.7);">
         <div class="container">
             <h2 class="text-center mb-4 display-6 fw-bold" style="font-family:'Montserrat',sans-serif;">Community Message Board</h2>
             <p class="text-center mb-4" style="color:#bbb; font-size:1.1rem;">Ask questions, suggest features, and connect with other users.</p>
@@ -389,6 +413,42 @@
         // Reset reCAPTCHA when modal is closed
         document.getElementById('authModal').addEventListener('hidden.bs.modal', function () {
             grecaptcha.reset();
+        });
+
+        // Password Reset Modal logic
+        const resetModal = new bootstrap.Modal(document.getElementById('resetModal'));
+        document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            authModal.hide();
+            setTimeout(() => resetModal.show(), 500);
+        });
+
+        document.getElementById('resetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email);
+            if (!user) {
+                alert('No account found with that email.');
+                return;
+            }
+            // Generate a simple reset token (for demo; not secure for production)
+            const token = Math.random().toString(36).substr(2, 10);
+            user.resetToken = token;
+            localStorage.setItem('users', JSON.stringify(users));
+            // Send reset email
+            const templateParams = {
+                to_email: email,
+                reset_link: `https://auditiontracker.co.uk/reset.html?email=${encodeURIComponent(email)}&token=${token}`,
+                from_name: "Audition Tracker"
+            };
+            emailjs.send('service_auditiontracker', 'template_passwordreset', templateParams)
+                .then(function(response) {
+                    alert('Password reset link sent! Please check your inbox.');
+                    resetModal.hide();
+                }, function(error) {
+                    alert('Failed to send reset email. Please try again.');
+                });
         });
     </script>
 </body>
