@@ -564,4 +564,24 @@ section.bg-light {
 .pricing-card .text-muted {
     color: #fff !important;
     opacity: 0.85;
+}
+
+/* Get in Touch (Contact) section background: black with pattern.png at 30% opacity */
+#contact {
+    position: relative;
+    background: #000 !important;
+    overflow: hidden;
+}
+#contact::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('pattern.png') repeat;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1;
+}
+#contact > .container {
+    position: relative;
+    z-index: 2;
 } 
