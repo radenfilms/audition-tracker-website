@@ -652,8 +652,10 @@ html {
 }
 
 /* Contact section: ensure pattern covers all sizes */
-#contact::before {
-    background-size: cover;
+@media (max-width: 600px) {
+    #contact::before {
+        background: url('pattern.png') center center/cover no-repeat;
+    }
 }
 
 /* Ensure testimonial avatars and icons scale */
