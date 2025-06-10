@@ -558,4 +558,10 @@ section.bg-light {
 #contact-form textarea::placeholder {
     color: #fff !important;
     opacity: 1;
+}
+
+/* Make pricing card note text white */
+.pricing-card .text-muted {
+    color: #fff !important;
+    opacity: 0.85;
 } 
