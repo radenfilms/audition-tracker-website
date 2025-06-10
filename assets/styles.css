@@ -572,6 +572,15 @@ section.bg-light {
     background: #000 url('pattern horisontal.png') center center/100% auto no-repeat !important;
     overflow: hidden;
 }
+#contact::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: inherit;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 2;
+}
 #contact > .container {
     position: relative;
     z-index: 3;
