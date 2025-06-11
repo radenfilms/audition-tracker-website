@@ -612,7 +612,7 @@ section.bg-light {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background: url('pattern-horisontal-v2.png') center center/cover no-repeat;
-    opacity: 0.3;
+    opacity: 0.2;
     pointer-events: none;
     z-index: 2;
     background-size: cover;
