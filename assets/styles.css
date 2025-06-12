@@ -545,6 +545,7 @@ section.bg-light {
     }
 }
 
+/* Remove authentication and message board styles */
 #messageForm .form-control, #messageForm input, #messageForm textarea, #messageForm select {
     color: #fff !important;
     background-color: rgba(35,35,35,0.85) !important;
