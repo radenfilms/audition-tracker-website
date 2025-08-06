@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actor Typecast Algorithm</title>
+    <style>
+        /* Import fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+        
+        /* Global Styles */
+        :root {
+            --background: #181818;
+            --card-bg: #232323;
+            --text: #ffffff;
+            --primary: #1de9b6;
+            --pink: #ff5e9b;
+            --deep-red: #a1001a;
+            --input-bg: #232323;
+            --input-border: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background-color: #181818 !important;
+            background-image: url('assets/background1.png') !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
+            background-attachment: fixed !important;
+            font-size: 1rem;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        body > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(0,0,0,0.5) !important;
+            background-color: rgba(0,0,0,0.5) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .navbar-brand {
+            color: var(--text) !important;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-link {
+            color: var(--text) !important;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #00b894;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin-top: 100px;
+            margin-bottom: 40px;
+            border: 1px solid #444444;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #00b894 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-section {
+            padding: 50px 40px;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1.1em;
+            letter-spacing: -0.01em;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--input-bg);
+            color: var(--text);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--card-bg);
+            box-shadow: 0 0 0 3px rgba(29, 233, 182, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .radio-option:hover {
+            background: var(--input-bg);
+            border-color: var(--input-border);
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .radio-option label {
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-option:hover {
+            background: var(--input-bg);
+            border-color: var(--input-border);
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-option label {
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #00b894 100%);
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .results {
+            padding: 50px 40px;
+            display: none;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, var(--input-bg) 0%, var(--card-bg) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-left: 6px solid var(--primary);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .result-card h3 {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .confidence-text {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #cccccc;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--input-border);
+        }
+
+        .typecast-list {
+            list-style: none;
+        }
+
+        .typecast-list li {
+            background: var(--input-bg);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary);
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .confidence-bar {
+            background: #e9ecef;
+            height: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.8s ease;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .confidence-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .reset-btn {
+            background: #6c757d;
+            margin-top: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .spinner {
+            border: 4px solid var(--input-border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 12px rgba(29, 233, 182, 0.2);
+        }
+
+        .loading p {
+            color: #cccccc;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">Audition Tracker</a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#pricing" class="nav-link">Pricing</a></li>
+                <li><a href="index.html#contact" class="nav-link">Get in Touch</a></li>
+                <li><a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="nav-link btn btn-primary">Download App</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🎭 Actor Typecast Algorithm</h1>
+            <p>Discover your casting potential with our advanced personality analysis</p>
+        </div>
+
+        <div class="form-section">
+            <form id="typecastForm">
+
+
+                <div class="form-group">
+                    <label>Gender Identity:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="gender1" name="gender" value="male" required>
+                            <label for="gender1">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="gender2" name="gender" value="female" required>
+                            <label for="gender2">Female</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="gender3" name="gender" value="non-binary" required>
+                            <label for="gender3">Non-binary</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="gender4" name="gender" value="transgender" required>
+                            <label for="gender4">Transgender</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age Range:</label>
+                    <select id="age" required>
+                        <option value="">Select your age range</option>
+                        <option value="18-25">18-25 (Young Adult)</option>
+                        <option value="26-35">26-35 (Young Professional)</option>
+                        <option value="36-45">36-45 (Mature Adult)</option>
+                        <option value="46-55">46-55 (Middle-aged)</option>
+                        <option value="56+">56+ (Senior)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Physical Appearance:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="appearance1" name="appearance" value="conventionally-attractive" required>
+                            <label for="appearance1">Conventionally Attractive</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="appearance2" name="appearance" value="average" required>
+                            <label for="appearance2">Average</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="appearance3" name="appearance" value="character-face" required>
+                            <label for="appearance3">Character Face</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="appearance4" name="appearance" value="distinctive" required>
+                            <label for="appearance4">Distinctive/Unique</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Body Type:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="body1" name="body" value="athletic" required>
+                            <label for="body1">Athletic/Fit</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="body2" name="body" value="average" required>
+                            <label for="body2">Average</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="body3" name="body" value="larger" required>
+                            <label for="body3">Larger/Plus-size</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="body4" name="body" value="slender" required>
+                            <label for="body4">Slender/Thin</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Core Personality Traits (Select all that apply):</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend1" name="friend-traits" value="confident">
+                            <label for="friend1">Confident & Charismatic</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend2" name="friend-traits" value="shy">
+                            <label for="friend2">Shy & Thoughtful</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend3" name="friend-traits" value="intellectual">
+                            <label for="friend3">Intellectual & Smart</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend4" name="friend-traits" value="quirky">
+                            <label for="friend4">Quirky & Unique</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend5" name="friend-traits" value="authoritative">
+                            <label for="friend5">Authoritative & Leader</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend6" name="friend-traits" value="mysterious">
+                            <label for="friend6">Mysterious & Intriguing</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend7" name="friend-traits" value="nurturing">
+                            <label for="friend7">Nurturing & Caring</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend8" name="friend-traits" value="rebellious">
+                            <label for="friend8">Rebellious & Defiant</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend9" name="friend-traits" value="naive">
+                            <label for="friend9">Naive & Innocent</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend10" name="friend-traits" value="funny">
+                            <label for="friend10">Funny & Humorous</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="friend11" name="friend-traits" value="protective">
+                            <label for="friend11">Protective & Guarding</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>What's your communication style?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="comm1" name="communication" value="direct" required>
+                            <label for="comm1">Direct and straightforward</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="comm2" name="communication" value="diplomatic" required>
+                            <label for="comm2">Diplomatic and careful</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="comm3" name="communication" value="emotional" required>
+                            <label for="comm3">Emotional and expressive</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="comm4" name="communication" value="reserved" required>
+                            <label for="comm4">Reserved and quiet</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="comm5" name="communication" value="humorous" required>
+                            <label for="comm5">Humorous and light-hearted</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>What motivates you most?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="motivation1" name="motivation" value="success" required>
+                            <label for="motivation1">Success and achievement</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="motivation2" name="motivation" value="connection" required>
+                            <label for="motivation2">Connecting with others</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="motivation3" name="motivation" value="knowledge" required>
+                            <label for="motivation3">Learning and knowledge</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="motivation4" name="motivation" value="adventure" required>
+                            <label for="motivation4">Adventure and excitement</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="motivation5" name="motivation" value="helping" required>
+                            <label for="motivation5">Helping others</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>How do you react under pressure?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="pressure1" name="pressure-response" value="calm" required>
+                            <label for="pressure1">Stay calm and focused</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pressure2" name="pressure-response" value="anxious" required>
+                            <label for="pressure2">Get anxious and stressed</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pressure3" name="pressure-response" value="aggressive" required>
+                            <label for="pressure3">Become aggressive</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pressure4" name="pressure-response" value="withdraw" required>
+                            <label for="pressure4">Withdraw and isolate</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pressure5" name="pressure-response" value="humor" required>
+                            <label for="pressure5">Use humor to cope</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>What's your relationship with authority?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="authority1" name="authority-relationship" value="respect" required>
+                            <label for="authority1">Respect and follow</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="authority2" name="authority-relationship" value="question" required>
+                            <label for="authority2">Question and challenge</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="authority3" name="authority-relationship" value="avoid" required>
+                            <label for="authority3">Avoid and ignore</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="authority4" name="authority-relationship" value="become" required>
+                            <label for="authority4">Become the authority</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Ethnicity/Cultural Background:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic1" name="ethnicity" value="white">
+                            <label for="ethnic1">White/Caucasian</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic2" name="ethnicity" value="black">
+                            <label for="ethnic2">Black/African</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic3" name="ethnicity" value="hispanic">
+                            <label for="ethnic3">Hispanic/Latino</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic4" name="ethnicity" value="asian">
+                            <label for="ethnic4">Asian</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic5" name="ethnicity" value="middle-eastern">
+                            <label for="ethnic5">Middle Eastern</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic6" name="ethnicity" value="mixed">
+                            <label for="ethnic6">Mixed Race</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic7" name="ethnicity" value="indian">
+                            <label for="ethnic7">South Asian</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ethnic8" name="ethnicity" value="pacific-islander">
+                            <label for="ethnic8">Pacific Islander</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Voice & Speech Characteristics:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="voice1" name="voice-type" value="deep" required>
+                            <label for="voice1">Deep/Resonant</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="voice2" name="voice-type" value="high" required>
+                            <label for="voice2">High/Pitched</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="voice3" name="voice-type" value="smooth" required>
+                            <label for="voice3">Smooth/Calming</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="voice4" name="voice-type" value="raspy" required>
+                            <label for="voice4">Raspy/Gravelly</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="voice5" name="voice-type" value="clear" required>
+                            <label for="voice5">Clear/Articulate</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Accent/Language Skills:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent1" name="accents" value="british">
+                            <label for="accent1">British</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent2" name="accents" value="american">
+                            <label for="accent2">American</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent3" name="accents" value="irish">
+                            <label for="accent3">Irish</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent4" name="accents" value="scottish">
+                            <label for="accent4">Scottish</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent5" name="accents" value="australian">
+                            <label for="accent5">Australian</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent6" name="accents" value="eastern-european">
+                            <label for="accent6">Eastern European</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent7" name="accents" value="spanish">
+                            <label for="accent7">Spanish</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent8" name="accents" value="french">
+                            <label for="accent8">French</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent9" name="accents" value="german">
+                            <label for="accent9">German</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="accent10" name="accents" value="italian">
+                            <label for="accent10">Italian</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>How do you express emotions?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="emotion1" name="emotion-style" value="intense" required>
+                            <label for="emotion1">Intensely and dramatically</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="emotion2" name="emotion-style" value="subtle" required>
+                            <label for="emotion2">Subtly and internally</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="emotion3" name="emotion-style" value="physical" required>
+                            <label for="emotion3">Through physical movement</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="emotion4" name="emotion-style" value="verbal" required>
+                            <label for="emotion4">Through words and tone</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="emotion5" name="emotion-style" value="controlled" required>
+                            <label for="emotion5">Controlled and measured</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Acting Experience Level:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="exp1" name="experience" value="beginner" required>
+                            <label for="exp1">Beginner (0-2 years)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="exp2" name="experience" value="intermediate" required>
+                            <label for="exp2">Intermediate (2-5 years)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="exp3" name="experience" value="experienced" required>
+                            <label for="exp3">Experienced (5+ years)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="exp4" name="experience" value="professional" required>
+                            <label for="exp4">Professional (10+ years)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Background/Experience:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg1" name="background" value="military">
+                            <label for="bg1">Military/Service</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg2" name="background" value="academic">
+                            <label for="bg2">Academic/Education</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg3" name="background" value="medical">
+                            <label for="bg3">Medical/Healthcare</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg4" name="background" value="business">
+                            <label for="bg4">Business/Corporate</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg5" name="background" value="artistic">
+                            <label for="bg5">Artistic/Creative</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg6" name="background" value="sports">
+                            <label for="bg6">Sports/Athletic</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg7" name="background" value="technical">
+                            <label for="bg7">Technical/Scientific</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bg8" name="background" value="service">
+                            <label for="bg8">Service Industry</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Skills (Select all that apply):</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill1" name="skills" value="dance">
+                            <label for="skill1">Dance</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill2" name="skills" value="singing">
+                            <label for="skill2">Singing</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill3" name="skills" value="martial-arts">
+                            <label for="skill3">Martial Arts</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill4" name="skills" value="sports">
+                            <label for="skill4">Sports</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill5" name="skills" value="musical-instruments">
+                            <label for="skill5">Musical Instruments</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill6" name="skills" value="accent">
+                            <label for="skill6">Accent Work</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill7" name="skills" value="stunt">
+                            <label for="skill7">Stunt Work</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="skill8" name="skills" value="improv">
+                            <label for="skill8">Improv</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Genres (Select all that apply):</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre1" name="genres" value="drama">
+                            <label for="genre1">Drama</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre2" name="genres" value="comedy">
+                            <label for="genre2">Comedy</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre3" name="genres" value="action">
+                            <label for="genre3">Action</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre4" name="genres" value="thriller">
+                            <label for="genre4">Thriller</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre5" name="genres" value="romance">
+                            <label for="genre5">Romance</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre6" name="genres" value="horror">
+                            <label for="genre6">Horror</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre7" name="genres" value="sci-fi">
+                            <label for="genre7">Sci-Fi/Fantasy</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre8" name="genres" value="period">
+                            <label for="genre8">Period/Historical</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre9" name="genres" value="indie">
+                            <label for="genre9">Independent/Art House</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="genre10" name="genres" value="commercial">
+                            <label for="genre10">Commercial/Advertising</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="btn">Discover My Typecast</button>
+            </form>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing your profile...</p>
+        </div>
+
+        <div class="results" id="results">
+            <h2>Your Typecast Results</h2>
+            <div id="resultsContent"></div>
+            <button class="btn reset-btn" onclick="resetForm()">Start Over</button>
+        </div>
+    </div>
+
+    <script>
+        // Core typecast factors - only what actually matters for casting
+        const typecastFactors = {
+            // Primary Factors (High Weight)
+            appearance: {
+                'conventionally-attractive': ['Hero', 'Leading Lady', 'Leading Man', 'Action Hero', 'Love Interest', 'Prince', 'Princess', 'Celebrity', 'Social Media Influencer', 'Reality Star'],
+                'distinctive': ['Villain', 'Character Actor', 'Anti-Hero', 'Femme Fatale', 'Wizard', 'Witch', 'Vampire', 'Werewolf', 'Monster'],
+                'character-face': ['Comic Relief', 'Nerd', 'Scientist', 'Artist', 'Tech Genius', 'Gamer', 'Teacher', 'Detective'],
+                'average': ['Sidekick', 'Best Friend', 'Employee', 'Nurse', 'Teacher', 'Student', 'Parent', 'Employee', 'Immigrant']
+            },
+            age: {
+                '18-25': ['Student', 'Prince', 'Princess', 'Gamer', 'Social Media Influencer', 'Nerd', 'Tech Genius', 'Child'],
+                '26-35': ['Hero', 'Leading Lady', 'Leading Man', 'Love Interest', 'Action Hero', 'Bad Boy', 'Girl Next Door', 'Vampire', 'Werewolf', 'Celebrity', 'Reality Star'],
+                '36-45': ['Villain', 'Anti-Hero', 'Mentor', 'Boss', 'Doctor', 'Lawyer', 'Police Officer', 'Spy', 'Veteran', 'Queen', 'King'],
+                '46-55': ['Wise Old Man', 'Wise Woman', 'Queen', 'King', 'Wizard', 'Witch', 'Mentor', 'Boss', 'Veteran'],
+                '56+': ['Wise Old Man', 'Wise Woman', 'Mentor', 'King', 'Queen', 'Wizard', 'Witch']
+            },
+            gender: {
+                'male': ['Hero', 'Leading Man', 'Action Hero', 'Bad Boy', 'Jock', 'King', 'Prince', 'Wizard', 'Villain', 'Anti-Hero', 'Sidekick', 'Best Friend', 'Nerd', 'Scientist', 'Teacher', 'Student', 'Doctor', 'Lawyer', 'Police Officer', 'Soldier', 'Spy', 'Boss', 'Employee', 'Vampire', 'Werewolf', 'Tech Genius', 'Veteran', 'Immigrant', 'Fitness Trainer', 'Detective', 'Monk', 'Priest'],
+                'female': ['Leading Lady', 'Femme Fatale', 'Girl Next Door', 'Queen', 'Princess', 'Witch', 'Love Interest', 'Nurse', 'Teacher', 'Student', 'Parent', 'Vampire', 'Werewolf', 'Social Media Influencer', 'Celebrity', 'Reality Star', 'Artist', 'Activist'],
+                'non-binary': ['Character Actor', 'Artist', 'Comic Relief', 'Tech Genius', 'Gamer', 'Activist', 'Podcaster']
+            },
+            
+            // Secondary Factors (Medium Weight)
+            voice: {
+                'deep': ['Villain', 'Action Hero', 'Boss', 'King', 'Vampire'],
+                'smooth': ['Hero', 'Leading Lady', 'Leading Man', 'Love Interest', 'Prince', 'Princess'],
+                'raspy': ['Character Actor', 'Veteran', 'Werewolf', 'Comedian'],
+                'clear': ['Teacher', 'Doctor', 'Lawyer', 'Police Officer', 'Comedian'],
+                'accented': ['Immigrant', 'Refugee', 'Foreign Character']
+            },
+            body: {
+                'athletic': ['Hero', 'Action Hero', 'Bad Boy', 'Jock', 'Soldier', 'Spy', 'Fitness Trainer'],
+                'slender': ['Vampire', 'Werewolf', 'Artist', 'Nerd', 'Gamer', 'Tech Genius'],
+                'average': ['Sidekick', 'Best Friend', 'Employee', 'Teacher', 'Student', 'Parent'],
+                'larger': ['Boss', 'Wise Old Man', 'Wise Woman', 'Comic Relief', 'Character Actor']
+            },
+            
+            // Tertiary Factors (Low Weight)
+            personality: {
+                'confident': ['Hero', 'Leading Man', 'Action Hero', 'Boss', 'Queen', 'King', 'Celebrity', 'Social Media Influencer'],
+                'charismatic': ['Leading Lady', 'Leading Man', 'Love Interest', 'Celebrity', 'Social Media Influencer', 'Reality Star', 'Prince', 'Princess'],
+                'mysterious': ['Villain', 'Vampire', 'Werewolf', 'Spy', 'Wizard', 'Witch', 'Femme Fatale'],
+                'quirky': ['Comic Relief', 'Nerd', 'Artist', 'Tech Genius', 'Gamer', 'Podcaster', 'Character Actor'],
+                'authoritative': ['Boss', 'Doctor', 'Lawyer', 'Police Officer', 'Queen', 'King', 'Mentor', 'Veteran'],
+                'nurturing': ['Nurse', 'Teacher', 'Parent', 'Girl Next Door', 'Mentor', 'Best Friend'],
+                'protective': ['Hero', 'Leading Man', 'Soldier', 'Veteran', 'Parent', 'Spy', 'Police Officer'],
+                'intellectual': ['Scientist', 'Doctor', 'Lawyer', 'Teacher', 'Tech Genius', 'Detective', 'Nerd'],
+                'rebellious': ['Bad Boy', 'Anti-Hero', 'Werewolf', 'Vampire', 'Activist', 'Artist'],
+                'naive': ['Student', 'Princess', 'Girl Next Door', 'Child'],
+                'shy': ['Nerd', 'Scientist', 'Student', 'Tech Genius', 'Gamer', 'Immigrant'],
+                'funny': ['Comic Relief', 'Sidekick', 'Best Friend', 'Reality Star', 'Podcaster'],
+                'passionate': ['Activist', 'Artist', 'Chef', 'Fitness Trainer', 'Veteran'],
+                'analytical': ['Detective', 'Scientist', 'Tech Genius', 'Doctor', 'Lawyer'],
+                'creative': ['Artist', 'Writer', 'Tech Genius', 'Chef', 'Social Media Influencer']
+            },
+            skills: {
+                'martial-arts': ['Action Hero', 'Soldier', 'Spy', 'Villain', 'Vampire', 'Werewolf', 'Hero'],
+                'sports': ['Hero', 'Action Hero', 'Jock', 'Soldier', 'Fitness Trainer', 'Veteran'],
+                'dance': ['Leading Lady', 'Leading Man', 'Celebrity', 'Reality Star', 'Fitness Trainer', 'Artist', 'Social Media Influencer'],
+                'singing': ['Leading Lady', 'Leading Man', 'Celebrity', 'Reality Star', 'Artist', 'Social Media Influencer'],
+                'improv': ['Comic Relief', 'Comedian', 'Character Actor', 'Social Media Influencer', 'Reality Star', 'Podcaster'],
+                'accent': ['Immigrant', 'Refugee', 'Foreign Character', 'Vampire', 'Werewolf', 'Alien'],
+                'voice-acting': ['Podcaster', 'Gamer', 'Tech Genius', 'Detective', 'Narrator'],
+                'stunt-work': ['Action Hero', 'Soldier', 'Spy', 'Hero', 'Villain'],
+                'stage-combat': ['Action Hero', 'Soldier', 'Spy', 'Villain', 'Hero'],
+                'mime': ['Artist', 'Character Actor', 'Comic Relief'],
+                'puppetry': ['Character Actor', 'Comic Relief', 'Artist'],
+                'magic': ['Wizard', 'Witch', 'Character Actor', 'Comic Relief']
+            },
+            background: {
+                'military': ['Soldier', 'Veteran', 'Spy', 'Action Hero', 'Hero'],
+                'academic': ['Scientist', 'Teacher', 'Doctor', 'Nerd', 'Tech Genius'],
+                'medical': ['Doctor', 'Nurse', 'Scientist'],
+                'business': ['Boss', 'Employee', 'Lawyer', 'Tech Genius', 'Startup Founder'],
+                'artistic': ['Artist', 'Actor', 'Celebrity', 'Social Media Influencer'],
+                'sports': ['Jock', 'Action Hero', 'Fitness Trainer', 'Hero'],
+                'technical': ['Scientist', 'Tech Genius', 'Nerd', 'Gamer'],
+                'service': ['Employee', 'Nurse', 'Teacher', 'Police Officer']
+            },
+            emotionStyle: {
+                'intense': ['Villain', 'Action Hero', 'Vampire', 'Werewolf', 'Femme Fatale'],
+                'subtle': ['Scientist', 'Nerd', 'Tech Genius', 'Teacher', 'Doctor'],
+                'physical': ['Action Hero', 'Soldier', 'Spy', 'Dancer', 'Fitness Trainer'],
+                'verbal': ['Lawyer', 'Teacher', 'Boss', 'Celebrity', 'Social Media Influencer'],
+                'controlled': ['Villain', 'Spy', 'Boss', 'Queen', 'King']
+            }
+        };
+
+        // Simplified character types - only the most common and distinct
+        const characterTypes = [
+            // Leading Roles
+            'Hero', 'Leading Lady', 'Leading Man', 'Action Hero',
+            
+            // Supporting Roles  
+            'Sidekick', 'Best Friend', 'Love Interest', 'Mentor',
+            
+            // Antagonists
+            'Villain', 'Anti-Hero',
+            
+            // Character Types
+            'Bad Boy', 'Girl Next Door', 'Nerd', 'Jock', 'Artist', 'Scientist',
+            'Teacher', 'Student', 'Parent',
+            
+            // Professional Types
+            'Doctor', 'Nurse', 'Lawyer', 'Police Officer', 'Soldier', 'Spy',
+            'Boss', 'Employee',
+            
+            // Fantasy/Period Types
+            'Queen', 'King', 'Prince', 'Princess', 'Wizard', 'Witch',
+            'Vampire', 'Werewolf',
+            
+            // Modern Types
+            'Tech Genius', 'Social Media Influencer', 'Celebrity', 'Reality Star',
+            'Veteran', 'Immigrant', 'Fitness Trainer'
+        ];
+
+        function calculateTypecast(formData) {
+            const results = [];
+            
+            for (const typecast of characterTypes) {
+                let score = 0;
+                let totalPossibleScore = 0;
+                let penalties = 0;
+                let bonusPoints = 0;
+                
+                // CRITICAL FACTORS (High Weight - 8 points each)
+                totalPossibleScore += 24; // 3 factors × 8 points each
+                
+                // Gender match (CRITICAL - casting directors prioritize this)
+                if (typecastFactors.gender[formData.gender]?.includes(typecast)) {
+                    score += 8;
+                    bonusPoints += 2; // Bonus for perfect gender match
+                } else {
+                    penalties += 8; // Heavy penalty for gender mismatch
+                }
+                
+                // Age match (CRITICAL - age-appropriate casting)
+                if (typecastFactors.age[formData.age]?.includes(typecast)) {
+                    score += 8;
+                    bonusPoints += 1; // Bonus for age match
+                } else {
+                    penalties += 4; // Significant penalty for age mismatch
+                }
+                
+                // Appearance match (CRITICAL - visual casting)
+                if (typecastFactors.appearance[formData.appearance]?.includes(typecast)) {
+                    score += 8;
+                    bonusPoints += 1; // Bonus for appearance match
+                } else {
+                    penalties += 3; // Moderate penalty for appearance mismatch
+                }
+                
+                // SECONDARY FACTORS (Medium Weight - 4 points each)
+                totalPossibleScore += 8; // 2 factors × 4 points each
+                
+                // Voice match (important for character voice)
+                if (typecastFactors.voice[formData.voiceType]?.includes(typecast)) {
+                    score += 4;
+                    bonusPoints += 1;
+                } else {
+                    penalties += 1; // Small penalty
+                }
+                
+                // Body type match (important for physical roles)
+                if (typecastFactors.body[formData.body]?.includes(typecast)) {
+                    score += 4;
+                    bonusPoints += 1;
+                } else {
+                    penalties += 1; // Small penalty
+                }
+                
+                // PERSONALITY FACTORS (High Weight - 6 points total)
+                let personalityMatches = 0;
+                let personalityTotal = 0;
+                
+                for (const trait of formData.friendTraits) {
+                    if (typecastFactors.personality[trait]?.includes(typecast)) {
+                        personalityMatches++;
+                    }
+                    personalityTotal++;
+                }
+                
+                if (personalityTotal > 0) {
+                    const personalityScore = (personalityMatches / personalityTotal) * 6;
+                    score += personalityScore;
+                    totalPossibleScore += 6;
+                    
+                    // Bonus for strong personality match
+                    if (personalityMatches >= personalityTotal * 0.7) {
+                        bonusPoints += 2;
+                    }
+                }
+                
+                // SKILLS FACTORS (Medium Weight - 4 points total)
+                let skillMatches = 0;
+                let skillTotal = 0;
+                
+                for (const skill of formData.skills) {
+                    if (typecastFactors.skills[skill]?.includes(typecast)) {
+                        skillMatches++;
+                    }
+                    skillTotal++;
+                }
+                
+                if (skillTotal > 0) {
+                    const skillScore = (skillMatches / skillTotal) * 4;
+                    score += skillScore;
+                    totalPossibleScore += 4;
+                    
+                    // Bonus for relevant skills
+                    if (skillMatches >= skillTotal * 0.5) {
+                        bonusPoints += 1;
+                    }
+                }
+                
+                // BACKGROUND FACTORS (Medium Weight - 4 points total)
+                let backgroundMatches = 0;
+                let backgroundTotal = 0;
+                
+                for (const background of formData.background) {
+                    if (typecastFactors.background[background]?.includes(typecast)) {
+                        backgroundMatches++;
+                    }
+                    backgroundTotal++;
+                }
+                
+                if (backgroundTotal > 0) {
+                    const backgroundScore = (backgroundMatches / backgroundTotal) * 4;
+                    score += backgroundScore;
+                    totalPossibleScore += 4;
+                    
+                    // Bonus for relevant background
+                    if (backgroundMatches >= backgroundTotal * 0.5) {
+                        bonusPoints += 1;
+                    }
+                }
+                
+                // EMOTION STYLE FACTORS (Medium Weight - 3 points)
+                if (typecastFactors.emotionStyle[formData.emotionStyle]?.includes(typecast)) {
+                    score += 3;
+                    totalPossibleScore += 3;
+                    bonusPoints += 1; // Bonus for emotion style match
+                } else {
+                    penalties += 1; // Small penalty
+                }
+                
+                // EXPERIENCE FACTORS (Weight varies by experience level)
+                const experienceMultiplier = {
+                    'beginner': 0.5,
+                    'intermediate': 1.0,
+                    'experienced': 1.5,
+                    'professional': 2.0
+                };
+                
+                const expMultiplier = experienceMultiplier[formData.experience] || 1.0;
+                score *= expMultiplier;
+                totalPossibleScore *= expMultiplier;
+                
+                // SPECIALIZED BONUSES for specific combinations
+                if (formData.gender === 'male' && formData.age === '26-35' && typecast === 'Hero') {
+                    bonusPoints += 3; // Classic hero type
+                }
+                if (formData.gender === 'female' && formData.age === '26-35' && typecast === 'Leading Lady') {
+                    bonusPoints += 3; // Classic leading lady type
+                }
+                if (formData.appearance === 'distinctive' && typecast === 'Villain') {
+                    bonusPoints += 2; // Distinctive appearance for villain
+                }
+                if (formData.voiceType === 'deep' && typecast === 'Villain') {
+                    bonusPoints += 2; // Deep voice for villain
+                }
+                if (formData.body === 'athletic' && typecast === 'Action Hero') {
+                    bonusPoints += 2; // Athletic body for action hero
+                }
+                
+                // Calculate final confidence with bonuses and penalties
+                const finalScore = Math.max(0, score + bonusPoints - penalties);
+                const confidence = totalPossibleScore > 0 ? finalScore / totalPossibleScore : 0;
+                
+                // Only include results with meaningful confidence
+                if (confidence > 0.3) { // Higher threshold for accuracy
+                    results.push({
+                        typecast: typecast,
+                        confidence: confidence,
+                        score: finalScore,
+                        totalScore: totalPossibleScore
+                    });
+                }
+            }
+            
+            // If no high-confidence results, use fallback with lower threshold
+            if (results.length === 0) {
+                for (const typecast of characterTypes) {
+                    let score = 0;
+                    let totalPossibleScore = 0;
+                    
+                    // Simplified but accurate scoring for fallback
+                    if (typecastFactors.gender[formData.gender]?.includes(typecast)) {
+                        score += 5;
+                    }
+                    if (typecastFactors.age[formData.age]?.includes(typecast)) {
+                        score += 3;
+                    }
+                    if (typecastFactors.appearance[formData.appearance]?.includes(typecast)) {
+                        score += 3;
+                    }
+                    
+                    totalPossibleScore = 11;
+                    const confidence = totalPossibleScore > 0 ? score / totalPossibleScore : 0;
+                    
+                    if (confidence > 0.2) {
+                        results.push({
+                            typecast: typecast,
+                            confidence: confidence,
+                            score: score,
+                            totalScore: totalPossibleScore
+                        });
+                    }
+                }
+            }
+            
+            // Sort by confidence and return top 3 (more focused for accuracy)
+            return results.sort((a, b) => b.confidence - a.confidence).slice(0, 3);
+        }
+
+        function getFormData() {
+            const form = document.getElementById('typecastForm');
+            const formData = new FormData(form);
+            
+            return {
+                gender: formData.get('gender'),
+                age: formData.get('age'),
+                appearance: formData.get('appearance'),
+                body: formData.get('body'),
+                friendTraits: formData.getAll('friend-traits'),
+                voiceType: formData.get('voice-type'),
+                skills: formData.getAll('skills'),
+                background: formData.getAll('background'),
+                emotionStyle: formData.get('emotion-style'),
+                experience: formData.get('experience')
+            };
+        }
+
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('resultsContent');
+            let html = '';
+            
+            // Always show results - the algorithm now guarantees at least some matches
+            results.forEach((result, index) => {
+                const percentage = Math.round(result.confidence * 100);
+                const description = getCharacterDescription(result.typecast);
+                html += `
+                    <div class="result-card">
+                        <h3>${index + 1}. ${result.typecast}</h3>
+                        <p class="confidence-text">Confidence: ${percentage}%</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: ${percentage}%"></div>
+                        </div>
+                        <p class="description">${description}</p>
+                    </div>
+                `;
+            });
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        function getCharacterDescription(typecast) {
+            const descriptions = {
+                // Leading Roles
+                'Hero': 'The central protagonist - confident, courageous, and morally upright. Examples: Captain America (MCU), Luke Skywalker (Star Wars), Harry Potter.',
+                'Leading Lady': 'The female protagonist - charismatic, confident, and carries the emotional weight. Examples: Katniss Everdeen (Hunger Games), Wonder Woman (Gal Gadot), Black Widow (Scarlett Johansson).',
+                'Leading Man': 'The male protagonist - charismatic, confident, and carries the action. Examples: James Bond (Daniel Craig), Indiana Jones (Harrison Ford), Captain America (Chris Evans).',
+                'Anti-Hero': 'The morally complex protagonist. Examples: Deadpool (Ryan Reynolds), Wolverine (Hugh Jackman), Harley Quinn (Margot Robbie).',
+                'Femme Fatale': 'The dangerous seductress - mysterious, manipulative, and uses charm as a weapon. Examples: Catwoman (Michelle Pfeiffer), Black Widow (Scarlett Johansson), Mystique (Rebecca Romijn).',
+                
+                // Supporting Roles
+                'Sidekick': 'The loyal companion - quirky, supportive, and provides comic relief. Examples: Ron Weasley (Harry Potter), Samwise Gamgee (Lord of the Rings), Chewbacca (Star Wars).',
+                'Mentor': 'The wise guide - authoritative, nurturing, and helps the hero grow. Examples: Obi-Wan Kenobi (Star Wars), Gandalf (Lord of the Rings), Dumbledore (Harry Potter).',
+                'Love Interest': 'The romantic partner - charismatic, emotionally expressive. Examples: Princess Leia (Carrie Fisher), Mary Jane (Kirsten Dunst), Pepper Potts (Gwyneth Paltrow).',
+                'Comic Relief': 'The funny friend - quirky, charismatic, and lightens the mood. Examples: Iron Man (Robert Downey Jr.), Deadpool (Ryan Reynolds), Chandler Bing (Friends).',
+                'Best Friend': 'The supportive companion - charismatic, nurturing, and provides friendship. Examples: Samwise Gamgee, Ron Weasley, Chewbacca.',
+                
+                // Antagonists
+                'Villain': 'The antagonist - mysterious, manipulative, and opposes the hero. Examples: Darth Vader (James Earl Jones), Joker (Heath Ledger), Thanos (Josh Brolin).',
+                'Anti-Hero': 'The morally complex antagonist. Examples: Deadpool (Ryan Reynolds), Wolverine (Hugh Jackman), Harley Quinn (Margot Robbie).',
+                
+                // Character Types
+                'Bad Boy': 'The rebellious, attractive male character. Examples: Han Solo (Harrison Ford), Edward Cullen (Robert Pattinson), James Dean roles.',
+                'Girl Next Door': 'The sweet, relatable female character. Examples: Mary Jane Watson, Sandy (Olivia Newton-John), Elle Woods (Reese Witherspoon).',
+                'Nerd': 'The intelligent, socially awkward character. Examples: Peter Parker (Tobey Maguire), Sheldon Cooper (Jim Parsons), Hermione Granger (Emma Watson).',
+                'Jock': 'The athletic, popular character. Examples: Captain America, Thor, Superman.',
+                'Artist': 'The creative, sensitive character. Examples: Vincent van Gogh, Frida Kahlo, Andy Warhol.',
+                'Scientist': 'The logical, analytical character. Examples: Dr. Strange (Benedict Cumberbatch), Tony Stark, Dr. Banner (Mark Ruffalo).',
+                'Detective': 'The investigator who solves mysteries. Examples: Sherlock Holmes (Benedict Cumberbatch), Batman, Columbo.',
+                'Teacher': 'The educator who guides others. Examples: Professor McGonagall, Mr. Miyagi, Professor Xavier.',
+                'Student': 'The learner who grows throughout the story. Examples: Harry Potter, Luke Skywalker, Peter Parker.',
+                'Parent': 'The caring guardian figure. Examples: Uncle Ben, Aunt May, Dumbledore.',
+                'Child': 'The young character who needs protection. Examples: Baby Yoda, E.T., Harry Potter.',
+                
+                // Professional Types
+                'Doctor': 'The medical professional. Examples: Dr. House (Hugh Laurie), Dr. Strange, Dr. Banner.',
+                'Nurse': 'The caring medical professional. Examples: Nurse Ratched (Louise Fletcher), Florence Nightingale.',
+                'Lawyer': 'The legal professional. Examples: Atticus Finch (Gregory Peck), Elle Woods (Reese Witherspoon).',
+                'Police Officer': 'The law enforcement officer. Examples: Dirty Harry (Clint Eastwood), John McClane (Bruce Willis).',
+                'Soldier': 'The military professional. Examples: Captain America, Rambo (Sylvester Stallone), Private Ryan.',
+                'Spy': 'The secret agent. Examples: James Bond (Daniel Craig), Jason Bourne (Matt Damon), Black Widow (Scarlett Johansson).',
+                'Boss': 'The authority figure in the workplace. Examples: Miranda Priestly (Meryl Streep), Gordon Gekko (Michael Douglas).',
+                'Employee': 'The worker under authority. Examples: Andy Sachs (Anne Hathaway), Peter Gibbons (Ron Livingston).',
+                'Thief': 'The criminal who steals. Examples: Han Solo, Robin Hood, Catwoman.',
+                'Priest': 'The religious leader. Examples: Father Merrin (Max von Sydow), Father Karras (Jason Miller).',
+                'Monk': 'The spiritual seeker. Examples: Yoda, Obi-Wan Kenobi, Master Splinter.',
+                
+                // Fantasy/Period Types
+                'Queen': 'The female ruler. Examples: Queen Elizabeth (Helen Mirren), Daenerys Targaryen (Emilia Clarke).',
+                'King': 'The male ruler. Examples: King Arthur, Aragorn (Viggo Mortensen), King Richard.',
+                'Prince': 'The young male royal. Examples: Prince Charming, Prince Eric, Prince Aladdin.',
+                'Princess': 'The young female royal. Examples: Princess Leia, Princess Jasmine, Princess Aurora.',
+                'Wizard': 'The magical spellcaster. Examples: Gandalf, Dumbledore, Merlin.',
+                'Witch': 'The female magical practitioner. Examples: Hermione Granger, Glinda (Billie Burke), Maleficent.',
+                'Vampire': 'The immortal blood drinker. Examples: Dracula (Bela Lugosi), Edward Cullen (Robert Pattinson), Blade (Wesley Snipes).',
+                'Werewolf': 'The shape-shifting creature. Examples: Remus Lupin (David Thewlis), Jacob Black (Taylor Lautner).',
+                'Ghost': 'The spectral being. Examples: Casper, The Ghost of Christmas Past, Sam Wheat (Patrick Swayze).',
+                'Alien': 'The extraterrestrial being. Examples: E.T., Superman, Chewbacca.',
+                'Robot': 'The mechanical being. Examples: R2-D2, C-3PO, The Terminator (Arnold Schwarzenegger).',
+                'Monster': 'The frightening creature. Examples: Godzilla, King Kong, The Creature from the Black Lagoon.',
+                'Fairy': 'The magical winged being. Examples: Tinker Bell, The Blue Fairy, Glinda.',
+                'Giant': 'The large being. Examples: Hagrid (Robbie Coltrane), The BFG, Paul Bunyan.',
+                'Dwarf': 'The small, stout being. Examples: Gimli (John Rhys-Davies), The Seven Dwarfs, Tyrion Lannister (Peter Dinklage).',
+                
+                // Modern Types
+                'Tech Genius': 'The brilliant technology expert - intellectual, quirky, and drives innovation. Examples: Tony Stark (Robert Downey Jr.), Mark Zuckerberg (Jesse Eisenberg), Elon Musk portrayals.',
+                'Social Media Influencer': 'The digital content creator - charismatic, confident, and builds online communities. Examples: Reality TV stars, YouTube personalities, Instagram celebrities.',
+                'Startup Founder': 'The entrepreneurial innovator - confident, charismatic, and disrupts industries. Examples: Mark Zuckerberg (Jesse Eisenberg), Steve Jobs (Michael Fassbender), Silicon Valley characters.',
+                'Chef': 'The culinary artist - passionate, authoritative, and creates through food. Examples: Gordon Ramsay portrayals, Ratatouille characters, Food Network personalities.',
+                'Journalist': 'The truth-seeking reporter - intellectual, confident, and uncovers stories. Examples: Lois Lane, Woodward & Bernstein, modern news anchors.',
+                'Activist': 'The social justice advocate - passionate, charismatic, and fights for change. Examples: Civil rights leaders, environmental activists, modern protestors.',
+                'Veteran': 'The experienced military professional - authoritative, protective, and carries battle scars. Examples: Rambo (Sylvester Stallone), John Wick (Keanu Reeves), war film characters.',
+                'Immigrant': 'The newcomer adapting to a new culture - hardworking, protective, and bridges worlds. Examples: Modern immigration stories, cultural adaptation narratives.',
+                'Celebrity': 'The famous personality - charismatic, confident, and lives in the spotlight. Examples: Reality TV stars, social media influencers, modern fame seekers.',
+                'Reality Star': 'The reality TV personality - charismatic, dramatic, and thrives on attention. Examples: Kardashians, Real Housewives, modern reality show contestants.',
+                'Podcaster': 'The digital content creator - charismatic, intellectual, and builds online audiences. Examples: Modern podcast hosts, digital media personalities.',
+                'Gamer': 'The video game enthusiast - quirky, intellectual, and lives in digital worlds. Examples: Ready Player One characters, modern gaming culture representatives.',
+                'Fitness Trainer': 'The health and wellness expert - confident, charismatic, and transforms lives. Examples: Modern fitness influencers, gym culture representatives.'
+            };
+            return descriptions[typecast] || 'A character type that matches your personality and traits.';
+        }
+
+
+
+        function resetForm() {
+            document.getElementById('typecastForm').reset();
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        document.getElementById('typecastForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            console.log('Form submitted');
+            
+            const formData = getFormData();
+            console.log('Form data:', formData);
+            
+            const results = calculateTypecast(formData);
+            console.log('Results:', results);
+            
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+                displayResults(results);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
