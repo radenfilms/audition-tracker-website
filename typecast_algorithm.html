@@ -214,6 +214,24 @@
                 width: 95%;
             }
             
+            .download-section {
+                padding: 20px 15px;
+            }
+            
+            .download-card {
+                padding: 20px;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+            
             .container {
                 margin-top: 80px;
                 margin-left: 10px;
@@ -288,6 +306,61 @@
             font-weight: 300;
             position: relative;
             z-index: 1;
+        }
+
+        .download-section {
+            padding: 30px 40px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .download-card {
+            background: linear-gradient(135deg, rgba(29, 233, 182, 0.1) 0%, rgba(0, 184, 148, 0.1) 100%);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .download-card h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .download-card p {
+            color: var(--text);
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--card-bg);
+            transform: translateY(-2px);
         }
 
         .form-section {
@@ -587,6 +660,21 @@
         <div class="header">
             <h1>🎭 Actor Typecast Algorithm</h1>
             <p>Discover your casting potential with our advanced personality analysis</p>
+        </div>
+
+        <div class="download-section">
+            <div class="download-card">
+                <h3>📋 Character Types Guide</h3>
+                <p>Download our comprehensive guide with all 40+ character types, descriptions, and examples from popular media.</p>
+                <div class="download-buttons">
+                    <a href="character_types_guide.pdf" download class="btn btn-primary">
+                        📄 Download PDF Guide
+                    </a>
+                    <a href="character_types_guide.html" target="_blank" class="btn btn-secondary">
+                        🌐 View Online
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="form-section">
