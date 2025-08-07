@@ -226,34 +226,7 @@
                 width: 100%;
             }
             
-            .download-section {
-                padding: 12px 15px;
-            }
-            
-            .download-card {
-                padding: 12px;
-            }
-            
-            .download-card h3 {
-                font-size: 1.1em;
-                margin-bottom: 6px;
-            }
-            
-            .download-card p {
-                font-size: 0.85em;
-                margin-bottom: 12px;
-            }
-            
-            .download-buttons {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .btn-secondary {
-                width: 100%;
-                text-align: center;
-                font-size: 0.8em;
-            }
+
             
             .container {
                 margin-top: 70px;
@@ -346,61 +319,7 @@
             z-index: 1;
         }
 
-        .download-section {
-            padding: 20px 40px;
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-        }
 
-        .download-card {
-            background: linear-gradient(135deg, rgba(29, 233, 182, 0.05) 0%, rgba(0, 184, 148, 0.05) 100%);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin: 0 auto;
-            max-width: 500px;
-        }
-
-        .download-card h3 {
-            color: var(--primary);
-            font-size: 1.2em;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .download-card p {
-            color: var(--text);
-            font-size: 0.95em;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
-
-        .download-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--card-bg);
-            transform: translateY(-1px);
-        }
 
         .form-section {
             padding: 50px 40px;
@@ -686,12 +605,11 @@
                 <span></span>
                 <span></span>
             </div>
-            <ul class="navbar-nav" id="navbarNav">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="index.html#pricing" class="nav-link">Pricing</a></li>
-                <li><a href="index.html#contact" class="nav-link">Get in Touch</a></li>
-                <li><a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="nav-link btn btn-primary">Download App</a></li>
-            </ul>
+                            <ul class="navbar-nav" id="navbarNav">
+                    <li><a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="nav-link btn btn-primary">Download App</a></li>
+                    <li><a href="character_types_guide.html" target="_blank" class="nav-link">View Characters</a></li>
+                    <li><a href="character_types_guide.pdf" download class="nav-link">Download PDF</a></li>
+                </ul>
         </div>
     </nav>
     
@@ -701,20 +619,7 @@
             <p>Discover your casting potential with our advanced personality analysis</p>
         </div>
 
-        <div class="download-section">
-            <div class="download-card">
-                <h3>📋 Character Types Guide</h3>
-                <p>Download our comprehensive guide with all 40+ character types, descriptions, and examples from popular media.</p>
-                <div class="download-buttons">
-                    <a href="character_types_guide.pdf" download class="btn btn-primary">
-                        📄 Download PDF Guide
-                    </a>
-                    <a href="character_types_guide.html" target="_blank" class="btn btn-secondary">
-                        🌐 View Online
-                    </a>
-                </div>
-            </div>
-        </div>
+
 
         <div class="form-section">
             <form id="typecastForm">
