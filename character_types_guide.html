@@ -49,12 +49,29 @@
             font-size: 0.8em;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         
         .download-btn:hover {
             background: rgba(255,255,255,0.3);
             border-color: rgba(255,255,255,0.5);
             transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+        
+        .download-btn:focus {
+            outline: 2px solid rgba(255,255,255,0.8);
+            outline-offset: 2px;
         }
         
         .header h1 {
