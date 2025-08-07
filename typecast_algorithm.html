@@ -123,15 +123,34 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
-            padding: 5px;
+            padding: 8px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        
+        .mobile-menu-toggle:hover {
+            background: rgba(255,255,255,0.1);
         }
         
         .mobile-menu-toggle span {
-            width: 25px;
-            height: 3px;
+            width: 22px;
+            height: 2px;
             background-color: var(--text);
-            margin: 3px 0;
+            margin: 2px 0;
             transition: 0.3s;
+            border-radius: 1px;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
         }
         
         .mobile-menu-toggle.active span:nth-child(1) {
@@ -174,7 +193,7 @@
             .nav-link {
                 margin: 0.5rem 0;
                 padding: 0.8rem 1.5rem;
-                font-size: 1rem;
+                font-size: 0.95rem;
                 width: 100%;
                 text-align: center;
                 border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -187,7 +206,7 @@
                 border-radius: 8px;
                 margin: 0.5rem 0;
                 padding: 0.8rem 1.5rem;
-                font-size: 1rem;
+                font-size: 0.95rem;
                 width: 100%;
                 text-align: center;
             }
@@ -197,12 +216,53 @@
                 padding: 0.8rem 1.5rem;
                 width: 100%;
                 text-align: center;
-                font-size: 1rem;
+                font-size: 0.95rem;
                 border-radius: 8px;
             }
             
             .navbar-brand {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+            }
+            
+            .container {
+                margin-top: 80px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            
+            .header {
+                padding: 25px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+                margin-bottom: 8px;
+            }
+            
+            .header p {
+                font-size: 0.95em;
+            }
+            
+            .form-section {
+                padding: 30px 20px;
+            }
+            
+            .form-group {
+                margin-bottom: 25px;
+            }
+            
+            .form-group label {
+                font-size: 1.05em;
+                margin-bottom: 10px;
+            }
+            
+            .radio-group, .checkbox-group {
+                gap: 10px;
+            }
+            
+            .radio-option, .checkbox-option {
+                padding: 10px 15px;
+                font-size: 0.95em;
             }
         }
         
