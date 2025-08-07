@@ -664,6 +664,42 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Height:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="height1" name="height" value="tall" required>
+                            <label for="height1">Tall (6'0"+)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="height2" name="height" value="average" required>
+                            <label for="height2">Average (5'6"-5'11")</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="height3" name="height" value="short" required>
+                            <label for="height3">Short (Under 5'6")</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Energy Level:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="energy1" name="energy-level" value="high" required>
+                            <label for="energy1">High Energy - Dynamic & Expressive</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="energy2" name="energy-level" value="medium" required>
+                            <label for="energy2">Medium Energy - Balanced & Natural</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="energy3" name="energy-level" value="low" required>
+                            <label for="energy3">Low Energy - Calm & Reserved</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>Core Personality Traits (Select all that apply):</label>
                     <div class="checkbox-group">
                         <div class="checkbox-option">
@@ -1097,10 +1133,32 @@
                 'physical': ['Action Hero', 'Soldier', 'Spy', 'Dancer', 'Fitness Trainer'],
                 'verbal': ['Lawyer', 'Teacher', 'Boss', 'Celebrity', 'Social Media Influencer'],
                 'controlled': ['Villain', 'Spy', 'Boss', 'Queen', 'King']
+            },
+            height: {
+                'tall': ['Hero', 'Leading Man', 'Action Hero', 'Basketball Player', 'Model', 'King', 'Vampire'],
+                'average': ['Everyman', 'Best Friend', 'Employee', 'Teacher', 'Student', 'Sidekick'],
+                'short': ['Comic Relief', 'Child', 'Sidekick', 'Nerd', 'Tech Genius', 'Gamer']
+            },
+            energyLevel: {
+                'high': ['Action Hero', 'Comic Relief', 'Villain', 'Celebrity', 'Social Media Influencer', 'Reality Star', 'Fitness Trainer'],
+                'medium': ['Leading Lady', 'Best Friend', 'Employee', 'Teacher', 'Student', 'Parent', 'Hero'],
+                'low': ['Scientist', 'Nerd', 'Mentor', 'Tech Genius', 'Gamer', 'Wizard', 'Witch']
+            },
+            genres: {
+                'action': ['Action Hero', 'Hero', 'Villain', 'Soldier', 'Spy', 'Fitness Trainer'],
+                'drama': ['Hero', 'Leading Lady', 'Leading Man', 'Villain', 'Anti-Hero', 'Mentor'],
+                'comedy': ['Comic Relief', 'Sidekick', 'Best Friend', 'Reality Star', 'Social Media Influencer'],
+                'thriller': ['Villain', 'Anti-Hero', 'Spy', 'Detective', 'Vampire', 'Werewolf'],
+                'romance': ['Leading Lady', 'Leading Man', 'Love Interest', 'Prince', 'Princess', 'Girl Next Door'],
+                'horror': ['Villain', 'Vampire', 'Werewolf', 'Monster', 'Ghost'],
+                'sci-fi': ['Scientist', 'Tech Genius', 'Alien', 'Robot', 'Vampire', 'Werewolf'],
+                'period': ['Queen', 'King', 'Prince', 'Princess', 'Wizard', 'Witch', 'Vampire'],
+                'indie': ['Artist', 'Nerd', 'Tech Genius', 'Gamer', 'Activist', 'Podcaster'],
+                'commercial': ['Celebrity', 'Social Media Influencer', 'Reality Star', 'Model', 'Fitness Trainer']
             }
         };
 
-        // Simplified character types - only the most common and distinct
+        // Comprehensive character types for modern casting
         const characterTypes = [
             // Leading Roles
             'Hero', 'Leading Lady', 'Leading Man', 'Action Hero',
@@ -1113,19 +1171,20 @@
             
             // Character Types
             'Bad Boy', 'Girl Next Door', 'Nerd', 'Jock', 'Artist', 'Scientist',
-            'Teacher', 'Student', 'Parent',
+            'Teacher', 'Student', 'Parent', 'Child',
             
             // Professional Types
             'Doctor', 'Nurse', 'Lawyer', 'Police Officer', 'Soldier', 'Spy',
-            'Boss', 'Employee',
+            'Boss', 'Employee', 'Detective',
             
             // Fantasy/Period Types
             'Queen', 'King', 'Prince', 'Princess', 'Wizard', 'Witch',
-            'Vampire', 'Werewolf',
+            'Vampire', 'Werewolf', 'Ghost', 'Alien', 'Robot',
             
             // Modern Types
             'Tech Genius', 'Social Media Influencer', 'Celebrity', 'Reality Star',
-            'Veteran', 'Immigrant', 'Fitness Trainer'
+            'Veteran', 'Immigrant', 'Fitness Trainer', 'Activist', 'Podcaster',
+            'Gamer', 'Chef', 'Journalist', 'Model', 'Comic Relief'
         ];
 
         function calculateTypecast(formData) {
@@ -1182,6 +1241,9 @@
                 } else {
                     penalties += 1; // Small penalty
                 }
+
+                // NEW FACTORS (Medium Weight - 3 points each)
+                totalPossibleScore += 6; // 2 factors × 3 points each
                 
                 // PERSONALITY FACTORS (High Weight - 6 points total)
                 let personalityMatches = 0;
@@ -1248,6 +1310,46 @@
                         bonusPoints += 1;
                     }
                 }
+
+                // HEIGHT FACTORS (Medium Weight - 3 points)
+                if (typecastFactors.height[formData.height]?.includes(typecast)) {
+                    score += 3;
+                    totalPossibleScore += 3;
+                    bonusPoints += 1; // Bonus for height match
+                } else {
+                    penalties += 1; // Small penalty
+                }
+
+                // ENERGY LEVEL FACTORS (Medium Weight - 3 points)
+                if (typecastFactors.energyLevel[formData.energyLevel]?.includes(typecast)) {
+                    score += 3;
+                    totalPossibleScore += 3;
+                    bonusPoints += 1; // Bonus for energy match
+                } else {
+                    penalties += 1; // Small penalty
+                }
+
+                // GENRE FACTORS (High Weight - 5 points total)
+                let genreMatches = 0;
+                let genreTotal = 0;
+                
+                for (const genre of formData.genres) {
+                    if (typecastFactors.genres[genre]?.includes(typecast)) {
+                        genreMatches++;
+                    }
+                    genreTotal++;
+                }
+                
+                if (genreTotal > 0) {
+                    const genreScore = (genreMatches / genreTotal) * 5;
+                    score += genreScore;
+                    totalPossibleScore += 5;
+                    
+                    // Bonus for genre alignment
+                    if (genreMatches >= genreTotal * 0.6) {
+                        bonusPoints += 2;
+                    }
+                }
                 
                 // EMOTION STYLE FACTORS (Medium Weight - 3 points)
                 if (typecastFactors.emotionStyle[formData.emotionStyle]?.includes(typecast)) {
@@ -1285,6 +1387,21 @@
                 }
                 if (formData.body === 'athletic' && typecast === 'Action Hero') {
                     bonusPoints += 2; // Athletic body for action hero
+                }
+                if (formData.height === 'tall' && typecast === 'Hero') {
+                    bonusPoints += 2; // Tall hero type
+                }
+                if (formData.energyLevel === 'high' && typecast === 'Comic Relief') {
+                    bonusPoints += 2; // High energy for comedy
+                }
+                if (formData.energyLevel === 'low' && typecast === 'Scientist') {
+                    bonusPoints += 2; // Low energy for intellectual roles
+                }
+                if (formData.genres.includes('action') && typecast === 'Action Hero') {
+                    bonusPoints += 3; // Action genre alignment
+                }
+                if (formData.genres.includes('comedy') && typecast === 'Comic Relief') {
+                    bonusPoints += 3; // Comedy genre alignment
                 }
                 
                 // Calculate final confidence with bonuses and penalties
@@ -1346,12 +1463,15 @@
                 age: formData.get('age'),
                 appearance: formData.get('appearance'),
                 body: formData.get('body'),
+                height: formData.get('height'),
+                energyLevel: formData.get('energy-level'),
                 friendTraits: formData.getAll('friend-traits'),
                 voiceType: formData.get('voice-type'),
                 skills: formData.getAll('skills'),
                 background: formData.getAll('background'),
                 emotionStyle: formData.get('emotion-style'),
-                experience: formData.get('experience')
+                experience: formData.get('experience'),
+                genres: formData.getAll('genres')
             };
         }
 
