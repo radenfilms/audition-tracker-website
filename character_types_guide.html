@@ -140,52 +140,76 @@
             .header {
                 page-break-after: avoid;
                 break-after: avoid;
+                padding: 30px 25px !important;
+            }
+            .header h1 {
+                font-size: 2.2em !important;
+                margin-bottom: 8px !important;
+            }
+            .header p {
+                font-size: 1em !important;
+            }
+            .content {
+                padding: 30px 25px !important;
             }
             .section {
                 page-break-inside: avoid;
                 break-inside: avoid;
-                margin-bottom: 30px;
+                margin-bottom: 30px !important;
             }
             .section h2 {
                 page-break-after: avoid;
                 break-after: avoid;
+                font-size: 1.6em !important;
+                margin-bottom: 15px !important;
+                padding-bottom: 8px !important;
             }
             .character-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px !important;
             }
             .character-card {
                 page-break-inside: avoid;
                 break-inside: avoid;
                 transform: none;
                 box-shadow: none;
-                border: 1px solid #ddd;
-                margin-bottom: 15px;
-                padding: 15px;
+                border: 1px solid #e9ecef !important;
+                border-radius: 8px !important;
+                margin-bottom: 0 !important;
+                padding: 15px !important;
+                background: #f8f9fa !important;
             }
             .character-card:hover {
                 transform: none;
                 box-shadow: none;
             }
+            .character-name {
+                font-size: 1.2em !important;
+                font-weight: 600 !important;
+                color: #1de9b6 !important;
+                margin-bottom: 6px !important;
+            }
+            .character-description {
+                font-size: 0.9em !important;
+                line-height: 1.4 !important;
+                margin-bottom: 6px !important;
+                color: #666 !important;
+            }
+            .examples {
+                font-size: 0.85em !important;
+                margin-top: 8px !important;
+                color: #888 !important;
+                font-style: italic !important;
+            }
             .intro {
                 page-break-after: avoid;
                 break-after: avoid;
+                padding: 15px !important;
+                margin-bottom: 25px !important;
             }
             .footer {
                 page-break-before: avoid;
                 break-before: avoid;
-            }
-            .content {
-                padding: 20px;
-            }
-            .character-name {
-                font-size: 1.2em;
-            }
-            .character-description {
-                font-size: 0.9em;
-            }
-            .examples {
-                font-size: 0.8em;
             }
         }
     </style>
