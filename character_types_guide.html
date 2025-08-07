@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actor Character Types Guide - Audition Tracker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1de9b6 0%, #00b894 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #1de9b6;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #1de9b6;
+            padding-bottom: 10px;
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .character-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1de9b6;
+            margin-bottom: 8px;
+        }
+        
+        .character-description {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .examples {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        
+        .intro {
+            background: #f8f9fa;
+            border-left: 4px solid #1de9b6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .intro h3 {
+            color: #1de9b6;
+            margin-bottom: 10px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .character-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎭 Actor Character Types Guide</h1>
+            <p>Comprehensive guide to character types for modern casting</p>
+        </div>
+        
+        <div class="content">
+            <div class="intro">
+                <h3>About This Guide</h3>
+                <p>This guide contains all character types used in the Audition Tracker Typecast Algorithm. Each type includes a description and examples from popular media. Use this as a reference to understand your casting potential and the types of roles you might be suited for.</p>
+            </div>
+            
+            <div class="section">
+                <h2>Leading Roles</h2>
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">Hero</div>
+                        <div class="character-description">The central protagonist - confident, courageous, and morally upright.</div>
+                        <div class="examples">Examples: Captain America (MCU), Luke Skywalker (Star Wars), Harry Potter</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Leading Lady</div>
+                        <div class="character-description">The female protagonist - charismatic, confident, and carries the emotional weight.</div>
+                        <div class="examples">Examples: Katniss Everdeen (Hunger Games), Wonder Woman (Gal Gadot), Black Widow (Scarlett Johansson)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Leading Man</div>
+                        <div class="character-description">The male protagonist - charismatic, confident, and carries the action.</div>
+                        <div class="examples">Examples: James Bond (Daniel Craig), Indiana Jones (Harrison Ford), Captain America (Chris Evans)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Action Hero</div>
+                        <div class="character-description">The physically capable protagonist who excels in action sequences.</div>
+                        <div class="examples">Examples: John Wick (Keanu Reeves), Jason Bourne (Matt Damon), Black Widow (Scarlett Johansson)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Anti-Hero</div>
+                        <div class="character-description">The morally complex protagonist with questionable methods.</div>
+                        <div class="examples">Examples: Deadpool (Ryan Reynolds), Wolverine (Hugh Jackman), Harley Quinn (Margot Robbie)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Femme Fatale</div>
+                        <div class="character-description">The dangerous seductress - mysterious, manipulative, and uses charm as a weapon.</div>
+                        <div class="examples">Examples: Catwoman (Michelle Pfeiffer), Black Widow (Scarlett Johansson), Mystique (Rebecca Romijn)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Supporting Roles</h2>
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">Sidekick</div>
+                        <div class="character-description">The loyal companion - quirky, supportive, and provides comic relief.</div>
+                        <div class="examples">Examples: Ron Weasley (Harry Potter), Samwise Gamgee (Lord of the Rings), Chewbacca (Star Wars)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Mentor</div>
+                        <div class="character-description">The wise guide - authoritative, nurturing, and helps the hero grow.</div>
+                        <div class="examples">Examples: Obi-Wan Kenobi (Star Wars), Gandalf (Lord of the Rings), Dumbledore (Harry Potter)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Love Interest</div>
+                        <div class="character-description">The romantic partner - charismatic, emotionally expressive.</div>
+                        <div class="examples">Examples: Princess Leia (Carrie Fisher), Mary Jane (Kirsten Dunst), Pepper Potts (Gwyneth Paltrow)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Comic Relief</div>
+                        <div class="character-description">The funny friend - quirky, charismatic, and lightens the mood.</div>
+                        <div class="examples">Examples: Iron Man (Robert Downey Jr.), Deadpool (Ryan Reynolds), Chandler Bing (Friends)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Best Friend</div>
+                        <div class="character-description">The supportive companion - charismatic, nurturing, and provides friendship.</div>
+                        <div class="examples">Examples: Samwise Gamgee, Ron Weasley, Chewbacca</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Antagonists</h2>
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">Villain</div>
+                        <div class="character-description">The antagonist - mysterious, manipulative, and opposes the hero.</div>
+                        <div class="examples">Examples: Darth Vader (James Earl Jones), Joker (Heath Ledger), Thanos (Josh Brolin)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Character Types</h2>
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">Bad Boy</div>
+                        <div class="character-description">The rebellious, attractive male character.</div>
+                        <div class="examples">Examples: Han Solo (Harrison Ford), Edward Cullen (Robert Pattinson), James Dean roles</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Girl Next Door</div>
+                        <div class="character-description">The sweet, relatable female character.</div>
+                        <div class="examples">Examples: Mary Jane Watson, Sandy (Olivia Newton-John), Elle Woods (Reese Witherspoon)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Nerd</div>
+                        <div class="character-description">The intelligent, socially awkward character.</div>
+                        <div class="examples">Examples: Peter Parker (Tobey Maguire), Sheldon Cooper (Jim Parsons), Hermione Granger (Emma Watson)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Jock</div>
+                        <div class="character-description">The athletic, popular character.</div>
+                        <div class="examples">Examples: Captain America, Thor, Superman</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Artist</div>
+                        <div class="character-description">The creative, sensitive character.</div>
+                        <div class="examples">Examples: Vincent van Gogh, Frida Kahlo, Andy Warhol</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Scientist</div>
+                        <div class="character-description">The logical, analytical character.</div>
+                        <div class="examples">Examples: Dr. Strange (Benedict Cumberbatch), Tony Stark, Dr. Banner (Mark Ruffalo)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Detective</div>
+                        <div class="character-description">The investigator who solves mysteries.</div>
+                        <div class="examples">Examples: Sherlock Holmes (Benedict Cumberbatch), Batman, Columbo</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Teacher</div>
+                        <div class="character-description">The educator who guides others.</div>
+                        <div class="examples">Examples: Professor McGonagall, Mr. Miyagi, Professor Xavier</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Student</div>
+                        <div class="character-description">The learner who grows throughout the story.</div>
+                        <div class="examples">Examples: Harry Potter, Luke Skywalker, Peter Parker</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Parent</div>
+                        <div class="character-description">The caring guardian figure.</div>
+                        <div class="examples">Examples: Uncle Ben, Aunt May, Dumbledore</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Child</div>
+                        <div class="character-description">The young character who needs protection.</div>
+                        <div class="examples">Examples: Baby Yoda, E.T., Harry Potter</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Professional Types</h2>
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">Doctor</div>
+                        <div class="character-description">The medical professional.</div>
+                        <div class="examples">Examples: Dr. House (Hugh Laurie), Dr. Strange, Dr. Banner</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Nurse</div>
+                        <div class="character-description">The caring medical professional.</div>
+                        <div class="examples">Examples: Nurse Ratched (Louise Fletcher), Florence Nightingale</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Lawyer</div>
+                        <div class="character-description">The legal professional.</div>
+                        <div class="examples">Examples: Atticus Finch (Gregory Peck), Elle Woods (Reese Witherspoon)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Police Officer</div>
+                        <div class="character-description">The law enforcement officer.</div>
+                        <div class="examples">Examples: Dirty Harry (Clint Eastwood), John McClane (Bruce Willis)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Soldier</div>
+                        <div class="character-description">The military professional.</div>
+                        <div class="examples">Examples: Captain America, Rambo (Sylvester Stallone), Private Ryan</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Spy</div>
+                        <div class="character-description">The secret agent.</div>
+                        <div class="examples">Examples: James Bond (Daniel Craig), Jason Bourne (Matt Damon), Black Widow (Scarlett Johansson)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Boss</div>
+                        <div class="character-description">The authority figure in the workplace.</div>
+                        <div class="examples">Examples: Miranda Priestly (Meryl Streep), Gordon Gekko (Michael Douglas)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Employee</div>
+                        <div class="character-description">The worker under authority.</div>
+                        <div class="examples">Examples: Andy Sachs (Anne Hathaway), Peter Gibbons (Ron Livingston)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Fantasy & Period Types</h2>
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">Queen</div>
+                        <div class="character-description">The female ruler.</div>
+                        <div class="examples">Examples: Queen Elizabeth (Helen Mirren), Daenerys Targaryen (Emilia Clarke)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">King</div>
+                        <div class="character-description">The male ruler.</div>
+                        <div class="examples">Examples: King Arthur, Aragorn (Viggo Mortensen), King Richard</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Prince</div>
+                        <div class="character-description">The young male royal.</div>
+                        <div class="examples">Examples: Prince Charming, Prince Eric, Prince Aladdin</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Princess</div>
+                        <div class="character-description">The young female royal.</div>
+                        <div class="examples">Examples: Princess Leia, Princess Jasmine, Princess Aurora</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Wizard</div>
+                        <div class="character-description">The magical spellcaster.</div>
+                        <div class="examples">Examples: Gandalf, Dumbledore, Merlin</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Witch</div>
+                        <div class="character-description">The female magical practitioner.</div>
+                        <div class="examples">Examples: Hermione Granger, Glinda (Billie Burke), Maleficent</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Vampire</div>
+                        <div class="character-description">The immortal blood drinker.</div>
+                        <div class="examples">Examples: Dracula (Bela Lugosi), Edward Cullen (Robert Pattinson), Blade (Wesley Snipes)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Werewolf</div>
+                        <div class="character-description">The shape-shifting creature.</div>
+                        <div class="examples">Examples: Remus Lupin (David Thewlis), Jacob Black (Taylor Lautner)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Ghost</div>
+                        <div class="character-description">The spectral being.</div>
+                        <div class="examples">Examples: Casper, The Ghost of Christmas Past, Sam Wheat (Patrick Swayze)</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Alien</div>
+                        <div class="character-description">The extraterrestrial being.</div>
+                        <div class="examples">Examples: E.T., Superman, Chewbacca</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Robot</div>
+                        <div class="character-description">The mechanical being.</div>
+                        <div class="examples">Examples: R2-D2, C-3PO, The Terminator (Arnold Schwarzenegger)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Modern Types</h2>
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">Tech Genius</div>
+                        <div class="character-description">The brilliant technology expert - intellectual, quirky, and drives innovation.</div>
+                        <div class="examples">Examples: Tony Stark (Robert Downey Jr.), Mark Zuckerberg (Jesse Eisenberg), Elon Musk portrayals</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Social Media Influencer</div>
+                        <div class="character-description">The digital content creator - charismatic, confident, and builds online communities.</div>
+                        <div class="examples">Examples: Reality TV stars, YouTube personalities, Instagram celebrities</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Celebrity</div>
+                        <div class="character-description">The famous personality - charismatic, confident, and lives in the spotlight.</div>
+                        <div class="examples">Examples: Reality TV stars, social media influencers, modern fame seekers</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Reality Star</div>
+                        <div class="character-description">The reality TV personality - charismatic, dramatic, and thrives on attention.</div>
+                        <div class="examples">Examples: Kardashians, Real Housewives, modern reality show contestants</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Veteran</div>
+                        <div class="character-description">The experienced military professional - authoritative, protective, and carries battle scars.</div>
+                        <div class="examples">Examples: Rambo (Sylvester Stallone), John Wick (Keanu Reeves), war film characters</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Immigrant</div>
+                        <div class="character-description">The newcomer adapting to a new culture - hardworking, protective, and bridges worlds.</div>
+                        <div class="examples">Examples: Modern immigration stories, cultural adaptation narratives</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Activist</div>
+                        <div class="character-description">The social justice advocate - passionate, charismatic, and fights for change.</div>
+                        <div class="examples">Examples: Civil rights leaders, environmental activists, modern protestors</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Podcaster</div>
+                        <div class="character-description">The digital content creator - charismatic, intellectual, and builds online audiences.</div>
+                        <div class="examples">Examples: Modern podcast hosts, digital media personalities</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Gamer</div>
+                        <div class="character-description">The video game enthusiast - quirky, intellectual, and lives in digital worlds.</div>
+                        <div class="examples">Examples: Ready Player One characters, modern gaming culture representatives</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Chef</div>
+                        <div class="character-description">The culinary artist - passionate, authoritative, and creates through food.</div>
+                        <div class="examples">Examples: Gordon Ramsay portrayals, Ratatouille characters, Food Network personalities</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Journalist</div>
+                        <div class="character-description">The truth-seeking reporter - intellectual, confident, and uncovers stories.</div>
+                        <div class="examples">Examples: Lois Lane, Woodward & Bernstein, modern news anchors</div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">Fitness Trainer</div>
+                        <div class="character-description">The health and wellness expert - confident, charismatic, and transforms lives.</div>
+                        <div class="examples">Examples: Modern fitness influencers, gym culture representatives</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 Audition Tracker. All character types and descriptions are for educational purposes.</p>
+            <p>Generated from the Audition Tracker Typecast Algorithm</p>
+        </div>
+    </div>
+</body>
+</html> 
