@@ -75,6 +75,8 @@
             border-radius: 12px;
             padding: 20px;
             transition: transform 0.2s, box-shadow 0.2s;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         
         .character-card:hover {
@@ -126,13 +128,63 @@
         @media print {
             body {
                 background: white;
+                margin: 0;
+                padding: 0;
             }
             .container {
                 box-shadow: none;
+                margin: 0;
+                max-width: none;
+            }
+            .header {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 30px;
+            }
+            .section h2 {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            .character-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .character-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                transform: none;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 15px;
+                padding: 15px;
             }
             .character-card:hover {
                 transform: none;
                 box-shadow: none;
+            }
+            .intro {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            .footer {
+                page-break-before: avoid;
+                break-before: avoid;
+            }
+            .content {
+                padding: 20px;
+            }
+            .character-name {
+                font-size: 1.2em;
+            }
+            .character-description {
+                font-size: 0.9em;
+            }
+            .examples {
+                font-size: 0.8em;
             }
         }
     </style>
