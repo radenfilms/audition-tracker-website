@@ -90,6 +90,7 @@
             list-style: none;
             margin: 0;
             padding: 0;
+            align-items: center;
         }
         
         .nav-link {
@@ -99,6 +100,7 @@
             margin-left: 1rem;
             border-radius: 5px;
             transition: background-color 0.3s;
+            white-space: nowrap;
         }
         
         .nav-link:hover {
@@ -114,6 +116,122 @@
         
         .btn-primary:hover {
             background-color: #00b894;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .navbar-nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(0,0,0,0.95);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: 0.3s;
+                overflow-y: auto;
+            }
+            
+            .navbar-nav.active {
+                left: 0;
+            }
+            
+            .nav-link {
+                margin: 1rem 0;
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .btn-primary {
+                margin: 1rem 0;
+                padding: 1rem 2rem;
+                width: 80%;
+                text-align: center;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar .container {
+                padding: 0 15px;
+            }
+            
+            .navbar-brand {
+                font-size: 1rem;
+            }
+            
+            .nav-link {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .container {
+                margin-top: 80px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .form-section {
+                padding: 30px 20px;
+            }
+            
+            .radio-group, .checkbox-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .radio-option, .checkbox-option {
+                padding: 10px 15px;
+            }
         }
 
         .container {
@@ -443,7 +561,12 @@
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="navbar-brand">Audition Tracker</a>
-            <ul class="navbar-nav">
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="navbar-nav" id="navbarNav">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="index.html#pricing" class="nav-link">Pricing</a></li>
                 <li><a href="index.html#contact" class="nav-link">Get in Touch</a></li>
@@ -1443,6 +1566,31 @@
             document.getElementById('results').style.display = 'none';
             document.getElementById('loading').style.display = 'none';
         }
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navbarNav = document.getElementById('navbarNav');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('active');
+            navbarNav.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('active');
+                navbarNav.classList.remove('active');
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuToggle.contains(e.target) && !navbarNav.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                navbarNav.classList.remove('active');
+            }
+        });
 
         document.getElementById('typecastForm').addEventListener('submit', function(e) {
             e.preventDefault();
