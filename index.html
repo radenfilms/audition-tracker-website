@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="jhSqenr2M0OmdaNUW7P7GEs9f3S3TeZIYaKig-nFfSA" />
     <title>Audition Tracker — Your Casting Call Companion</title>
-    <meta name="description" content="Audition Tracker for actors: log auditions, callbacks, and deadlines on iPhone and iPad. £4.99 one-time, with optional Premium import and Audition Room.">
+    <meta name="description" content="Audition Tracker for actors: log auditions, callbacks, and deadlines on iPhone and iPad. £4.99 one-time, optional Premium from £1.99/month.">
     <meta name="author" content="Raden Films">
     <meta name="theme-color" content="#000000">
     <meta name="robots" content="index, follow, max-image-preview:large">
@@ -19,7 +19,7 @@
     <meta property="og:locale" content="en_GB">
     <meta property="og:url" content="https://auditiontracker.co.uk/">
     <meta property="og:title" content="Audition Tracker — Your Casting Call Companion">
-    <meta property="og:description" content="Track every audition, callback, and deadline in one place — on iPhone and iPad. £4.99 one-time · optional Premium.">
+    <meta property="og:description" content="Track every audition, callback, and deadline in one place — on iPhone and iPad. £4.99 one-time · Premium from £1.99/month.">
     <meta property="og:image" content="https://auditiontracker.co.uk/assets/og-share.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -141,7 +141,7 @@
                         Track every audition, callback, and deadline in one place — on iPhone and iPad.
                     </p>
                     <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="btn btn-primary btn-lg px-5 py-3 mb-2">Download on App Store</a>
-                    <p class="mt-3 mb-0" style="color:#888; font-size:0.95rem;">£4.99 one-time · Optional Premium in the app</p>
+                    <p class="mt-3 mb-0 hero-price-note" style="color:#888; font-size:0.95rem;">£4.99 one-time · Optional Premium from £1.99/month</p>
                 </div>
             </div>
         </div>
@@ -295,8 +295,8 @@
                         </div>
                         <div class="premium-card-body p-4 p-md-5">
                             <h3 class="fw-bold mb-2" style="font-family:'Montserrat',sans-serif;">Premium</h3>
-                            <div class="price mb-2" style="color:var(--primary); font-size:1.85rem; font-weight:800;">Subscription</div>
-                            <p class="mb-4" style="color:#bbb;">In-app upgrade — prices shown before you buy</p>
+                            <div class="price premium-price mb-2" style="color:var(--primary); font-size:2.5rem; font-weight:900;">£1.99</div>
+                            <p class="premium-price-note mb-4" style="color:#bbb;">per month · cancel anytime</p>
                             <ul class="features-list mb-4 text-start mx-auto" style="max-width:320px;">
                                 <li>Import auditions from email, PDF, or paste</li>
                                 <li>Early access to Audition Room (beta)</li>
@@ -363,24 +363,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
-        // Localise the one-time app price (GBP default / USD when detected).
+        // Localise prices (GBP default / USD when detected).
         function updatePrice() {
             const priceElement = document.querySelector('.app-price');
             const priceNote = document.querySelector('.app-price-note');
-            if (!priceElement) return;
+            const premiumPrice = document.querySelector('.premium-price');
+            const premiumNote = document.querySelector('.premium-price-note');
+            const heroNote = document.querySelector('.hero-price-note');
 
             fetch('https://ipapi.co/json/')
                 .then(response => response.json())
                 .then(data => {
-                    if (data.currency === 'USD') {
-                        priceElement.textContent = '$4.99';
-                    } else {
-                        priceElement.textContent = '£4.99';
-                    }
+                    const usd = data.currency === 'USD';
+                    if (priceElement) priceElement.textContent = usd ? '$4.99' : '£4.99';
                     if (priceNote) priceNote.textContent = 'One-time purchase';
+                    if (premiumPrice) premiumPrice.textContent = usd ? '$1.99' : '£1.99';
+                    if (premiumNote) premiumNote.textContent = 'per month · cancel anytime';
+                    if (heroNote) {
+                        heroNote.textContent = usd
+                            ? '$4.99 one-time · Optional Premium from $1.99/month'
+                            : '£4.99 one-time · Optional Premium from £1.99/month';
+                    }
                 })
                 .catch(() => {
-                    priceElement.textContent = '£4.99';
+                    if (priceElement) priceElement.textContent = '£4.99';
+                    if (premiumPrice) premiumPrice.textContent = '£1.99';
                 });
         }
 
