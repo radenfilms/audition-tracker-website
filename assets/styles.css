@@ -425,8 +425,8 @@ section.bg-light {
         font-size: 1.3rem;
     }
     .hero-main-logo {
-        max-width: 110px !important;
-        margin-bottom: 0.75rem !important;
+        max-width: 120px !important;
+        margin-bottom: 1rem !important;
     }
     .screenshots-scroll {
         gap: 4px;
@@ -630,86 +630,14 @@ section.bg-light {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    max-width: 220px;
+    max-width: 260px;
     width: 100%;
     height: auto;
 }
 @media (max-width: 600px) {
     .hero-main-logo {
-        max-width: 110px !important;
-        margin-bottom: 0.75rem !important;
-    }
-}
-
-.hero-row {
-    min-height: 100vh;
-    padding-top: 5.5rem;
-    padding-bottom: 2rem;
-    align-content: center;
-}
-
-.hero-shot-strip {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: clamp(0.55rem, 2vw, 1.1rem);
-    max-width: 34rem;
-    margin: 0 auto;
-    padding: 0 0.5rem;
-}
-
-.hero-shot {
-    flex: 1 1 0;
-    max-width: 9.5rem;
-    display: block;
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(25, 227, 227, 0.12);
-    transform: translateY(0);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.hero-shot-mid {
-    max-width: 10.5rem;
-    transform: translateY(-0.55rem);
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(25, 227, 227, 0.22);
-    z-index: 1;
-}
-
-.hero-shot img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.hero-shot:hover,
-.hero-shot:focus-visible {
-    transform: translateY(-0.35rem);
-    box-shadow: 0 16px 40px rgba(25, 227, 227, 0.18), 0 0 0 1px rgba(25, 227, 227, 0.35);
-    outline: none;
-}
-
-.hero-shot-mid:hover,
-.hero-shot-mid:focus-visible {
-    transform: translateY(-0.9rem);
-}
-
-@media (max-width: 600px) {
-    .hero-row {
-        min-height: auto;
-        padding-top: 5rem;
-        padding-bottom: 2.5rem;
-    }
-    .hero-shot-strip {
-        max-width: 20rem;
-    }
-    .hero-shot {
-        max-width: 6.2rem;
-        border-radius: 0.75rem;
-    }
-    .hero-shot-mid {
-        max-width: 6.8rem;
-        transform: translateY(-0.35rem);
+        max-width: 120px !important;
+        margin-bottom: 1rem !important;
     }
 }
 
