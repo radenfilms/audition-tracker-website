@@ -557,9 +557,9 @@ section.bg-light {
     scroll-snap-type: x mandatory;
 }
 .screenshot-frame {
-    flex: 0 0 23%; /* 4 per screen with some gap */
-    min-width: 180px;
-    max-width: 260px;
+    flex: 0 0 20%; /* ~5 per screen with some gap */
+    min-width: 170px;
+    max-width: 240px;
     scroll-snap-align: start;
     background: none !important;
     border-radius: 28px;
