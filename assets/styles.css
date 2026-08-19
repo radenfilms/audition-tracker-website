@@ -778,12 +778,19 @@ html {
 }
 
 .how-graph-step {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
     position: relative;
     background: rgba(24, 24, 24, 0.94);
     border: 1px solid rgba(29, 233, 182, 0.2);
     border-radius: 16px;
     padding: 1.25rem 1.2rem 1.15rem;
     text-align: left;
+}
+
+.how-graph-step::marker {
+    content: none;
 }
 
 .how-graph-head {
