@@ -1101,6 +1101,18 @@ body.blog-page .blog-layout {
     text-decoration: underline;
 }
 
+.blog-cta .btn,
+.blog-article a.btn {
+    color: #0c0c0c;
+    text-decoration: none;
+}
+
+.blog-cta .btn:hover,
+.blog-article a.btn:hover {
+    color: #0c0c0c;
+    text-decoration: none;
+}
+
 .blog-callout {
     margin: 0.5rem 0 0;
 }
