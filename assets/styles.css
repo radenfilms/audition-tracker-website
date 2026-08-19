@@ -968,7 +968,7 @@ body.blog-page .blog-layout {
     color: var(--primary);
     font-family: "Avenir Next", Avenir, sans-serif;
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-bottom: 0.75rem;
@@ -977,12 +977,12 @@ body.blog-page .blog-layout {
 .blog-article h1,
 .blog-index h1 {
     font-family: "Avenir Next", Avenir, sans-serif;
-    font-weight: 800;
-    font-size: clamp(2.2rem, 4.2vw, 3.35rem);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 4.2vw, 3.6rem);
     color: #fff;
     margin: 0.35rem 0 1.5rem;
     line-height: 1.12;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
 }
 
 .blog-h1-sub {
@@ -1014,24 +1014,24 @@ body.blog-page .blog-layout {
 
 .blog-article h2 {
     font-family: "Avenir Next", Avenir, sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+    font-weight: 400;
+    font-size: clamp(1.65rem, 2.8vw, 2.5rem);
     color: #fff;
     margin: 3rem 0 1.1rem;
     line-height: 1.2;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
     scroll-margin-top: 5.5rem;
 }
 
 .blog-article h2 em {
     font-style: italic;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--primary);
 }
 
 .blog-article h3 {
     font-family: "Avenir Next", Avenir, sans-serif;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 1.05rem;
     color: var(--primary);
     margin: 1.35rem 0 0.5rem;
