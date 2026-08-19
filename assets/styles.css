@@ -941,9 +941,9 @@ html {
 
 .blog-article,
 .blog-index {
-    max-width: 760px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 2.5rem 1.25rem 3rem;
+    padding: 2.5rem 1.25rem 3.5rem;
 }
 
 .blog-kicker {
@@ -959,51 +959,58 @@ html {
 .blog-article h1,
 .blog-index h1 {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.7rem, 4vw, 2.45rem);
-    color: var(--primary);
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
+    font-weight: 800;
+    font-size: clamp(2.05rem, 5.4vw, 3.15rem);
+    color: #fff;
+    margin: 0.35rem 0 1.35rem;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
 }
 
-.blog-lede {
-    color: #ddd;
-    font-size: 1.15rem;
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
+.blog-lede em {
+    font-style: italic;
 }
 
 .blog-meta {
     color: #888;
-    font-size: 0.92rem;
-    margin-bottom: 2rem;
+    font-size: 0.88rem;
+    margin: 0 0 1rem;
 }
 
 .blog-article h2 {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 1.35rem;
+    font-weight: 800;
+    font-size: clamp(1.55rem, 3.6vw, 2.15rem);
     color: #fff;
-    margin: 2.2rem 0 0.85rem;
+    margin: 2.85rem 0 1.05rem;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
     scroll-margin-top: 5.5rem;
+}
+
+.blog-article h2 em {
+    font-style: italic;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .blog-article h3 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 1.08rem;
+    font-size: 1.02rem;
     color: var(--primary);
-    margin: 1.5rem 0 0.6rem;
+    margin: 1.35rem 0 0.5rem;
 }
 
 .blog-article p,
 .blog-article li {
-    color: #ccc;
+    color: #c9c9c9;
+    font-size: 1.05rem;
     line-height: 1.8;
 }
 
 .blog-article p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.05rem;
 }
 
 .blog-article ul,
@@ -1025,41 +1032,11 @@ html {
     text-decoration: underline;
 }
 
-.blog-toc {
-    background: rgba(24, 24, 24, 0.94);
-    border: 1px solid rgba(29, 233, 182, 0.2);
-    border-radius: 16px;
-    padding: 1.15rem 1.25rem;
-    margin: 0 0 2rem;
-}
-
-.blog-toc p {
-    margin: 0 0 0.55rem;
-    color: #fff;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-}
-
-.blog-toc ol {
-    margin: 0;
-    padding-left: 1.2rem;
-}
-
-.blog-toc a {
-    color: #ddd;
-}
-
 .blog-callout {
-    background: rgba(24, 24, 24, 0.94);
-    border: 1px solid rgba(255, 94, 155, 0.28);
-    border-radius: 16px;
-    padding: 1.35rem 1.4rem;
-    margin: 2rem 0;
+    margin: 0.5rem 0 0;
 }
 
 .blog-callout h2 {
-    margin-top: 0;
     color: var(--pink);
 }
 
