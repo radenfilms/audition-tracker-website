@@ -1100,8 +1100,8 @@ body.blog-page .blog-layout {
     font-size: clamp(2.6rem, 5vw, 4.15rem);
     color: #fff;
     letter-spacing: -0.02em;
-    line-height: 1.05;
-    margin: 0 0 0.9rem;
+    line-height: 1.12;
+    margin: 0;
 }
 
 .blog-news-hero p {
