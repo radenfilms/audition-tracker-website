@@ -964,6 +964,40 @@ body.blog-page .blog-layout {
     padding: 3rem clamp(1.25rem, 5vw, 3rem) 4.5rem;
 }
 
+.blog-hero-still {
+    margin: 0 0 1.85rem;
+    overflow: hidden;
+    background: #111;
+}
+
+.blog-hero-still img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 2.35 / 1;
+    object-fit: cover;
+}
+
+.blog-hero-still img[src*="True-Lies-50"] {
+    object-position: 28% 50%;
+}
+
+.blog-hero-still img[src*="Orgasmo-34"] {
+    object-position: 50% 42%;
+}
+
+.blog-hero-still img[src*="Body-of-Lies-23"] {
+    object-position: 50% 40%;
+}
+
+.blog-hero-still img[src*="too-hot-to-handle"] {
+    object-position: 42% 48%;
+}
+
+.blog-hero-still img[src*="charade-desk-log"] {
+    object-position: 48% 40%;
+}
+
 .blog-kicker {
     color: var(--primary);
     font-family: "Avenir Next", Avenir, sans-serif;
