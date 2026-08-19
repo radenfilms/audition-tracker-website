@@ -1140,6 +1140,10 @@ body.blog-page .blog-layout {
     object-position: 50% 42%;
 }
 
+.blog-post-img img[src*="Body-of-Lies-23"] {
+    object-position: 50% 45%;
+}
+
 .blog-post-meta {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-size: 0.95rem;
