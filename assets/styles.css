@@ -751,4 +751,159 @@ html {
         flex-direction: row;
         text-align: left;
     }
-} 
+}
+
+/* How it works */
+.how-it-works {
+    background: #0c0c0c;
+    padding: 4.5rem 0;
+    border-top: 1px solid rgba(29, 233, 182, 0.12);
+    border-bottom: 1px solid rgba(255, 94, 155, 0.1);
+}
+
+.how-it-works-lead {
+    color: #bbb;
+    font-size: 1.15rem;
+    max-width: 38rem;
+    margin: 0 auto 2.4rem;
+}
+
+.how-graph {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+}
+
+.how-graph-step {
+    position: relative;
+    background: rgba(24, 24, 24, 0.94);
+    border: 1px solid rgba(29, 233, 182, 0.2);
+    border-radius: 16px;
+    padding: 1.25rem 1.2rem 1.15rem;
+    text-align: left;
+}
+
+.how-graph-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-bottom: 0.85rem;
+}
+
+.how-graph-num {
+    flex: 0 0 2.1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 0.95rem;
+    color: #0c0c0c;
+    background: var(--primary);
+}
+
+.how-graph-step:nth-child(even) .how-graph-num {
+    background: var(--pink);
+}
+
+.how-graph-step h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.08rem;
+    color: #fff;
+    margin: 0 0 0.2rem;
+}
+
+.how-graph-where {
+    margin: 0;
+    color: #8a8a8a;
+    font-size: 0.82rem;
+}
+
+.how-graph-where strong {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.how-graph-step ul {
+    margin: 0;
+    padding-left: 1.15rem;
+}
+
+.how-graph-step li {
+    color: #ccc;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin-bottom: 0.35rem;
+}
+
+.how-graph-step li:last-child {
+    margin-bottom: 0;
+}
+
+.how-graph-step em {
+    color: #aaa;
+    font-style: normal;
+    font-size: 0.88em;
+}
+
+.how-graph-arrow {
+    display: block;
+    margin-top: 0.9rem;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.how-graph-arrow::after {
+    content: " ↓";
+}
+
+.how-graph-loop {
+    margin: 1.6rem auto 0;
+    max-width: 28rem;
+    text-align: center;
+    color: #bbb;
+    font-size: 0.98rem;
+    border: 1px dashed rgba(255, 94, 155, 0.4);
+    border-radius: 999px;
+    padding: 0.7rem 1.2rem;
+}
+
+.how-graph-loop span {
+    color: var(--pink);
+    font-weight: 700;
+}
+
+@media (min-width: 768px) {
+    .how-graph {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.35rem 1.6rem;
+    }
+
+    .how-graph-arrow {
+        display: none;
+    }
+
+    .how-graph-step:not(:nth-child(3n))::after {
+        content: "→";
+        position: absolute;
+        top: 1.4rem;
+        right: -1.05rem;
+        font-size: 1.2rem;
+        line-height: 1;
+        color: var(--pink);
+        z-index: 2;
+    }
+}
+ 
