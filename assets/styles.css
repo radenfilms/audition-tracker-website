@@ -1088,7 +1088,7 @@ body.blog-page .blog-layout {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-weight: 400;
     font-size: clamp(2.6rem, 5vw, 4.15rem);
-    color: #583b1f;
+    color: #141414;
     letter-spacing: -0.02em;
     line-height: 1.05;
     margin: 0 0 0.9rem;
@@ -1098,7 +1098,7 @@ body.blog-page .blog-layout {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-weight: 400;
     font-size: clamp(1.2rem, 2.4vw, 2.26rem);
-    color: #583b1f;
+    color: #3a3a3a;
     margin: 0;
 }
 
@@ -1122,7 +1122,7 @@ body.blog-page .blog-layout {
     border-radius: 0;
     aspect-ratio: 1;
     width: 100%;
-    background: #d4cec6;
+    background: #d8f3ea;
 }
 
 .blog-post-img img {
@@ -1135,7 +1135,7 @@ body.blog-page .blog-layout {
 .blog-post-meta {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-size: 0.95rem;
-    color: #8a7460;
+    color: #6a7370;
     margin: 0 0 0.85rem;
 }
 
@@ -1149,19 +1149,19 @@ body.blog-page .blog-layout {
 }
 
 .blog-post-copy h2 a {
-    color: #583b1f;
+    color: #141414;
     text-decoration: none;
     display: inline;
     overflow-wrap: anywhere;
 }
 
 .blog-post-copy h2 a:hover {
-    color: #3d2814;
+    color: #0d9d7a;
 }
 
 .blog-post-excerpt {
     font-family: "Avenir Next", Avenir, sans-serif;
-    color: #583b1f;
+    color: #2a2a2a;
     font-size: 1.05rem;
     line-height: 1.7;
     margin: 0 0 1.1rem;
@@ -1169,26 +1169,29 @@ body.blog-page .blog-layout {
 
 .blog-read-more {
     font-family: "Avenir Next", Avenir, sans-serif;
-    color: #583b1f;
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    border-bottom: none;
+    color: #0d9d7a;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(29, 233, 182, 0.7);
 }
 
 .blog-read-more:hover {
-    color: #3d2814;
-    border-bottom: none;
+    color: var(--pink);
+    border-bottom-color: var(--pink);
 }
 
 body.blog-home {
-    background: #e5e0da !important;
+    background: #f4fbf8 !important;
     background-image: none !important;
-    color: #583b1f;
+    color: #141414;
 }
 
 body.blog-home::before {
-    display: none !important;
+    display: block !important;
+    background:
+        radial-gradient(ellipse 90% 55% at 50% -8%, rgba(29, 233, 182, 0.22), transparent 58%),
+        radial-gradient(ellipse 45% 40% at 100% 12%, rgba(255, 94, 155, 0.1), transparent 52%),
+        radial-gradient(ellipse 40% 35% at 0% 70%, rgba(29, 233, 182, 0.08), transparent 50%);
 }
 
 body.blog-home .navbar .container {
