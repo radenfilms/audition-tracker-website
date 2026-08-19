@@ -934,10 +934,26 @@ html {
 }
 
 /* Blog / guides */
+body.blog-page,
+body.blog-page .navbar,
+body.blog-page .nav-link,
+body.blog-page .navbar-brand,
+body.blog-page .btn,
+body.blog-page h1,
+body.blog-page h2,
+body.blog-page h3,
+body.blog-page p,
+body.blog-page a,
+body.blog-page li,
+body.blog-page span,
+body.blog-page button,
+body.blog-page .blog-layout {
+    font-family: "Avenir Next", Avenir, sans-serif !important;
+}
+
 .blog-layout {
     padding-top: 5.5rem;
     padding-bottom: 3rem;
-    font-family: "Avenir Next", Avenir, "Nunito Sans", "Segoe UI", sans-serif;
 }
 
 .blog-article,
@@ -1052,6 +1068,114 @@ html {
 .blog-cta {
     text-align: center;
     margin: 2.5rem 0 1rem;
+}
+
+.blog-news {
+    max-width: 1140px;
+    width: min(1140px, 90vw);
+    margin: 0 auto;
+    padding: 1.5rem clamp(1.25rem, 4vw, 2rem) 4.5rem;
+}
+
+.blog-news-hero {
+    text-align: center;
+    padding: 2.75rem 0 2.5rem;
+}
+
+.blog-news-hero h1 {
+    font-family: "Avenir Next", Avenir, sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.35rem, 5vw, 3.6rem);
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    margin: 0 0 0.85rem;
+}
+
+.blog-news-hero p {
+    font-family: "Avenir Next", Avenir, sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    color: #bdbdbd;
+    margin: 0;
+}
+
+.blog-post {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    align-items: center;
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.blog-post-img {
+    display: block;
+    overflow: hidden;
+    border-radius: 6px;
+    aspect-ratio: 16 / 10;
+    background: #111;
+}
+
+.blog-post-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.blog-post-meta {
+    font-family: "Avenir Next", Avenir, sans-serif;
+    font-size: 0.88rem;
+    color: #8a8a8a;
+    margin: 0 0 0.7rem;
+}
+
+.blog-post-copy h2 {
+    font-family: "Avenir Next", Avenir, sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.7rem, 3vw, 2.55rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.9rem;
+}
+
+.blog-post-copy h2 a {
+    color: #e8e8e8;
+    text-decoration: none;
+}
+
+.blog-post-copy h2 a:hover {
+    color: #fff;
+}
+
+.blog-post-excerpt {
+    font-family: "Avenir Next", Avenir, sans-serif;
+    color: #aaa;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin: 0 0 1.1rem;
+}
+
+.blog-read-more {
+    font-family: "Avenir Next", Avenir, sans-serif;
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(29, 233, 182, 0.45);
+}
+
+.blog-read-more:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+@media (min-width: 768px) {
+    .blog-post {
+        grid-template-columns: 1.05fr 1fr;
+        gap: clamp(1.75rem, 4vw, 3.75rem);
+        padding: 3rem 0;
+    }
 }
 
 .blog-card {
