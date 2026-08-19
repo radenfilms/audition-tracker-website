@@ -1132,6 +1132,10 @@ body.blog-page .blog-layout {
     display: block;
 }
 
+.blog-post-img img[src*="True-Lies-50"] {
+    object-position: 33% 50%;
+}
+
 .blog-post-meta {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-size: 0.95rem;
