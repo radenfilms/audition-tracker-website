@@ -985,6 +985,16 @@ body.blog-page .blog-layout {
     letter-spacing: -0.03em;
 }
 
+.blog-h1-sub {
+    display: block;
+    font-weight: 400;
+    font-size: 0.58em;
+    color: #d4d4d4;
+    letter-spacing: -0.02em;
+    margin-top: 0.45rem;
+    line-height: 1.25;
+}
+
 .blog-lede {
     color: #d4d4d4;
     font-size: 1.12rem;
@@ -1106,7 +1116,7 @@ body.blog-page .blog-layout {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.6rem;
-    align-items: center;
+    align-items: start;
     padding: 2.75rem 0;
     border-top: 0;
     max-width: none;
@@ -1157,17 +1167,31 @@ body.blog-page .blog-layout {
     font-size: clamp(2rem, 3.4vw, 3.6rem);
     line-height: 1.12;
     letter-spacing: -0.02em;
-    margin: 0 0 1.15rem;
+    margin: 0 0 0.85rem;
 }
 
 .blog-post-copy h2 a {
     color: #fff;
     text-decoration: none;
-    display: inline;
+    display: block;
     overflow-wrap: anywhere;
 }
 
 .blog-post-copy h2 a:hover {
+    color: var(--primary);
+}
+
+.blog-post-sub {
+    display: block;
+    font-size: clamp(1.25rem, 2.1vw, 1.95rem);
+    font-weight: 400;
+    color: #cfcfcf;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-top: 0.4rem;
+}
+
+.blog-post-copy h2 a:hover .blog-post-sub {
     color: var(--primary);
 }
 
@@ -1177,6 +1201,10 @@ body.blog-page .blog-layout {
     font-size: 1.05rem;
     line-height: 1.7;
     margin: 0 0 1.1rem;
+}
+
+.blog-post-excerpt em {
+    font-style: italic;
 }
 
 .blog-read-more {
@@ -1205,7 +1233,7 @@ body.blog-home .navbar .container {
         grid-template-columns: minmax(240px, 0.74fr) minmax(280px, 1fr);
         gap: clamp(2.25rem, 5.5vw, 6.75rem);
         padding: 1.25rem 0 3.75rem;
-        align-items: center;
+        align-items: start;
     }
 }
 
