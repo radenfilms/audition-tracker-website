@@ -1070,10 +1070,33 @@ body.blog-page .blog-layout {
     margin: 2.5rem 0 1rem;
 }
 
-.blog-magazine {
-    width: min(720px, 88vw);
+body.blog-home .blog-layout {
+    padding: 0;
+}
+
+.blog-unveil {
+    position: relative;
+}
+
+.blog-unveil-pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: 0;
+}
+
+.blog-cover-sheet {
+    position: relative;
+    z-index: 2;
+    margin-top: -100vh;
+    background: #fff !important;
+    min-height: 100vh;
+    padding: 6.25rem 0 5rem;
+}
+
+.blog-cover {
+    width: min(640px, 86vw);
     margin: 0 auto;
-    padding: 3.5rem 0 6rem;
     text-align: center;
 }
 
@@ -1145,29 +1168,86 @@ body.blog-page .blog-layout {
     border-bottom-color: #0d9d7a;
 }
 
-.blog-index-list {
-    margin: 5.5rem auto 0;
-    padding-top: 2.25rem;
-    border-top: 1px solid #e6e6e6;
-    display: flex;
-    flex-direction: column;
-    gap: 1.15rem;
+.blog-spread {
+    display: block;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none !important;
 }
 
-.blog-index-list a {
+.blog-spread img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: brightness(0.55);
+}
+
+.blog-spread-copy {
+    position: absolute;
+    left: clamp(1.4rem, 5vw, 4.5rem);
+    bottom: clamp(2rem, 6vh, 4rem);
+    max-width: min(36rem, 80vw);
     font-family: "Avenir Next", Avenir, sans-serif;
-    font-weight: 400;
-    font-size: 1.15rem;
-    color: #111;
-    text-decoration: none;
 }
 
-.blog-index-list a:hover {
-    color: #0d9d7a;
+.blog-spread-copy p:first-child {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin: 0 0 0.7rem;
+}
+
+.blog-spread-copy h2 {
+    font-weight: 400;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0 0 0.55rem;
+}
+
+.blog-spread-copy p {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1.1rem;
+    margin: 0 0 1.1rem;
+}
+
+.blog-spread-copy span {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    font-size: 0.92rem;
+    letter-spacing: 0.06em;
+}
+
+.blog-spread--stack {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .blog-unveil-pin {
+        position: relative;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .blog-cover-sheet {
+        margin-top: 0;
+    }
+
+    .blog-spread--stack {
+        position: relative;
+    }
 }
 
 body.blog-home {
-    background: #fff !important;
+    background: #000 !important;
     background-image: none !important;
     color: #111;
 }
