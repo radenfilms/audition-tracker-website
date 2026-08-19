@@ -1071,14 +1071,16 @@ body.blog-page .blog-layout {
 }
 
 .blog-news {
-    max-width: 1400px;
-    width: min(1400px, 92vw);
-    margin: 0 auto;
-    padding: 2rem clamp(1.25rem, 4vw, 2rem) 5rem;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 1.25rem clamp(1.35rem, 4vw, 4.8rem) 5.5rem;
 }
 
 .blog-news-hero {
     text-align: center;
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 4.5rem 0 4.25rem;
 }
 
@@ -1107,10 +1109,11 @@ body.blog-page .blog-layout {
     align-items: center;
     padding: 2.75rem 0;
     border-top: 0;
+    max-width: none;
 }
 
 .blog-post + .blog-post {
-    padding-top: 3.25rem;
+    padding-top: 3.5rem;
 }
 
 .blog-post-img {
@@ -1118,6 +1121,7 @@ body.blog-page .blog-layout {
     overflow: hidden;
     border-radius: 0;
     aspect-ratio: 1;
+    width: 100%;
     background: #d4cec6;
 }
 
@@ -1138,7 +1142,7 @@ body.blog-page .blog-layout {
 .blog-post-copy h2 {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-weight: 400;
-    font-size: clamp(2rem, 3.6vw, 3.5rem);
+    font-size: clamp(2rem, 3.4vw, 3.6rem);
     line-height: 1.12;
     letter-spacing: -0.02em;
     margin: 0 0 1.15rem;
@@ -1187,11 +1191,19 @@ body.blog-home::before {
     display: none !important;
 }
 
+body.blog-home .navbar .container {
+    max-width: none;
+    width: 100%;
+    padding-left: clamp(1.35rem, 4vw, 4.8rem);
+    padding-right: clamp(1.35rem, 4vw, 4.8rem);
+}
+
 @media (min-width: 768px) {
     .blog-post {
-        grid-template-columns: 1fr 1fr;
-        gap: clamp(2rem, 4vw, 4rem);
-        padding: 1.5rem 0 3.5rem;
+        grid-template-columns: minmax(240px, 0.74fr) minmax(280px, 1fr);
+        gap: clamp(2.25rem, 5.5vw, 6.75rem);
+        padding: 1.25rem 0 3.75rem;
+        align-items: center;
     }
 }
 
