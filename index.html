@@ -139,7 +139,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/styles.css?v=20260819">
+    <link rel="stylesheet" href="assets/styles.css?v=20260819b">
     <link rel="icon" type="image/png" href="assets/at-icon.png">
     <style>
         html {
@@ -152,20 +152,21 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#hero">
-                <img src="assets/at-logo.png" alt="Audition Tracker Logo" height="40">
+                <img src="assets/at-logo.png" alt="Audition Tracker">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#how-it-works">How it works</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#screenshots">Screenshots</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Toolkit</a></li>
                     <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
                     <li class="nav-item"><a class="nav-link" href="/support/">Support</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-2" href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank">Download</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary nav-download ms-2" href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" rel="noopener">Download</a></li>
                 </ul>
             </div>
         </div>
@@ -184,8 +185,11 @@
                     <p class="lead mb-4" style="max-width: 34rem; margin-left: auto; margin-right: auto;">
                         Track every audition, callback, and deadline in one place — on iPhone and iPad.
                     </p>
-                    <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="btn btn-primary btn-lg px-5 py-3 mb-2">Download on App Store</a>
-                    <p class="mt-3 mb-0 hero-price-note" style="color:#888; font-size:0.95rem;">£4.99 one-time · Optional Premium from £1.99/month</p>
+                    <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" rel="noopener" class="btn btn-primary btn-lg px-5 py-3 mb-2">Download on App Store</a>
+                    <div class="mt-3">
+                        <a href="#how-it-works" class="hero-secondary-link">See how it works</a>
+                    </div>
+                    <p class="mt-3 mb-0 hero-price-note">£4.99 one-time · Optional Premium from £1.99/month</p>
                 </div>
             </div>
         </div>
@@ -293,53 +297,62 @@
         </div>
     </section>
 
-    <!-- Features -->
-    <section id="features" class="py-5" style="background:#111;">
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="py-5 screenshots-bg">
         <div class="container">
-            <h2 class="text-center mb-3 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">Built for working actors</h2>
-            <p class="text-center mb-2" style="color:#bbb; font-size:1.15rem;">One place for auditions, dates, stats, and prep.</p>
-            <p class="text-center mb-5" style="color:#888; font-size:1rem;">Log → track → review — on iPhone and iPad.</p>
+            <h2 class="text-center mb-3 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">See it in action</h2>
+            <p class="text-center mb-5" style="color:#bbb; font-size:1.15rem;">The same flow, on screen — swipe through Home, Auditions, Calendar, Stats, and the toolkit.</p>
+            <div class="screenshots-scroll">
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-home.jpg" alt="Home screen with upcoming auditions" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Home</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-auditions.jpg" alt="Auditions list with search, attachments, and status" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Auditions</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-calendar.jpg" alt="Calendar with Month and Agenda views" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Calendar</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-stats.jpg" alt="Statistics page with booking rate and charts" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Stats</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-toolkit.jpg" alt="Actor Toolkit with Premium, Financials, Measurements, Typecast, and Music" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Toolkit</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-financials.jpg" alt="Financials page for income, expenses, and reports" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Financials</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-measurements.jpg" alt="Measurements page for casting and fittings" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Measurements</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-music.jpg" alt="Music page with mood playlists for auditions" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Music</figcaption>
+                </figure>
+                <figure class="screenshot-frame">
+                    <img src="assets/Screenshots/v25-typecast.jpg" alt="Typecast page to discover casting types" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
+                    <figcaption>Typecast</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-5 features-bg">
+        <div class="container">
+            <h2 class="text-center mb-3 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">More in the toolkit</h2>
+            <p class="text-center mb-5" style="color:#bbb; font-size:1.15rem;">The loop above is the core. These extras sit in Settings when you need them.</p>
             <div class="row g-4 justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <div class="pretty-card h-100 p-4">
-                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Track every audition</h3>
-                        <p class="mb-0" style="color:#ccc;">Projects, roles, Booked / Penciled / Pending / Not Booked, callbacks, attachments, and reminders.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="pretty-card h-100 p-4">
                         <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Import with Premium</h3>
-                        <p class="mb-0" style="color:#ccc;">Paste casting email, import a PDF, or share from Mail — then review the draft before you save.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="pretty-card h-100 p-4">
-                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Calendar &amp; deadlines</h3>
-                        <p class="mb-0" style="color:#ccc;">Auditions, callbacks, production dates, and deadlines — optional sync to Apple Calendar.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="pretty-card h-100 p-4">
-                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Stats that matter</h3>
-                        <p class="mb-0" style="color:#ccc;">Booking rate, callbacks, formats, and trends — filter by year or month and export when you need a report.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="pretty-card h-100 p-4">
-                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Casting contacts</h3>
-                        <p class="mb-0" style="color:#ccc;">The Emails tab groups casting directors from auditions you already track, with booking breakdowns.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="pretty-card h-100 p-4">
-                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Home that works</h3>
-                        <p class="mb-0" style="color:#ccc;">Upcoming auditions, pending counts, and quick links so you know what’s next when you open the app.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="pretty-card h-100 p-4">
-                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Typecast &amp; prep</h3>
-                        <p class="mb-0" style="color:#ccc;">Typecast helpers from your audition history, actor Tips, measurements on hand, and mood playlists for warm-ups.</p>
+                        <p class="mb-0" style="color:#ccc;">Paste a casting email, import a PDF, or share from Mail — then review the draft before you save.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
@@ -350,46 +363,27 @@
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="pretty-card h-100 p-4">
+                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Typecast &amp; prep</h3>
+                        <p class="mb-0" style="color:#ccc;">Typecast helpers from your audition history, actor Tips, measurements on hand, and mood playlists for warm-ups.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="pretty-card h-100 p-4">
+                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Backups</h3>
+                        <p class="mb-0" style="color:#ccc;">Export and restore your data from Settings. Your auditions stay on the device unless you use a cloud feature.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="pretty-card h-100 p-4">
+                        <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">iPhone and iPad</h3>
+                        <p class="mb-0" style="color:#ccc;">One purchase, both devices. Built for a phone in the waiting room and an iPad when you’re doing admin.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="pretty-card h-100 p-4">
                         <h3 class="h5 fw-bold mb-2" style="color:var(--primary);">Audition Room (beta)</h3>
                         <p class="mb-0" style="color:#ccc;">Premium early access to a private actor community — rolled out in gated waves. Sign in with Apple required.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Screenshots Section -->
-    <section id="screenshots" class="py-5 screenshots-bg">
-        <div class="container">
-            <h2 class="text-center mb-3 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">See it in action</h2>
-            <p class="text-center mb-5" style="color:#bbb; font-size:1.15rem;">Home, Toolkit, Stats, Calendar, Auditions, Financials, Typecast, and more — built for busy casting seasons.</p>
-            <div class="screenshots-scroll">
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-home.jpg" alt="New Home screen with upcoming auditions" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-toolkit.jpg" alt="Actor Toolkit with Premium, Financials, Measurements, Typecast, and Music" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-stats.jpg" alt="Statistics page with booking rate and detailed charts" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-calendar.jpg" alt="Calendar with Month and Agenda views" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-auditions.jpg" alt="Auditions list with search, attachments, and status" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-financials.jpg" alt="Financials page for income, expenses, and reports" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-measurements.jpg" alt="Measurements page for casting and fittings" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-music.jpg" alt="Music page with mood playlists for auditions" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
-                </div>
-                <div class="screenshot-frame">
-                    <img src="assets/Screenshots/v25-typecast.jpg" alt="Typecast page to discover casting types" class="img-fluid rounded shadow" width="414" height="895" loading="lazy">
                 </div>
             </div>
         </div>
@@ -442,7 +436,7 @@
                             <li>Attachments, reminders, and tips</li>
                             <li>Works on iPhone and iPad</li>
                         </ul>
-                        <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="btn btn-primary btn-lg px-5 py-3 mb-2">Download on App Store</a>
+                        <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" rel="noopener" class="btn btn-primary btn-lg px-5 py-3 mb-2">Download on App Store</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-5">
@@ -461,7 +455,7 @@
                                 <li>Sign in with Apple for community features</li>
                                 <li>Optional — the core app works without it</li>
                             </ul>
-                            <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" class="btn btn-pink btn-lg px-5 py-3 mb-2">Available in the App</a>
+                            <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" rel="noopener" class="btn btn-pink btn-lg px-5 py-3 mb-2">Available in the App</a>
                         </div>
                     </div>
                 </div>
@@ -470,28 +464,31 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-light">
+    <section id="contact" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-3">Get in Touch</h2>
-            <p class="text-center mb-5" style="color:#666;">Email <a href="mailto:info@auditiontracker.co.uk">info@auditiontracker.co.uk</a> or send a message below.</p>
+            <h2 class="text-center mb-3 display-5 fw-bold" style="font-family:'Montserrat',sans-serif;">Get in touch</h2>
+            <p class="text-center mb-5" style="color:#bbb;">Email <a href="mailto:info@auditiontracker.co.uk">info@auditiontracker.co.uk</a> or send a message below.</p>
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <form id="contact-form" action="https://formsubmit.co/info@auditiontracker.co.uk" method="POST">
                         <div class="mb-3">
-                            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                            <label class="form-label visually-hidden" for="contact-name">Your name</label>
+                            <input type="text" class="form-control" id="contact-name" name="name" placeholder="Your name" autocomplete="name" required>
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            <label class="form-label visually-hidden" for="contact-email">Your email</label>
+                            <input type="email" class="form-control" id="contact-email" name="email" placeholder="Your email" autocomplete="email" required>
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" name="message" rows="5" placeholder="Your Message" required></textarea>
+                            <label class="form-label visually-hidden" for="contact-message">Your message</label>
+                            <textarea class="form-control" id="contact-message" name="message" rows="5" placeholder="Your message" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <div class="g-recaptcha" data-sitekey="6LcVVVsrAAAAAO8uIydSKbqLC4WdfQyxe_XcfavT"></div>
+                            <div class="g-recaptcha" data-sitekey="6LcVVVsrAAAAAO8uIydSKbqLC4WdfQyxe_XcfavT" data-theme="dark"></div>
                         </div>
                         <input type="hidden" name="_next" value="https://auditiontracker.co.uk/thank-you.html">
                         <input type="hidden" name="_captcha" value="true">
-                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                        <button type="submit" class="btn btn-primary w-100">Send message</button>
                     </form>
                     <div id="contactFormMsg" class="mt-3"></div>
                 </div>
@@ -510,8 +507,8 @@
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <a href="/support/" class="footer-link me-4">Support</a>
-                    <a href="/privacy" class="footer-link me-4">Privacy Policy</a>
-                    <a href="/terms" class="footer-link me-4">Terms of Use</a>
+                    <a href="/privacy/" class="footer-link me-4">Privacy Policy</a>
+                    <a href="/terms/" class="footer-link me-4">Terms of Use</a>
                     <a href="#contact" class="footer-link">Contact</a>
                 </div>
             </div>
