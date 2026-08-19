@@ -1109,6 +1109,10 @@ body.blog-page .blog-layout {
     border-top: 0;
 }
 
+.blog-post + .blog-post {
+    padding-top: 3.25rem;
+}
+
 .blog-post-img {
     display: block;
     overflow: hidden;
