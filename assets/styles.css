@@ -6,6 +6,8 @@
     --card-bg: #232323;
     --text: #ffffff;
     --primary: #1de9b6;
+    --gold: #c5a46e;
+    --gold-soft: #e8d5a3;
     --pink: #ff5e9b;
     --deep-red: #a1001a;
     --input-bg: #232323;
@@ -1022,7 +1024,7 @@ body.blog-page .blog-layout {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-weight: 400;
     font-size: clamp(2.2rem, 4.2vw, 3.6rem);
-    color: #fff;
+    color: var(--gold);
     margin: 0.35rem 0 1.5rem;
     line-height: 1.12;
     letter-spacing: -0.02em;
@@ -1032,7 +1034,7 @@ body.blog-page .blog-layout {
     display: block;
     font-weight: 400;
     font-size: 0.58em;
-    color: #d4d4d4;
+    color: var(--gold-soft);
     letter-spacing: -0.02em;
     margin-top: 0.45rem;
     line-height: 1.25;
@@ -1059,7 +1061,7 @@ body.blog-page .blog-layout {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-weight: 400;
     font-size: clamp(1.65rem, 2.8vw, 2.5rem);
-    color: #fff;
+    color: var(--gold);
     margin: 3rem 0 1.1rem;
     line-height: 1.2;
     letter-spacing: -0.02em;
@@ -1069,14 +1071,14 @@ body.blog-page .blog-layout {
 .blog-article h2 em {
     font-style: italic;
     font-weight: 400;
-    color: var(--primary);
+    color: var(--gold-soft);
 }
 
 .blog-article h3 {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-weight: 400;
     font-size: 1.05rem;
-    color: var(--primary);
+    color: var(--gold);
     margin: 1.35rem 0 0.5rem;
 }
 
@@ -1153,7 +1155,7 @@ body.blog-page .blog-layout {
     font-family: "Avenir Next", Avenir, sans-serif;
     font-weight: 400;
     font-size: clamp(2.6rem, 5vw, 4.15rem);
-    color: #fff;
+    color: var(--gold);
     letter-spacing: -0.02em;
     line-height: 1.12;
     margin: 0;
@@ -1226,28 +1228,28 @@ body.blog-page .blog-layout {
 }
 
 .blog-post-copy h2 a {
-    color: #fff;
+    color: var(--gold);
     text-decoration: none;
     display: block;
     overflow-wrap: anywhere;
 }
 
 .blog-post-copy h2 a:hover {
-    color: var(--primary);
+    color: var(--gold-soft);
 }
 
 .blog-post-sub {
     display: block;
     font-size: clamp(1.25rem, 2.1vw, 1.95rem);
     font-weight: 400;
-    color: #cfcfcf;
+    color: var(--gold-soft);
     letter-spacing: -0.02em;
     line-height: 1.25;
     margin-top: 0.4rem;
 }
 
 .blog-post-copy h2 a:hover .blog-post-sub {
-    color: var(--primary);
+    color: var(--gold);
 }
 
 .blog-post-excerpt {
