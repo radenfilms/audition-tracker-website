@@ -797,6 +797,11 @@ html {
     border-bottom: 1px solid rgba(29, 233, 182, 0.4);
 }
 
+.hero-platform-note {
+    color: #c8c8c8;
+    font-size: 1rem;
+}
+
 .hero-price-note {
     color: #c8c8c8;
     font-size: 0.95rem;
