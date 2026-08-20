@@ -1009,8 +1009,8 @@ body.blog-page .blog-layout {
     object-position: 22% 45%;
 }
 
-.blog-hero-still img[src*="Auditions.png"] {
-    object-position: 50% 28%;
+.blog-hero-still img[src*="Comrades-06"] {
+    object-position: 38% 35%;
 }
 
 .blog-hero-still img[src*="charlie-day-meme"] {
@@ -1273,6 +1273,10 @@ body.blog-page .blog-layout {
 
 .blog-post-img img[src*="charade-courtyard"] {
     object-position: 48% 40%;
+}
+
+.blog-post-img img[src*="Comrades-06"] {
+    object-position: 38% 32%;
 }
 
 .blog-post-meta {
