@@ -1029,6 +1029,10 @@ body.blog-page .blog-layout {
     object-position: 50% 40%;
 }
 
+.blog-hero-still img[src*="charade-courtyard"] {
+    object-position: 50% 40%;
+}
+
 .blog-hero-still img[src*="charade-hepburn-prep"] {
     object-position: 50% 35%;
 }
@@ -1265,6 +1269,10 @@ body.blog-page .blog-layout {
 
 .blog-post-img img[src*="Toxic-Avenger"] {
     object-position: 50% 35%;
+}
+
+.blog-post-img img[src*="charade-courtyard"] {
+    object-position: 48% 40%;
 }
 
 .blog-post-meta {
