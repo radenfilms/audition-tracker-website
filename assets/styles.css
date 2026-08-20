@@ -1013,6 +1013,10 @@ body.blog-page .blog-layout {
     object-position: 50% 28%;
 }
 
+.blog-hero-still img[src*="charlie-day-meme"] {
+    object-position: 50% 35%;
+}
+
 .blog-hero-still img[src*="charade-hepburn-prep"] {
     object-position: 50% 35%;
 }
@@ -1233,6 +1237,10 @@ body.blog-page .blog-layout {
 
 .blog-post-img img[src*="charade-grant-hepburn-agent"] {
     object-position: 42% 40%;
+}
+
+.blog-post-img img[src*="charlie-day-meme"] {
+    object-position: 50% 40%;
 }
 
 .blog-post-meta {
