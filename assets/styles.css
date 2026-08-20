@@ -1021,6 +1021,10 @@ body.blog-page .blog-layout {
     object-position: 35% 40%;
 }
 
+.blog-hero-still img[src*="One-Battle-After-Another"] {
+    object-position: 42% 35%;
+}
+
 .blog-hero-still img[src*="charade-hepburn-prep"] {
     object-position: 50% 35%;
 }
@@ -1249,6 +1253,10 @@ body.blog-page .blog-layout {
 
 .blog-post-img img[src*="War-of-the-Worlds"] {
     object-position: 30% 40%;
+}
+
+.blog-post-img img[src*="One-Battle-After-Another"] {
+    object-position: 40% 30%;
 }
 
 .blog-post-meta {
