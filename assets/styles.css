@@ -1003,6 +1003,10 @@ body.blog-page .blog-layout {
     object-position: 48% 40%;
 }
 
+.blog-hero-still img[src*="Auditions.png"] {
+    object-position: 50% 28%;
+}
+
 .blog-kicker {
     color: var(--primary);
     font-family: "Avenir Next", Avenir, sans-serif;
