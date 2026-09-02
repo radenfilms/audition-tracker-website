@@ -1485,4 +1485,46 @@ body.blog-home .navbar .container {
         z-index: 2;
     }
 }
+
+.video-section-lead,
+.video-section-note {
+    color: #bbb;
+    font-size: 1.1rem;
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.video-section-note a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+}
+
+.video-section-note a:hover {
+    color: #fff;
+}
+
+.hero-secondary-sep {
+    color: #666;
+}
+
+.video-embed {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid rgba(29, 233, 182, 0.22);
+    background: #000;
+    aspect-ratio: 16 / 9;
+}
+
+.video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
  
