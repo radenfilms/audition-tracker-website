@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audition Tracker Connect — Casting requests for agents &amp; actors</title>
+    <meta name="description" content="Connect turns casting emails into ready audition requests. Agents import sides and send; actors get them in Audition Tracker. From £24/month with 3 months free.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://auditiontracker.co.uk/connect/">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Audition Tracker">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:url" content="https://auditiontracker.co.uk/connect/">
+    <meta property="og:title" content="Audition Tracker Connect — Casting requests for agents &amp; actors">
+    <meta property="og:description" content="Forward a casting email. Connect drafts the request with sides and links. Send it to your actor in the app.">
+    <meta property="og:image" content="https://auditiontracker.co.uk/assets/og-share.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audition Tracker Connect">
+    <meta name="twitter:description" content="Casting email in. Audition request out — for agencies and their actors.">
+    <meta name="twitter:image" content="https://auditiontracker.co.uk/assets/og-share.jpg">
+    <link rel="icon" type="image/png" href="../assets/at-logo-stars-bg.png">
+    <link rel="apple-touch-icon" href="../assets/at-logo-stars-bg.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261002connect">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W10GEZ22Q7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-W10GEZ22Q7');
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Audition Tracker Connect",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "Agency dashboard that turns casting emails into audition requests for actors using Audition Tracker.",
+          "url": "https://auditiontracker.co.uk/connect/",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Monthly",
+              "price": "29",
+              "priceCurrency": "GBP",
+              "description": "3 months free trial, then £29 per month"
+            },
+            {
+              "@type": "Offer",
+              "name": "Yearly",
+              "price": "288",
+              "priceCurrency": "GBP",
+              "description": "3 months free trial, then £288 per year (£24/month)"
+            }
+          ],
+          "publisher": {
+            "@type": "Organization",
+            "name": "Raden Films",
+            "url": "https://auditiontracker.co.uk/"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Audition Tracker Connect?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Connect is the agency side of Audition Tracker. Agents import casting emails, attach sides, and send requests. Actors receive them in the Audition Tracker app."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do agents import casting emails?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Forward the casting email to your private Connect address (best for PDF sides), use the Gmail extension or bookmark for a quick import, or paste the breakdown. Connect drafts the project, role, instructions, and links."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do actors need a Connect subscription?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Actors use the Audition Tracker app. When their agency invites them, requests appear in Connect inside the app. The agency subscription covers Connect for the agency."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much does Connect cost?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "£29 per month, or £288 per year (£24/month). New agencies get 3 months free on either plan; the card is charged after the trial."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&display=swap');
+
+        .connect-page { padding-top: 0; }
+
+        .connect-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 7rem 1.25rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .connect-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 50% 20%, rgba(29, 233, 182, 0.14), transparent 60%),
+                linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+            pointer-events: none;
+            z-index: 0;
+            animation: connectWash 10s ease-in-out infinite alternate;
+        }
+        @keyframes connectWash {
+            from { opacity: 0.75; }
+            to { opacity: 1; }
+        }
+        .connect-hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 40rem;
+            margin: 0 auto;
+            animation: connectRise 0.9s ease-out both;
+        }
+        @keyframes connectRise {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .connect-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 1.5rem;
+        }
+        .connect-brand img {
+            width: clamp(72px, 14vw, 104px);
+            height: auto;
+            border-radius: 22px;
+            animation: connectFloat 5s ease-in-out infinite;
+        }
+        @keyframes connectFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .connect-brand-name {
+            font-family: Montserrat, sans-serif;
+            font-weight: 900;
+            font-size: clamp(1.55rem, 4.2vw, 2.35rem);
+            letter-spacing: -0.02em;
+            color: #fff;
+            line-height: 1.15;
+            margin: 0;
+        }
+        .connect-brand-name span {
+            display: block;
+            color: var(--primary);
+            font-size: 0.55em;
+            letter-spacing: 0.28em;
+            font-weight: 700;
+            margin-top: 0.35rem;
+        }
+        .connect-hero h1 {
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.35rem, 3.4vw, 1.85rem);
+            color: #fff;
+            margin: 0 0 0.85rem;
+            line-height: 1.25;
+        }
+        .connect-hero .lead {
+            color: #c8c8c8;
+            font-size: 1.1rem;
+            max-width: 32rem;
+            margin: 0 auto 1.75rem;
+            line-height: 1.55;
+        }
+        .connect-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+        }
+        .connect-cta-row .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #042018;
+            font-weight: 700;
+            padding: 0.85rem 1.6rem;
+            border-radius: 10px;
+        }
+        .connect-cta-row .btn-primary:hover {
+            background: #14d4a6;
+            border-color: #14d4a6;
+            color: #042018;
+        }
+        .connect-cta-row .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.85rem 1.4rem;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+        .connect-cta-row .btn-ghost:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .connect-price-note {
+            margin-top: 1.25rem;
+            color: #9a9a9a;
+            font-size: 0.95rem;
+        }
+
+        .connect-section {
+            padding: 4.5rem 0;
+        }
+        .connect-section h2 {
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.1rem);
+            color: #fff;
+            text-align: center;
+            margin-bottom: 0.65rem;
+        }
+        .connect-section .section-lead {
+            text-align: center;
+            color: #b0b0b0;
+            max-width: 34rem;
+            margin: 0 auto 2.5rem;
+            font-size: 1.05rem;
+        }
+
+        .connect-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 40rem;
+            counter-reset: step;
+        }
+        .connect-steps li {
+            position: relative;
+            padding: 0 0 1.75rem 4rem;
+            counter-increment: step;
+        }
+        .connect-steps li:last-child { padding-bottom: 0; }
+        .connect-steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: rgba(29, 233, 182, 0.12);
+            border: 1px solid rgba(29, 233, 182, 0.45);
+            color: var(--primary);
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .connect-steps li:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            left: 1.2rem;
+            top: 2.65rem;
+            bottom: 0.25rem;
+            width: 1px;
+            background: linear-gradient(180deg, rgba(29, 233, 182, 0.45), transparent);
+        }
+        .connect-steps h3 {
+            font-family: Montserrat, sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0.2rem 0 0.35rem;
+        }
+        .connect-steps p {
+            color: #b8b8b8;
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        .connect-split {
+            display: grid;
+            gap: 2.5rem;
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .connect-split {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+        }
+        .connect-split article h3 {
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin: 0 0 0.65rem;
+        }
+        .connect-split article p {
+            color: #c0c0c0;
+            margin: 0 0 0.85rem;
+            line-height: 1.6;
+        }
+        .connect-split article ul {
+            margin: 0;
+            padding-left: 1.15rem;
+            color: #b0b0b0;
+        }
+        .connect-split article li { margin-bottom: 0.4rem; }
+
+        .connect-pricing {
+            display: grid;
+            gap: 1.25rem;
+            max-width: 40rem;
+            margin: 0 auto;
+        }
+        @media (min-width: 640px) {
+            .connect-pricing { grid-template-columns: 1fr 1fr; }
+        }
+        .connect-plan {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 1.5rem 1.35rem;
+            background: rgba(18, 18, 18, 0.55);
+            text-align: center;
+        }
+        .connect-plan.featured {
+            border-color: rgba(29, 233, 182, 0.55);
+            box-shadow: 0 0 0 1px rgba(29, 233, 182, 0.12);
+        }
+        .connect-plan .plan-name {
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .connect-plan .plan-amount {
+            font-family: Montserrat, sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .connect-plan .plan-amount small {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #9a9a9a;
+        }
+        .connect-plan .plan-note {
+            color: #9a9a9a;
+            font-size: 0.9rem;
+            margin: 0.65rem 0 0;
+        }
+
+        .connect-faq {
+            max-width: 40rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .connect-faq details {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(18, 18, 18, 0.5);
+            padding: 0.15rem 0;
+        }
+        .connect-faq summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 1rem 1.2rem;
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            color: #fff;
+        }
+        .connect-faq summary::-webkit-details-marker { display: none; }
+        .connect-faq .faq-body {
+            padding: 0 1.2rem 1.1rem;
+            color: #b8b8b8;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 0.85rem;
+        }
+        .connect-faq .faq-body a { color: var(--primary); }
+
+        .connect-final {
+            text-align: center;
+            padding: 4rem 1.25rem 5rem;
+        }
+        .connect-final h2 {
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.45rem, 3vw, 1.9rem);
+            margin-bottom: 0.65rem;
+        }
+        .connect-final p {
+            color: #b0b0b0;
+            max-width: 30rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+<body class="connect-page">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="../assets/at-logo.png" alt="Audition Tracker">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/connect/" aria-current="page">Connect</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/blog/">Guide</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/support/">Support</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary nav-download ms-2" href="https://connect.auditiontracker.co.uk" target="_blank" rel="noopener">Open Connect</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="connect-hero">
+        <div class="connect-hero-inner">
+            <div class="connect-brand">
+                <img src="../assets/at-logo-stars-bg.png" width="104" height="104" alt="">
+                <p class="connect-brand-name">Audition Tracker<span>CONNECT</span></p>
+            </div>
+            <h1>Casting email in. Audition request out.</h1>
+            <p class="lead">Agents import the brief with sides and links, then send it straight to actors in Audition Tracker.</p>
+            <div class="connect-cta-row">
+                <a class="btn btn-primary" href="https://connect.auditiontracker.co.uk" target="_blank" rel="noopener">Start free trial</a>
+                <a class="btn-ghost" href="#how">See how it works</a>
+            </div>
+            <p class="connect-price-note">3 months free · then from £24/month</p>
+        </div>
+    </header>
+
+    <section id="how" class="connect-section reveal">
+        <div class="container">
+            <h2>How Connect works</h2>
+            <p class="section-lead">Built for the real casting workflow — not another shared spreadsheet.</p>
+            <ol class="connect-steps">
+                <li>
+                    <h3>Import the casting email</h3>
+                    <p>Forward to your private Connect address for sides PDFs every time, or use the Gmail extension / bookmark for a quick pull. Paste works too.</p>
+                </li>
+                <li>
+                    <h3>Review the draft</h3>
+                    <p>Connect fills project, role, instructions, upload links, and forms. Add or swap the PDF, then pick the actor from your roster.</p>
+                </li>
+                <li>
+                    <h3>Send to the app</h3>
+                    <p>Your actor gets the request in Audition Tracker — accept, decline, self-tape, or mark tape sent. You see the status update.</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section id="who" class="connect-section reveal" style="padding-top: 1rem;">
+        <div class="container">
+            <h2>For agencies and actors</h2>
+            <p class="section-lead">One product, two sides of the same request.</p>
+            <div class="connect-split">
+                <article>
+                    <h3>Agents &amp; managers</h3>
+                    <p>Run Connect in the browser. Invite your roster, import casting mail, and send requests without retyping the breakdown.</p>
+                    <ul>
+                        <li>Private inbound email for attached sides</li>
+                        <li>Gmail extension and bookmark import</li>
+                        <li>Roster invites and request status</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>Actors</h3>
+                    <p>No separate Connect subscription. When your agency invites you, requests land in Audition Tracker → Toolkit → Connect.</p>
+                    <ul>
+                        <li>Accept or decline in the app</li>
+                        <li>Sides, links, and instructions in one place</li>
+                        <li>Keeps your audition log current</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="connect-section reveal">
+        <div class="container">
+            <h2>Pricing</h2>
+            <p class="section-lead">Agency subscription. Actors use the free Connect path in the app when invited.</p>
+            <div class="connect-pricing">
+                <div class="connect-plan">
+                    <div class="plan-name">Monthly</div>
+                    <div class="plan-amount">£29<small>/month</small></div>
+                    <p class="plan-note">3 months free, then billed monthly</p>
+                </div>
+                <div class="connect-plan featured">
+                    <div class="plan-name">Yearly</div>
+                    <div class="plan-amount">£24<small>/month</small></div>
+                    <p class="plan-note">£288/year · 3 months free to start</p>
+                </div>
+            </div>
+            <p class="section-lead" style="margin-top: 1.75rem; margin-bottom: 0;">
+                Card charged only after the trial.
+                <a href="https://connect.auditiontracker.co.uk" style="color: var(--primary);">Open Connect to subscribe</a>.
+            </p>
+        </div>
+    </section>
+
+    <section id="faq" class="connect-section reveal" style="padding-top: 1rem;">
+        <div class="container">
+            <h2>Questions</h2>
+            <p class="section-lead">Quick answers before you start a trial.</p>
+            <div class="connect-faq">
+                <details open>
+                    <summary>Is Connect the same as the actor app?</summary>
+                    <div class="faq-body">
+                        <p>No. <strong>Connect</strong> is the agency web dashboard. <strong>Audition Tracker</strong> is the actor app on iPhone and iPad. Together they carry the request from casting email to actor.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>What’s the best way to import sides PDFs?</summary>
+                    <div class="faq-body">
+                        <p>Forward the casting email to your private Connect address (shown under Import after you sign in). That’s the reliable path for attachments. The Gmail extension is faster for breakdown text and links.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Do actors pay for Connect?</summary>
+                    <div class="faq-body">
+                        <p>No. Actors need Audition Tracker. Your agency invite unlocks Connect requests in the app. The agency pays the Connect subscription.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Where do I sign in?</summary>
+                    <div class="faq-body">
+                        <p>Agents: <a href="https://connect.auditiontracker.co.uk">connect.auditiontracker.co.uk</a>. Actors: download <a href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone">Audition Tracker</a>, then Toolkit → Connect with your invite code.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="connect-final reveal">
+        <h2>Ready when the next casting email lands</h2>
+        <p>Start a free trial, invite your actors, and send the next brief without rebuilding it by hand.</p>
+        <div class="connect-cta-row">
+            <a class="btn btn-primary" href="https://connect.auditiontracker.co.uk" target="_blank" rel="noopener">Open Connect</a>
+            <a class="btn-ghost" href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" rel="noopener">Get the actor app</a>
+        </div>
+    </section>
+
+    <footer class="text-center py-4" style="color:#777; font-size:0.9rem;">
+        <p class="mb-1">
+            <a href="/" style="color:var(--primary); text-decoration:none;">Audition Tracker</a>
+            ·
+            <a href="/support/" style="color:#999; text-decoration:none;">Support</a>
+            ·
+            <a href="/privacy/" style="color:#999; text-decoration:none;">Privacy</a>
+            ·
+            <a href="/terms/" style="color:#999; text-decoration:none;">Terms</a>
+        </p>
+        <p class="mb-0">© Raden Films</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            var nodes = document.querySelectorAll(".reveal");
+            if (!("IntersectionObserver" in window)) {
+                nodes.forEach(function (n) { n.classList.add("in"); });
+                return;
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("in");
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            nodes.forEach(function (n) { io.observe(n); });
+        })();
+    </script>
+</body>
+</html>
