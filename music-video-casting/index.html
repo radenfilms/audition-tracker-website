@@ -216,7 +216,7 @@
             var clockEl = document.getElementById("song-clock");
             var canvas = document.getElementById("mv-waves");
             var draw = canvas.getContext("2d");
-            var audioCtx, analyser, freq;
+            var audioCtx, analyser, freq, wave;
             var ready = false;
             var userPaused = false;
             var seeking = false;
@@ -242,9 +242,10 @@
                 audioCtx = new AC();
                 var source = audioCtx.createMediaElementSource(audio);
                 analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 512;
-                analyser.smoothingTimeConstant = 0.86;
+                analyser.fftSize = 2048;
+                analyser.smoothingTimeConstant = 0.72;
                 freq = new Uint8Array(analyser.frequencyBinCount);
+                wave = new Uint8Array(analyser.fftSize);
                 source.connect(analyser);
                 analyser.connect(audioCtx.destination);
                 return audioCtx.resume();
@@ -276,76 +277,65 @@
                 draw.setTransform(ratio, 0, 0, ratio, 0, 0);
             }
 
-            var level = { bass: 0.16, mid: 0.12, high: 0.08 };
-
-            function approach(current, target) {
-                return current + (target - current) * (reduceMotion ? 0.04 : 0.12);
-            }
-
-            function curtainY(x, width, height, curtain, time, lift) {
-                var across = x / width;
-                var drift = reduceMotion ? curtain.phase : time * curtain.speed + curtain.phase;
-                var fold = Math.sin(across * Math.PI * curtain.folds + drift);
-                var detail = Math.sin(across * Math.PI * curtain.folds * 2.3 - drift * 0.75);
-                var rise = curtain.reach * (0.55 + lift) * (0.45 + 0.55 * (fold * 0.5 + 0.5));
-                return height * (curtain.crest - rise) + detail * height * 0.03;
-            }
+            var bars = [];
 
             function paint(now) {
                 requestAnimationFrame(paint);
                 var width = canvas.clientWidth;
                 var height = canvas.clientHeight;
                 if (!width || !height) return;
-                if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
+                if (analyser && !audio.paused) {
+                    analyser.getByteFrequencyData(freq);
+                    analyser.getByteTimeDomainData(wave);
+                }
                 var playing = ready && !audio.paused && !audio.ended;
-                level.bass = approach(level.bass, playing ? band(1, 8) : 0.28);
-                level.mid = approach(level.mid, playing ? band(8, 28) : 0.2);
-                level.high = approach(level.high, playing ? band(28, 70) : 0.12);
+                var bass = playing ? band(1, 6) : 0;
+                var count = Math.max(70, Math.min(140, Math.floor(width / 5)));
+                if (bars.length !== count) {
+                    bars = [];
+                    for (var n = 0; n < count; n++) bars.push(0.05);
+                }
+                var centerY = height * 0.58;
+                var maxH = height * 0.24;
+                var gap = width / count;
+                var punch = playing ? 0.85 + bass * 1.35 : 0.28;
                 draw.clearRect(0, 0, width, height);
-                draw.globalCompositeOperation = "lighter";
+                draw.lineCap = "round";
 
-                var curtains = [
-                    { rgb: "29, 233, 182", crest: 0.62, reach: 0.34, folds: 2.1, speed: 0.00042, phase: 0.3, lift: level.bass },
-                    { rgb: "255, 94, 155", crest: 0.7, reach: 0.28, folds: 2.8, speed: 0.00058, phase: 1.8, lift: level.mid },
-                    { rgb: "197, 164, 110", crest: 0.78, reach: 0.18, folds: 1.5, speed: 0.00034, phase: 3.6, lift: level.high }
-                ];
-
-                curtains.forEach(function (curtain) {
+                for (var i = 0; i < count; i++) {
+                    var across = i / (count - 1);
+                    var sample = 0;
+                    if (wave && playing) {
+                        var at = Math.floor(across * (wave.length - 1));
+                        sample = Math.abs(wave[at] - 128) / 128;
+                        var next = Math.abs(wave[Math.min(wave.length - 1, at + 8)] - 128) / 128;
+                        sample = Math.max(sample, next * 0.85);
+                    }
+                    var shaped = Math.min(1, Math.pow(Math.max(sample, 0.015), 0.48) * 1.55);
+                    var idle = 0.16 + 0.14 * Math.abs(Math.sin(across * Math.PI * 5 + now * 0.001));
+                    var target = Math.min(1, (playing ? shaped : idle) * punch);
+                    var rate = reduceMotion ? 0.08 : (target > bars[i] ? 0.62 : 0.16);
+                    bars[i] += (target - bars[i]) * rate;
+                    var barH = Math.max(3, bars[i] * maxH);
+                    var x = i * gap + gap * 0.5;
+                    var grad = draw.createLinearGradient(x, centerY - barH, x, centerY + barH);
+                    grad.addColorStop(0, "rgba(197, 164, 110, 0)");
+                    grad.addColorStop(0.14, "rgba(255, 94, 155, 0.25)");
+                    grad.addColorStop(0.32, "rgba(255, 94, 155, 0.95)");
+                    grad.addColorStop(0.5, "rgba(210, 255, 244, 1)");
+                    grad.addColorStop(0.68, "rgba(255, 94, 155, 0.95)");
+                    grad.addColorStop(0.86, "rgba(255, 94, 155, 0.25)");
+                    grad.addColorStop(1, "rgba(197, 164, 110, 0)");
+                    draw.strokeStyle = grad;
+                    draw.shadowColor = "rgba(255, 94, 155, 0.65)";
+                    draw.shadowBlur = reduceMotion ? 0 : 10;
+                    draw.lineWidth = Math.max(1.4, gap * 0.42);
                     draw.beginPath();
-                    draw.moveTo(0, height);
-                    var step = Math.max(8, width / 42);
-                    for (var x = 0; x <= width; x += step) {
-                        draw.lineTo(x, curtainY(x, width, height, curtain, now, curtain.lift));
-                    }
-                    draw.lineTo(width, height);
-                    draw.closePath();
-                    var top = height * (curtain.crest - curtain.reach);
-                    var wash = draw.createLinearGradient(0, top, 0, height);
-                    wash.addColorStop(0, "rgba(" + curtain.rgb + ", 0)");
-                    wash.addColorStop(0.42, "rgba(" + curtain.rgb + ", 0.22)");
-                    wash.addColorStop(1, "rgba(" + curtain.rgb + ", 0)");
-                    draw.fillStyle = wash;
-                    draw.fill();
-
-                    draw.save();
-                    draw.clip();
-                    var stride = Math.max(6, Math.round(width / 48));
-                    for (var ray = stride / 2; ray < width; ray += stride) {
-                        var y = curtainY(ray, width, height, curtain, now, curtain.lift);
-                        var sway = reduceMotion ? 0 : Math.sin(now * 0.00035 + ray * 0.02) * 10;
-                        var flicker = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(ray * 0.09 + now * 0.0016 + curtain.phase));
-                        draw.globalAlpha = 0.18 + flicker * 0.45 * (0.45 + curtain.lift);
-                        draw.strokeStyle = "rgba(" + curtain.rgb + ", 0.95)";
-                        draw.lineWidth = 1.6;
-                        draw.beginPath();
-                        draw.moveTo(ray, y);
-                        draw.lineTo(ray + sway, height);
-                        draw.stroke();
-                    }
-                    draw.restore();
-                    draw.globalAlpha = 1;
-                });
-                draw.globalCompositeOperation = "source-over";
+                    draw.moveTo(x, centerY - barH);
+                    draw.lineTo(x, centerY + barH);
+                    draw.stroke();
+                }
+                draw.shadowBlur = 0;
             }
 
             resizeWaves();
