@@ -282,12 +282,13 @@
                 return current + (target - current) * (reduceMotion ? 0.04 : 0.12);
             }
 
-            function ribbonY(x, width, height, wave, time) {
+            function curtainY(x, width, height, curtain, time, lift) {
                 var across = x / width;
-                var drift = reduceMotion ? wave.phase : time * wave.speed + wave.phase;
-                return height * wave.y
-                    + Math.sin(across * Math.PI * 2 * wave.cycles + drift) * height * wave.amp
-                    + Math.sin(across * Math.PI * 2 * wave.cycles * 0.5 + drift * 0.7) * height * wave.amp * 0.28;
+                var drift = reduceMotion ? curtain.phase : time * curtain.speed + curtain.phase;
+                var fold = Math.sin(across * Math.PI * curtain.folds + drift);
+                var detail = Math.sin(across * Math.PI * curtain.folds * 2.3 - drift * 0.75);
+                var rise = curtain.reach * (0.55 + lift) * (0.45 + 0.55 * (fold * 0.5 + 0.5));
+                return height * (curtain.crest - rise) + detail * height * 0.03;
             }
 
             function paint(now) {
@@ -297,55 +298,54 @@
                 if (!width || !height) return;
                 if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
                 var playing = ready && !audio.paused && !audio.ended;
-                level.bass = approach(level.bass, playing ? 0.1 + band(1, 8) * 0.34 : 0.11);
-                level.mid = approach(level.mid, playing ? 0.07 + band(8, 28) * 0.26 : 0.08);
-                level.high = approach(level.high, playing ? 0.045 + band(28, 70) * 0.18 : 0.05);
+                level.bass = approach(level.bass, playing ? band(1, 8) : 0.28);
+                level.mid = approach(level.mid, playing ? band(8, 28) : 0.2);
+                level.high = approach(level.high, playing ? band(28, 70) : 0.12);
                 draw.clearRect(0, 0, width, height);
+                draw.globalCompositeOperation = "lighter";
 
-                var glow = draw.createRadialGradient(width * 0.5, height * 0.42, 8, width * 0.5, height * 0.55, width * 0.62);
-                glow.addColorStop(0, "rgba(29, 233, 182, " + (0.05 + level.bass * 0.18) + ")");
-                glow.addColorStop(0.45, "rgba(255, 94, 155, 0.05)");
-                glow.addColorStop(1, "rgba(0, 0, 0, 0)");
-                draw.fillStyle = glow;
-                draw.fillRect(0, 0, width, height);
-
-                var waves = [
-                    { color: [29, 233, 182], amp: level.bass, cycles: 1.15, speed: 0.00055, phase: 0.4, y: 0.78, width: 2.4 },
-                    { color: [255, 94, 155], amp: level.mid, cycles: 1.7, speed: 0.00072, phase: 2.1, y: 0.7, width: 2 },
-                    { color: [197, 164, 110], amp: level.high, cycles: 2.35, speed: 0.0009, phase: 4.2, y: 0.62, width: 1.5 }
+                var curtains = [
+                    { rgb: "29, 233, 182", crest: 0.62, reach: 0.34, folds: 2.1, speed: 0.00042, phase: 0.3, lift: level.bass },
+                    { rgb: "255, 94, 155", crest: 0.7, reach: 0.28, folds: 2.8, speed: 0.00058, phase: 1.8, lift: level.mid },
+                    { rgb: "197, 164, 110", crest: 0.78, reach: 0.18, folds: 1.5, speed: 0.00034, phase: 3.6, lift: level.high }
                 ];
-                var step = Math.max(10, width / 36);
-                waves.forEach(function (wave) {
-                    var rgb = wave.color[0] + ", " + wave.color[1] + ", " + wave.color[2];
+
+                curtains.forEach(function (curtain) {
                     draw.beginPath();
-                    var previousX = 0;
-                    var previousY = ribbonY(0, width, height, wave, now);
-                    draw.moveTo(previousX, previousY);
-                    for (var x = step; x <= width + step; x += step) {
-                        var y = ribbonY(Math.min(x, width), width, height, wave, now);
-                        var midX = (previousX + Math.min(x, width)) / 2;
-                        var midY = (previousY + y) / 2;
-                        draw.quadraticCurveTo(previousX, previousY, midX, midY);
-                        previousX = Math.min(x, width);
-                        previousY = y;
+                    draw.moveTo(0, height);
+                    var step = Math.max(8, width / 42);
+                    for (var x = 0; x <= width; x += step) {
+                        draw.lineTo(x, curtainY(x, width, height, curtain, now, curtain.lift));
                     }
-                    draw.strokeStyle = "rgba(" + rgb + ", 0.9)";
-                    draw.lineWidth = wave.width;
-                    draw.lineJoin = "round";
-                    draw.lineCap = "round";
-                    draw.shadowColor = "rgba(" + rgb + ", 0.45)";
-                    draw.shadowBlur = reduceMotion ? 0 : 12;
-                    draw.stroke();
-                    draw.shadowBlur = 0;
                     draw.lineTo(width, height);
-                    draw.lineTo(0, height);
                     draw.closePath();
-                    var fill = draw.createLinearGradient(0, height * (wave.y - wave.amp), 0, height);
-                    fill.addColorStop(0, "rgba(" + rgb + ", 0.16)");
-                    fill.addColorStop(1, "rgba(" + rgb + ", 0)");
-                    draw.fillStyle = fill;
+                    var top = height * (curtain.crest - curtain.reach);
+                    var wash = draw.createLinearGradient(0, top, 0, height);
+                    wash.addColorStop(0, "rgba(" + curtain.rgb + ", 0)");
+                    wash.addColorStop(0.42, "rgba(" + curtain.rgb + ", 0.22)");
+                    wash.addColorStop(1, "rgba(" + curtain.rgb + ", 0)");
+                    draw.fillStyle = wash;
                     draw.fill();
+
+                    draw.save();
+                    draw.clip();
+                    var stride = Math.max(6, Math.round(width / 48));
+                    for (var ray = stride / 2; ray < width; ray += stride) {
+                        var y = curtainY(ray, width, height, curtain, now, curtain.lift);
+                        var sway = reduceMotion ? 0 : Math.sin(now * 0.00035 + ray * 0.02) * 10;
+                        var flicker = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(ray * 0.09 + now * 0.0016 + curtain.phase));
+                        draw.globalAlpha = 0.18 + flicker * 0.45 * (0.45 + curtain.lift);
+                        draw.strokeStyle = "rgba(" + curtain.rgb + ", 0.95)";
+                        draw.lineWidth = 1.6;
+                        draw.beginPath();
+                        draw.moveTo(ray, y);
+                        draw.lineTo(ray + sway, height);
+                        draw.stroke();
+                    }
+                    draw.restore();
+                    draw.globalAlpha = 1;
                 });
+                draw.globalCompositeOperation = "source-over";
             }
 
             resizeWaves();
