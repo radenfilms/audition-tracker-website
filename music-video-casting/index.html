@@ -50,7 +50,8 @@
             <h2>Your face. Your performance. Our music video.</h2>
             <p class="mv-lead">We're inviting actors from around the world to take part in the official Audition Tracker music video. Choose your section, make it your own, and join actors from around the world in creating something together.</p>
             <a class="mv-cta" href="#enter">Enter the casting call</a>
-            <div class="mv-stage" aria-hidden="true">
+            <div class="mv-stage">
+                <canvas id="mv-waves" class="mv-waves" aria-hidden="true"></canvas>
                 <img src="../assets/at-logo-stars-bg.png" alt="">
                 <ol class="mv-format">
                     <li>Your section</li>
@@ -63,14 +64,12 @@
         <section class="mv-section" id="song" aria-labelledby="song-title">
             <div class="mv-wrap">
                 <h2 id="song-title">The song</h2>
-                <p class="mv-intro">Listen to the full track, then download it so you can synchronise your performance.</p>
-                <!-- Admin: replace music-video-casting/audio/song.mp3 to update the player and the download. No page edit is required. -->
+                <p class="mv-intro">The song plays while you read. Pause it whenever you want, and download it so you can synchronise your performance.</p>
+                <!-- Admin: replace music-video-casting/audio/song.mp3. The player, waves, and download all use that file. -->
                 <div class="mv-player">
-                    <audio id="song-audio" controls preload="metadata" src="audio/song.mp3">
-                        Your browser cannot play this audio. Use the download link instead.
-                    </audio>
+                    <audio id="song-audio" preload="auto" src="audio/song.mp3"></audio>
                     <p class="mv-duration" id="song-duration">Duration appears when the track loads.</p>
-                    <p class="mv-track-note" id="song-missing" hidden>The track is not on the site yet. Check back shortly.</p>
+                    <p class="mv-track-note" id="song-missing" hidden>The track is not on the site yet. Add the file as music-video-casting/audio/song.mp3.</p>
                     <a class="mv-download" id="song-download" href="audio/song.mp3" download>Download the original song</a>
                 </div>
             </div>
@@ -198,6 +197,12 @@
         <p>© Raden Films</p>
     </footer>
 
+    <div class="mv-dock" id="song-dock" hidden>
+        <button type="button" id="song-toggle" aria-pressed="false">Play</button>
+        <input id="song-seek" type="range" min="0" max="1000" value="0" aria-label="Song position">
+        <span id="song-clock">0:00</span>
+    </div>
+
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         (function () {
@@ -205,26 +210,171 @@
             var duration = document.getElementById("song-duration");
             var missing = document.getElementById("song-missing");
             var download = document.getElementById("song-download");
+            var dock = document.getElementById("song-dock");
+            var toggle = document.getElementById("song-toggle");
+            var seek = document.getElementById("song-seek");
+            var clockEl = document.getElementById("song-clock");
+            var canvas = document.getElementById("mv-waves");
+            var draw = canvas.getContext("2d");
+            var audioCtx, analyser, freq;
+            var ready = false;
+            var userPaused = false;
+            var seeking = false;
+            var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
             function clock(seconds) {
-                if (!isFinite(seconds)) return "";
+                if (!isFinite(seconds)) return "0:00";
                 var m = Math.floor(seconds / 60);
-                var s = Math.round(seconds % 60);
-                if (s === 60) { m += 1; s = 0; }
+                var s = Math.floor(seconds % 60);
                 return m + ":" + String(s).padStart(2, "0");
             }
 
+            function setToggle(playing) {
+                toggle.textContent = playing ? "Pause" : "Play";
+                toggle.setAttribute("aria-pressed", playing ? "true" : "false");
+                toggle.setAttribute("aria-label", playing ? "Pause the song" : "Play the song");
+            }
+
+            function wireAudio() {
+                if (audioCtx) return audioCtx.resume();
+                var AC = window.AudioContext || window.webkitAudioContext;
+                if (!AC) return Promise.resolve();
+                audioCtx = new AC();
+                var source = audioCtx.createMediaElementSource(audio);
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 256;
+                freq = new Uint8Array(analyser.frequencyBinCount);
+                source.connect(analyser);
+                analyser.connect(audioCtx.destination);
+                return audioCtx.resume();
+            }
+
+            function tryPlay() {
+                if (!ready || userPaused) return;
+                wireAudio();
+                var pending = audio.play();
+                if (pending && pending.catch) pending.catch(function () { setToggle(false); });
+            }
+
+            function band(start, end) {
+                if (!freq) return 0;
+                var sum = 0;
+                var count = 0;
+                for (var i = start; i < end && i < freq.length; i++) {
+                    sum += freq[i];
+                    count++;
+                }
+                return count ? (sum / count) / 255 : 0;
+            }
+
+            function resizeWaves() {
+                var rect = canvas.getBoundingClientRect();
+                var ratio = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+                canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+                draw.setTransform(ratio, 0, 0, ratio, 0, 0);
+            }
+
+            function paint(now) {
+                requestAnimationFrame(paint);
+                var width = canvas.clientWidth;
+                var height = canvas.clientHeight;
+                if (!width || !height) return;
+                if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
+                var playing = ready && !audio.paused && !audio.ended;
+                var bass = playing ? band(2, 12) : 0;
+                var mid = playing ? band(12, 40) : 0;
+                var high = playing ? band(40, 100) : 0;
+                var calm = reduceMotion ? 0.04 : 0.08;
+                var waves = [
+                    { color: "rgba(29, 233, 182,", level: playing ? 0.16 + bass * 0.72 : calm, cycles: 1.6, speed: 0.0009, y: 0.72 },
+                    { color: "rgba(255, 94, 155,", level: playing ? 0.12 + mid * 0.66 : calm * 0.8, cycles: 2.4, speed: 0.0013, y: 0.58 },
+                    { color: "rgba(197, 164, 110,", level: playing ? 0.08 + high * 0.55 : calm * 0.6, cycles: 3.3, speed: 0.0018, y: 0.46 }
+                ];
+                draw.clearRect(0, 0, width, height);
+                waves.forEach(function (wave, index) {
+                    var points = [];
+                    var step = 4;
+                    for (var x = 0; x <= width; x += step) {
+                        var across = x / width;
+                        var drift = reduceMotion ? index : now * wave.speed + index;
+                        points.push([x, height * wave.y + Math.sin(across * Math.PI * 2 * wave.cycles + drift) * height * wave.level]);
+                    }
+                    draw.beginPath();
+                    points.forEach(function (point, i) {
+                        if (i === 0) draw.moveTo(point[0], point[1]);
+                        else draw.lineTo(point[0], point[1]);
+                    });
+                    draw.strokeStyle = wave.color + "0.95)";
+                    draw.lineWidth = 2;
+                    draw.stroke();
+                    draw.lineTo(width, height);
+                    draw.lineTo(0, height);
+                    draw.closePath();
+                    draw.fillStyle = wave.color + "0.22)";
+                    draw.fill();
+                });
+            }
+
+            resizeWaves();
+            window.addEventListener("resize", resizeWaves);
+            requestAnimationFrame(paint);
+
             audio.addEventListener("loadedmetadata", function () {
-                duration.textContent = "Full track · " + clock(audio.duration);
+                ready = true;
                 missing.hidden = true;
-                download.removeAttribute("aria-disabled");
+                dock.hidden = false;
+                download.hidden = false;
+                duration.hidden = false;
+                duration.textContent = "Full track · " + clock(audio.duration);
+                clockEl.textContent = "0:00 / " + clock(audio.duration);
+                tryPlay();
+            });
+            audio.addEventListener("play", function () { setToggle(true); });
+            audio.addEventListener("pause", function () { setToggle(false); });
+            audio.addEventListener("ended", function () { setToggle(false); });
+            audio.addEventListener("timeupdate", function () {
+                if (!audio.duration || seeking) return;
+                seek.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+                clockEl.textContent = clock(audio.currentTime) + " / " + clock(audio.duration);
             });
             audio.addEventListener("error", function () {
-                audio.hidden = true;
+                ready = false;
+                dock.hidden = true;
                 download.hidden = true;
                 duration.hidden = true;
                 missing.hidden = false;
             });
+
+            toggle.addEventListener("click", function () {
+                if (!ready) return;
+                if (!audio.paused) {
+                    userPaused = true;
+                    audio.pause();
+                    return;
+                }
+                userPaused = false;
+                if (audio.ended) audio.currentTime = 0;
+                tryPlay();
+            });
+            seek.addEventListener("pointerdown", function () { seeking = true; });
+            seek.addEventListener("input", function () {
+                if (!audio.duration) return;
+                clockEl.textContent = clock((Number(seek.value) / 1000) * audio.duration) + " / " + clock(audio.duration);
+            });
+            seek.addEventListener("change", function () {
+                if (!audio.duration) return;
+                audio.currentTime = (Number(seek.value) / 1000) * audio.duration;
+                seeking = false;
+            });
+
+            function startAfterTap(event) {
+                if (event.target.closest && event.target.closest("#song-dock")) return;
+                if (!ready || !audio.paused || userPaused) return;
+                tryPlay();
+            }
+            document.addEventListener("pointerdown", startAfterTap);
+            document.addEventListener("keydown", startAfterTap);
 
             var form = document.getElementById("enter");
             var error = document.getElementById("form-error");
