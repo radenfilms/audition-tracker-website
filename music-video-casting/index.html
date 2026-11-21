@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International music video casting call — Audition Tracker</title>
+    <meta name="description" content="Working actors worldwide: perform one section of the Audition Tracker song, post it with #AuditionTrackerMusicVideo, and enter the official music video casting call.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://auditiontracker.co.uk/music-video-casting/">
+    <meta name="theme-color" content="#07080b">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Audition Tracker">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:url" content="https://auditiontracker.co.uk/music-video-casting/">
+    <meta property="og:title" content="Put working actors in the spotlight">
+    <meta property="og:description" content="Choose your section, post your performance, and enter the official Audition Tracker music video. #AuditionTrackerMusicVideo">
+    <meta property="og:image" content="https://auditiontracker.co.uk/assets/og-share.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Put working actors in the spotlight">
+    <meta name="twitter:description" content="An international casting call for the official Audition Tracker music video.">
+    <meta name="twitter:image" content="https://auditiontracker.co.uk/assets/og-share.jpg">
+    <link rel="icon" type="image/png" href="../assets/at-logo-stars-bg.png">
+    <link rel="apple-touch-icon" href="../assets/at-logo-stars-bg.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="casting.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W10GEZ22Q7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-W10GEZ22Q7');
+    </script>
+</head>
+<body class="mv-page">
+    <header class="mv-wrap mv-bar">
+        <a href="/" aria-label="Audition Tracker home">
+            <img src="../assets/at-logo.png" alt="Audition Tracker">
+        </a>
+        <p class="mv-hashtag">#AuditionTrackerMusicVideo</p>
+    </header>
+
+    <main>
+        <section class="mv-hero mv-wrap" aria-labelledby="mv-title">
+            <p class="mv-kicker">International casting call</p>
+            <h1 id="mv-title">Put working actors in the spotlight.</h1>
+            <h2>Your face. Your performance. Our music video.</h2>
+            <p class="mv-lead">We're inviting actors from around the world to take part in the official Audition Tracker music video. Choose your section, make it your own, and join actors from around the world in creating something together.</p>
+            <a class="mv-cta" href="#enter">Enter the casting call</a>
+            <div class="mv-stage" aria-hidden="true">
+                <img src="../assets/at-logo-stars-bg.png" alt="">
+                <ol class="mv-format">
+                    <li>Your section</li>
+                    <li>Pre-chorus</li>
+                    <li>Lip-sync chorus</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="mv-section" id="song" aria-labelledby="song-title">
+            <div class="mv-wrap">
+                <h2 id="song-title">The song</h2>
+                <p class="mv-intro">Listen to the full track, then download it so you can synchronise your performance.</p>
+                <!-- Admin: replace music-video-casting/audio/song.mp3 to update the player and the download. No page edit is required. -->
+                <div class="mv-player">
+                    <audio id="song-audio" controls preload="metadata" src="audio/song.mp3">
+                        Your browser cannot play this audio. Use the download link instead.
+                    </audio>
+                    <p class="mv-duration" id="song-duration">Duration appears when the track loads.</p>
+                    <p class="mv-track-note" id="song-missing" hidden>The track is not on the site yet. Check back shortly.</p>
+                    <a class="mv-download" id="song-download" href="audio/song.mp3" download>Download the original song</a>
+                </div>
+            </div>
+        </section>
+
+        <form class="mv-section" id="enter" action="https://formsubmit.co/info@auditiontracker.co.uk" method="POST" aria-labelledby="enter-title">
+            <div class="mv-wrap">
+                <h2 id="sections-title">Choose your section</h2>
+                <p class="mv-intro">Perform one section only. Every entry then continues into the same pre-chorus and chorus.</p>
+                <fieldset class="mv-cards">
+                    <legend class="visually-hidden">Choose one section to perform</legend>
+                    <label class="mv-card mv-card-nightmare">
+                        <input type="radio" name="section" value="The Audition Nightmare" required>
+                        <p class="mv-verse">Verse 1</p>
+                        <h3>The Audition Nightmare</h3>
+                        <p class="mv-lyrics">The breakdown came, I missed the call<br>I search my phone, I search it all<br>The sides are lost, the deadline's near<br>Another audition missed this year</p>
+                        <p class="mv-direction">The audition has arrived. The sides are missing, the deadline is approaching and everything seems to be going wrong. Show your interpretation of everyday audition chaos. Play it for laughs, build the tension or go completely over the top.</p>
+                    </label>
+                    <label class="mv-card mv-card-measures">
+                        <input type="radio" name="section" value="The Actor's Measurements" required>
+                        <p class="mv-verse">Verse 2</p>
+                        <h3>The Actor's Measurements</h3>
+                        <p class="mv-lyrics">What's my waist? What's my chest?<br>Inner thigh? I have to guess!<br>Hips and sleeve and jacket too<br>Every job wants something new</p>
+                        <p class="mv-direction">Every casting seems to need a different measurement. Have fun with this one. Make it funny, deadpan, exaggerated or wonderfully ridiculous.</p>
+                    </label>
+                    <label class="mv-card mv-card-checklist">
+                        <input type="radio" name="section" value="The Actor's Checklist" required>
+                        <p class="mv-verse">Bridge</p>
+                        <h3>The Actor's Checklist</h3>
+                        <p class="mv-lyrics">Where are the sides? What's the slate?<br>Who's casting? What's the date?<br>Where's the call-back? What's the role?<br>Now you know who you should call!</p>
+                        <p class="mv-direction">The familiar checklist of an actor's working life. Show us your version. You could create a fast-paced sequence, play different characters or build a little story around the lyrics.</p>
+                    </label>
+                </fieldset>
+            </div>
+
+            <div class="mv-wrap mv-section" id="chorus">
+                <h2>Everyone joins the chorus</h2>
+                <p class="mv-callout">Whichever section you choose, your video must continue into this pre-chorus and chorus. The chorus must be lip-synced. That shared ending is how performances from around the world can be edited together.</p>
+                <div class="mv-block">
+                    <h3>Pre-chorus</h3>
+                    <p class="mv-lyrics">Where do you turn?<br>When the details blur?</p>
+                </div>
+                <div class="mv-chorus">
+                    <h3>Chorus</h3>
+                    <p class="mv-lyrics">Your casting call companion<br>Audition Tracker<br>Your casting call companion<br>Audition Tracker<br>Keep it all in one place<br>Every role, every date<br>Your casting call companion<br>Audition Tracker</p>
+                </div>
+                <ol class="mv-format" aria-label="Performance order">
+                    <li>Chosen section</li>
+                    <li>Pre-chorus</li>
+                    <li>Lip-sync chorus</li>
+                </ol>
+                <ul class="mv-rules">
+                    <li>Look directly into the camera.</li>
+                    <li>Lip-sync the chorus accurately.</li>
+                    <li>Bring your own personality and performance style.</li>
+                    <li>Be confident, playful, funny, serious or completely original.</li>
+                </ul>
+            </div>
+
+            <div class="mv-wrap">
+                <h2 id="enter-title">Enter</h2>
+                <p class="mv-callout">Publishing the video on your own TikTok or Instagram is required. There is no private submission. Tag Audition Tracker and use #AuditionTrackerMusicVideo. Selected actors whose footage is licensed and used in the finished music video will receive an agreed fee.</p>
+                <ol class="mv-steps">
+                    <li>Choose one section above.</li>
+                    <li>Download the song and film that section, then the pre-chorus, then the lip-synced chorus.</li>
+                    <li>Publish it on your TikTok or Instagram with the hashtag and a tag for Audition Tracker.</li>
+                    <li>Send the public post link and a download link to the original video file.</li>
+                </ol>
+
+                <input type="hidden" name="_subject" value="Audition Tracker music video casting">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_next" value="https://auditiontracker.co.uk/music-video-casting/thank-you.html">
+                <input type="text" name="_honey" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0;">
+
+                <div class="mv-form">
+                    <div>
+                        <label for="actor-name">Name</label>
+                        <input id="actor-name" name="name" type="text" autocomplete="name" required>
+                    </div>
+                    <div>
+                        <label for="actor-email">Email</label>
+                        <input id="actor-email" name="email" type="email" autocomplete="email" required>
+                    </div>
+                    <div>
+                        <label for="actor-country">Country</label>
+                        <input id="actor-country" name="country" type="text" autocomplete="country-name" required>
+                    </div>
+                    <div>
+                        <label for="actor-platform">Where you published it</label>
+                        <select id="actor-platform" name="platform" required>
+                            <option value="">Choose one</option>
+                            <option>TikTok</option>
+                            <option>Instagram</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="actor-post">Published video link</label>
+                        <input id="actor-post" name="published_video_url" type="url" inputmode="url" placeholder="https://" required>
+                    </div>
+                    <div>
+                        <label for="actor-file">Original video file link</label>
+                        <input id="actor-file" name="original_video_link" type="url" inputmode="url" placeholder="https://" required>
+                        <p class="mv-fine">This site cannot store large video files. Upload the original file somewhere you can share a download link, and paste that link here.</p>
+                    </div>
+                    <label class="mv-check">
+                        <input type="checkbox" name="published_publicly" value="Yes" required>
+                        <span>I published this on my own TikTok or Instagram with #AuditionTrackerMusicVideo and tagged Audition Tracker.</span>
+                    </label>
+                    <label class="mv-check">
+                        <input type="checkbox" name="no_private_entry" value="Yes" required>
+                        <span>I understand there is no private way to enter. The public post is part of the casting call.</span>
+                    </label>
+                    <div class="g-recaptcha" data-sitekey="6LcVVVsrAAAAAO8uIydSKbqLC4WdfQyxe_XcfavT" data-theme="dark"></div>
+                    <p class="mv-error" id="form-error" tabindex="-1" hidden></p>
+                    <button class="mv-submit" type="submit">Submit your entry</button>
+                    <p class="mv-fine">Entries are emailed to Audition Tracker so they can be reviewed. See the <a href="/privacy/">privacy policy</a>.</p>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <footer class="mv-foot mv-wrap">
+        <p><a href="/">Audition Tracker</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
+        <p>© Raden Films</p>
+    </footer>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        (function () {
+            var audio = document.getElementById("song-audio");
+            var duration = document.getElementById("song-duration");
+            var missing = document.getElementById("song-missing");
+            var download = document.getElementById("song-download");
+
+            function clock(seconds) {
+                if (!isFinite(seconds)) return "";
+                var m = Math.floor(seconds / 60);
+                var s = Math.round(seconds % 60);
+                if (s === 60) { m += 1; s = 0; }
+                return m + ":" + String(s).padStart(2, "0");
+            }
+
+            audio.addEventListener("loadedmetadata", function () {
+                duration.textContent = "Full track · " + clock(audio.duration);
+                missing.hidden = true;
+                download.removeAttribute("aria-disabled");
+            });
+            audio.addEventListener("error", function () {
+                audio.hidden = true;
+                download.hidden = true;
+                duration.hidden = true;
+                missing.hidden = false;
+            });
+
+            var form = document.getElementById("enter");
+            var error = document.getElementById("form-error");
+            form.addEventListener("submit", function (event) {
+                var post = document.getElementById("actor-post").value.trim();
+                var file = document.getElementById("actor-file").value.trim();
+                var host = "";
+                try { host = new URL(post).hostname.replace(/^www\./, ""); } catch (e) { host = ""; }
+                var social = host === "tiktok.com" || host.endsWith(".tiktok.com") || host === "instagram.com" || host.endsWith(".instagram.com") || host === "instagr.am";
+                var fileOk = false;
+                try { fileOk = new URL(file).protocol === "https:"; } catch (e) { fileOk = false; }
+                if (!social || !fileOk) {
+                    event.preventDefault();
+                    error.hidden = false;
+                    error.textContent = !social
+                        ? "The published video link needs to be a TikTok or Instagram URL."
+                        : "The original video link needs to start with https://";
+                    error.focus();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
