@@ -242,7 +242,8 @@
                 audioCtx = new AC();
                 var source = audioCtx.createMediaElementSource(audio);
                 analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 256;
+                analyser.fftSize = 512;
+                analyser.smoothingTimeConstant = 0.86;
                 freq = new Uint8Array(analyser.frequencyBinCount);
                 source.connect(analyser);
                 analyser.connect(audioCtx.destination);
@@ -275,6 +276,20 @@
                 draw.setTransform(ratio, 0, 0, ratio, 0, 0);
             }
 
+            var level = { bass: 0.16, mid: 0.12, high: 0.08 };
+
+            function approach(current, target) {
+                return current + (target - current) * (reduceMotion ? 0.04 : 0.12);
+            }
+
+            function ribbonY(x, width, height, wave, time) {
+                var across = x / width;
+                var drift = reduceMotion ? wave.phase : time * wave.speed + wave.phase;
+                return height * wave.y
+                    + Math.sin(across * Math.PI * 2 * wave.cycles + drift) * height * wave.amp
+                    + Math.sin(across * Math.PI * 2 * wave.cycles * 0.5 + drift * 0.7) * height * wave.amp * 0.28;
+            }
+
             function paint(now) {
                 requestAnimationFrame(paint);
                 var width = canvas.clientWidth;
@@ -282,36 +297,53 @@
                 if (!width || !height) return;
                 if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
                 var playing = ready && !audio.paused && !audio.ended;
-                var bass = playing ? band(2, 12) : 0;
-                var mid = playing ? band(12, 40) : 0;
-                var high = playing ? band(40, 100) : 0;
-                var calm = reduceMotion ? 0.04 : 0.08;
-                var waves = [
-                    { color: "rgba(29, 233, 182,", level: playing ? 0.16 + bass * 0.72 : calm, cycles: 1.6, speed: 0.0009, y: 0.72 },
-                    { color: "rgba(255, 94, 155,", level: playing ? 0.12 + mid * 0.66 : calm * 0.8, cycles: 2.4, speed: 0.0013, y: 0.58 },
-                    { color: "rgba(197, 164, 110,", level: playing ? 0.08 + high * 0.55 : calm * 0.6, cycles: 3.3, speed: 0.0018, y: 0.46 }
-                ];
+                level.bass = approach(level.bass, playing ? 0.1 + band(1, 8) * 0.34 : 0.11);
+                level.mid = approach(level.mid, playing ? 0.07 + band(8, 28) * 0.26 : 0.08);
+                level.high = approach(level.high, playing ? 0.045 + band(28, 70) * 0.18 : 0.05);
                 draw.clearRect(0, 0, width, height);
-                waves.forEach(function (wave, index) {
-                    var points = [];
-                    var step = 4;
-                    for (var x = 0; x <= width; x += step) {
-                        var across = x / width;
-                        var drift = reduceMotion ? index : now * wave.speed + index;
-                        points.push([x, height * wave.y + Math.sin(across * Math.PI * 2 * wave.cycles + drift) * height * wave.level]);
-                    }
+
+                var glow = draw.createRadialGradient(width * 0.5, height * 0.42, 8, width * 0.5, height * 0.55, width * 0.62);
+                glow.addColorStop(0, "rgba(29, 233, 182, " + (0.05 + level.bass * 0.18) + ")");
+                glow.addColorStop(0.45, "rgba(255, 94, 155, 0.05)");
+                glow.addColorStop(1, "rgba(0, 0, 0, 0)");
+                draw.fillStyle = glow;
+                draw.fillRect(0, 0, width, height);
+
+                var waves = [
+                    { color: [29, 233, 182], amp: level.bass, cycles: 1.15, speed: 0.00055, phase: 0.4, y: 0.78, width: 2.4 },
+                    { color: [255, 94, 155], amp: level.mid, cycles: 1.7, speed: 0.00072, phase: 2.1, y: 0.7, width: 2 },
+                    { color: [197, 164, 110], amp: level.high, cycles: 2.35, speed: 0.0009, phase: 4.2, y: 0.62, width: 1.5 }
+                ];
+                var step = Math.max(10, width / 36);
+                waves.forEach(function (wave) {
+                    var rgb = wave.color[0] + ", " + wave.color[1] + ", " + wave.color[2];
                     draw.beginPath();
-                    points.forEach(function (point, i) {
-                        if (i === 0) draw.moveTo(point[0], point[1]);
-                        else draw.lineTo(point[0], point[1]);
-                    });
-                    draw.strokeStyle = wave.color + "0.95)";
-                    draw.lineWidth = 2;
+                    var previousX = 0;
+                    var previousY = ribbonY(0, width, height, wave, now);
+                    draw.moveTo(previousX, previousY);
+                    for (var x = step; x <= width + step; x += step) {
+                        var y = ribbonY(Math.min(x, width), width, height, wave, now);
+                        var midX = (previousX + Math.min(x, width)) / 2;
+                        var midY = (previousY + y) / 2;
+                        draw.quadraticCurveTo(previousX, previousY, midX, midY);
+                        previousX = Math.min(x, width);
+                        previousY = y;
+                    }
+                    draw.strokeStyle = "rgba(" + rgb + ", 0.9)";
+                    draw.lineWidth = wave.width;
+                    draw.lineJoin = "round";
+                    draw.lineCap = "round";
+                    draw.shadowColor = "rgba(" + rgb + ", 0.45)";
+                    draw.shadowBlur = reduceMotion ? 0 : 12;
                     draw.stroke();
+                    draw.shadowBlur = 0;
                     draw.lineTo(width, height);
                     draw.lineTo(0, height);
                     draw.closePath();
-                    draw.fillStyle = wave.color + "0.22)";
+                    var fill = draw.createLinearGradient(0, height * (wave.y - wave.amp), 0, height);
+                    fill.addColorStop(0, "rgba(" + rgb + ", 0.16)");
+                    fill.addColorStop(1, "rgba(" + rgb + ", 0)");
+                    draw.fillStyle = fill;
                     draw.fill();
                 });
             }
