@@ -318,7 +318,11 @@
                     bars[i] += (target - bars[i]) * rate;
                     var barH = Math.max(3, bars[i] * maxH);
                     var x = i * gap + gap * 0.5;
-                    var grad = draw.createLinearGradient(x, centerY - barH, x, centerY + barH);
+                    var drift = reduceMotion ? 0.6 : now * 0.00115;
+                    var sway = Math.sin(across * Math.PI * 2.4 + drift) * height * 0.075
+                        + Math.sin(across * Math.PI * 5.2 - drift * 0.65) * height * 0.028;
+                    var y = centerY + sway;
+                    var grad = draw.createLinearGradient(x, y - barH, x, y + barH);
                     grad.addColorStop(0, "rgba(29, 233, 182, 0)");
                     grad.addColorStop(0.12, "rgba(29, 233, 182, 0.85)");
                     grad.addColorStop(0.3, "rgba(255, 94, 155, 0.95)");
@@ -330,9 +334,10 @@
                     draw.shadowColor = "rgba(255, 94, 155, 0.55)";
                     draw.shadowBlur = reduceMotion ? 0 : 10;
                     draw.lineWidth = Math.max(1.4, gap * 0.42);
+                    var lean = Math.cos(across * Math.PI * 2.4 + drift) * 5;
                     draw.beginPath();
-                    draw.moveTo(x, centerY - barH);
-                    draw.lineTo(x, centerY + barH);
+                    draw.moveTo(x - lean, y - barH);
+                    draw.lineTo(x + lean, y + barH);
                     draw.stroke();
                 }
                 draw.shadowBlur = 0;
