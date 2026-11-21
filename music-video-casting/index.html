@@ -51,7 +51,6 @@
             <p class="mv-lead">We're inviting actors from around the world to take part in the official Audition Tracker music video. Choose your section, make it your own, and join actors from around the world in creating something together.</p>
             <a class="mv-cta" href="#enter">Enter the casting call</a>
             <div class="mv-stage">
-                <canvas id="mv-waves" class="mv-waves" aria-hidden="true"></canvas>
                 <img src="../assets/at-logo-stars-bg.png" alt="">
                 <ol class="mv-format">
                     <li>Your section</li>
@@ -65,7 +64,7 @@
             <div class="mv-wrap">
                 <h2 id="song-title">The song</h2>
                 <p class="mv-intro">The song plays while you read. Pause it whenever you want, and download it so you can synchronise your performance.</p>
-                <!-- Admin: replace music-video-casting/audio/song.mp3. The player, waves, and download all use that file. -->
+                <!-- Admin: replace music-video-casting/audio/song.mp3. The player and download both use that file. -->
                 <div class="mv-player">
                     <audio id="song-audio" preload="auto" src="audio/song.mp3"></audio>
                     <p class="mv-duration" id="song-duration">Duration appears when the track loads.</p>
@@ -214,13 +213,9 @@
             var toggle = document.getElementById("song-toggle");
             var seek = document.getElementById("song-seek");
             var clockEl = document.getElementById("song-clock");
-            var canvas = document.getElementById("mv-waves");
-            var draw = canvas.getContext("2d");
-            var audioCtx, analyser, freq, wave;
             var ready = false;
             var userPaused = false;
             var seeking = false;
-            var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
             function clock(seconds) {
                 if (!isFinite(seconds)) return "0:00";
@@ -235,121 +230,11 @@
                 toggle.setAttribute("aria-label", playing ? "Pause the song" : "Play the song");
             }
 
-            function wireAudio() {
-                if (audioCtx) return audioCtx.resume();
-                var AC = window.AudioContext || window.webkitAudioContext;
-                if (!AC) return Promise.resolve();
-                audioCtx = new AC();
-                var source = audioCtx.createMediaElementSource(audio);
-                analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 2048;
-                analyser.smoothingTimeConstant = 0.72;
-                freq = new Uint8Array(analyser.frequencyBinCount);
-                wave = new Uint8Array(analyser.fftSize);
-                source.connect(analyser);
-                analyser.connect(audioCtx.destination);
-                return audioCtx.resume();
-            }
-
             function tryPlay() {
                 if (!ready || userPaused) return;
-                wireAudio();
                 var pending = audio.play();
                 if (pending && pending.catch) pending.catch(function () { setToggle(false); });
             }
-
-            function band(start, end) {
-                if (!freq) return 0;
-                var sum = 0;
-                var count = 0;
-                for (var i = start; i < end && i < freq.length; i++) {
-                    sum += freq[i];
-                    count++;
-                }
-                return count ? (sum / count) / 255 : 0;
-            }
-
-            function resizeWaves() {
-                var rect = canvas.getBoundingClientRect();
-                var ratio = Math.min(window.devicePixelRatio || 1, 2);
-                canvas.width = Math.max(1, Math.floor(rect.width * ratio));
-                canvas.height = Math.max(1, Math.floor(rect.height * ratio));
-                draw.setTransform(ratio, 0, 0, ratio, 0, 0);
-            }
-
-            var energy = 0.35;
-            var teal = [29, 233, 182];
-            var pink = [255, 94, 155];
-            var gold = [244, 214, 150];
-
-            function approach(current, target) {
-                return current + (target - current) * (reduceMotion ? 0.04 : 0.08);
-            }
-
-            function mix(a, b, t) {
-                return [
-                    Math.round(a[0] + (b[0] - a[0]) * t),
-                    Math.round(a[1] + (b[1] - a[1]) * t),
-                    Math.round(a[2] + (b[2] - a[2]) * t)
-                ];
-            }
-
-            function strandColor(t) {
-                var hue = t - Math.floor(t);
-                if (hue < 0.5) return mix(teal, pink, hue / 0.5);
-                return mix(pink, gold, (hue - 0.5) / 0.5);
-            }
-
-            function hill(position, center, width) {
-                var distance = position - center;
-                if (distance > 0.5) distance -= 1;
-                if (distance < -0.5) distance += 1;
-                return Math.exp(-(distance * distance) / (width * width));
-            }
-
-            function paint(now) {
-                requestAnimationFrame(paint);
-                var width = canvas.clientWidth;
-                var height = canvas.clientHeight;
-                if (!width || !height) return;
-                if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
-                var playing = ready && !audio.paused && !audio.ended;
-                var bass = playing ? band(1, 7) : 0.08;
-                energy = approach(energy, playing ? 0.34 + Math.pow(bass, 0.85) * 0.9 : 0.28);
-                draw.clearRect(0, 0, width, height);
-                draw.globalCompositeOperation = "source-over";
-                draw.lineWidth = 1;
-                draw.lineJoin = "round";
-                draw.lineCap = "round";
-                draw.shadowBlur = 0;
-                var lines = 64;
-                var time = reduceMotion ? 1.2 : now * 0.00032;
-                var step = 3;
-                var crest = reduceMotion ? 0.35 : (time * 0.11) % 1;
-                for (var i = 0; i < lines; i++) {
-                    var t = i / (lines - 1);
-                    var color = strandColor(t);
-                    var spread = (t - 0.5) * height * 0.15;
-                    draw.strokeStyle = "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", 0.55)";
-                    draw.beginPath();
-                    for (var x = 0; x <= width; x += step) {
-                        var p = x / width;
-                        var rise = hill(p, crest, 0.11) * 0.2 + hill(p, (crest + 0.47) % 1, 0.07) * 0.1;
-                        var waveY = Math.sin(p * Math.PI * 2 * 1.35 + time) * 0.085
-                            + Math.sin(p * Math.PI * 2 * 2.7 - time * 0.6) * 0.028;
-                        var twist = Math.cos(p * Math.PI * 2 * 1.35 + time * 0.55);
-                        var y = height * (0.64 + waveY * (0.72 + energy * 0.38) - rise * energy)
-                            + spread * (0.28 + Math.abs(twist) * 0.72);
-                        if (x === 0) draw.moveTo(x, y);
-                        else draw.lineTo(x, y);
-                    }
-                    draw.stroke();
-                }
-            }
-
-            resizeWaves();
-            window.addEventListener("resize", resizeWaves);
-            requestAnimationFrame(paint);
 
             audio.addEventListener("loadedmetadata", function () {
                 ready = true;
