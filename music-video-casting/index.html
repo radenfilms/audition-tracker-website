@@ -277,8 +277,7 @@
                 draw.setTransform(ratio, 0, 0, ratio, 0, 0);
             }
 
-            var flow = 0.7;
-            var spikes = [];
+            var energy = 0.35;
             var teal = [29, 233, 182];
             var pink = [255, 94, 155];
             var gold = [244, 214, 150];
@@ -296,8 +295,16 @@
             }
 
             function strandColor(t) {
-                if (t < 0.45) return mix(teal, pink, t / 0.45);
-                return mix(pink, gold, (t - 0.45) / 0.55);
+                var hue = t - Math.floor(t);
+                if (hue < 0.5) return mix(teal, pink, hue / 0.5);
+                return mix(pink, gold, (hue - 0.5) / 0.5);
+            }
+
+            function hill(position, center, width) {
+                var distance = position - center;
+                if (distance > 0.5) distance -= 1;
+                if (distance < -0.5) distance += 1;
+                return Math.exp(-(distance * distance) / (width * width));
             }
 
             function paint(now) {
@@ -307,62 +314,35 @@
                 if (!width || !height) return;
                 if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
                 var playing = ready && !audio.paused && !audio.ended;
-                var bass = playing ? band(1, 6) : 0;
-                var spikeCount = 42;
-                if (spikes.length !== spikeCount) {
-                    spikes = [];
-                    for (var n = 0; n < spikeCount; n++) spikes.push(0);
-                }
-                var spikeTotal = 0;
-                var spikeRaw = [];
-                for (var s = 0; s < spikeCount; s++) {
-                    var bin = freq ? Math.min(freq.length - 1, Math.floor(Math.pow((s + 1) / spikeCount, 1.15) * freq.length * 0.72)) : 0;
-                    var level = freq && playing ? freq[bin] / 255 : 0;
-                    spikeRaw.push(level);
-                    spikeTotal += level;
-                }
-                var spikeAvg = spikeTotal / spikeCount;
-                for (var s = 0; s < spikeCount; s++) {
-                    var above = Math.max(0, spikeRaw[s] - spikeAvg * 1.08);
-                    var target = Math.min(1, Math.pow(above, 1.05) * (0.7 + bass * 2.4));
-                    var rate = reduceMotion ? 0.08 : (target > spikes[s] ? 0.7 : 0.14);
-                    spikes[s] += (target - spikes[s]) * rate;
-                }
-                flow = approach(flow, playing ? 0.55 + bass * 0.2 : 0.5);
+                var bass = playing ? band(1, 7) : 0.08;
+                energy = approach(energy, playing ? 0.34 + Math.pow(bass, 0.85) * 0.9 : 0.28);
                 draw.clearRect(0, 0, width, height);
                 draw.globalCompositeOperation = "source-over";
                 draw.lineWidth = 1;
                 draw.lineJoin = "round";
                 draw.lineCap = "round";
                 draw.shadowBlur = 0;
-                var lines = 56;
-                var time = reduceMotion ? 1.2 : now * 0.00048;
+                var lines = 64;
+                var time = reduceMotion ? 1.2 : now * 0.00032;
                 var step = 3;
-                function spikeAt(p) {
-                    var f = p * (spikeCount - 1);
-                    var index = Math.floor(f);
-                    var blend = f - index;
-                    var left = spikes[index] || 0;
-                    var right = spikes[Math.min(spikeCount - 1, index + 1)] || 0;
-                    return left + (right - left) * blend;
-                }
+                var crest = reduceMotion ? 0.35 : (time * 0.11) % 1;
                 for (var i = 0; i < lines; i++) {
                     var t = i / (lines - 1);
                     var color = strandColor(t);
-                    var spread = (t - 0.5) * height * 0.16;
+                    var spread = (t - 0.5) * height * 0.15;
+                    draw.strokeStyle = "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", 0.55)";
                     draw.beginPath();
                     for (var x = 0; x <= width; x += step) {
                         var p = x / width;
-                        var kick = spikeAt(p);
-                        var waveY = Math.sin(p * Math.PI * 2.4 + time) * 0.07
-                            + Math.sin(p * Math.PI * 4.1 - time * 0.72) * 0.025;
-                        var twist = Math.cos(p * Math.PI * 2.4 + time * 0.85);
-                        var y = height * (0.66 + waveY * flow - kick * 0.34)
-                            + spread * (0.22 + Math.abs(twist) * 0.7 + kick * 0.55);
+                        var rise = hill(p, crest, 0.11) * 0.2 + hill(p, (crest + 0.47) % 1, 0.07) * 0.1;
+                        var waveY = Math.sin(p * Math.PI * 2 * 1.35 + time) * 0.085
+                            + Math.sin(p * Math.PI * 2 * 2.7 - time * 0.6) * 0.028;
+                        var twist = Math.cos(p * Math.PI * 2 * 1.35 + time * 0.55);
+                        var y = height * (0.64 + waveY * (0.72 + energy * 0.38) - rise * energy)
+                            + spread * (0.28 + Math.abs(twist) * 0.72);
                         if (x === 0) draw.moveTo(x, y);
                         else draw.lineTo(x, y);
                     }
-                    draw.strokeStyle = "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", 0.62)";
                     draw.stroke();
                 }
             }
