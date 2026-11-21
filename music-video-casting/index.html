@@ -278,6 +278,7 @@
             }
 
             var flow = 0.7;
+            var spikes = [];
             var teal = [29, 233, 182];
             var pink = [255, 94, 155];
             var gold = [244, 214, 150];
@@ -306,8 +307,28 @@
                 if (!width || !height) return;
                 if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
                 var playing = ready && !audio.paused && !audio.ended;
-                var bass = playing ? band(2, 8) : 0.1;
-                flow = approach(flow, playing ? 0.72 + bass * 0.45 : 0.62);
+                var bass = playing ? band(1, 6) : 0;
+                var spikeCount = 42;
+                if (spikes.length !== spikeCount) {
+                    spikes = [];
+                    for (var n = 0; n < spikeCount; n++) spikes.push(0);
+                }
+                var spikeTotal = 0;
+                var spikeRaw = [];
+                for (var s = 0; s < spikeCount; s++) {
+                    var bin = freq ? Math.min(freq.length - 1, Math.floor(Math.pow((s + 1) / spikeCount, 1.15) * freq.length * 0.72)) : 0;
+                    var level = freq && playing ? freq[bin] / 255 : 0;
+                    spikeRaw.push(level);
+                    spikeTotal += level;
+                }
+                var spikeAvg = spikeTotal / spikeCount;
+                for (var s = 0; s < spikeCount; s++) {
+                    var above = Math.max(0, spikeRaw[s] - spikeAvg * 1.08);
+                    var target = Math.min(1, Math.pow(above, 1.05) * (0.7 + bass * 2.4));
+                    var rate = reduceMotion ? 0.08 : (target > spikes[s] ? 0.7 : 0.14);
+                    spikes[s] += (target - spikes[s]) * rate;
+                }
+                flow = approach(flow, playing ? 0.55 + bass * 0.2 : 0.5);
                 draw.clearRect(0, 0, width, height);
                 draw.globalCompositeOperation = "source-over";
                 draw.lineWidth = 1;
@@ -317,17 +338,27 @@
                 var lines = 56;
                 var time = reduceMotion ? 1.2 : now * 0.00048;
                 var step = 3;
+                function spikeAt(p) {
+                    var f = p * (spikeCount - 1);
+                    var index = Math.floor(f);
+                    var blend = f - index;
+                    var left = spikes[index] || 0;
+                    var right = spikes[Math.min(spikeCount - 1, index + 1)] || 0;
+                    return left + (right - left) * blend;
+                }
                 for (var i = 0; i < lines; i++) {
                     var t = i / (lines - 1);
                     var color = strandColor(t);
-                    var spread = (t - 0.5) * height * 0.2;
+                    var spread = (t - 0.5) * height * 0.16;
                     draw.beginPath();
                     for (var x = 0; x <= width; x += step) {
                         var p = x / width;
-                        var waveY = Math.sin(p * Math.PI * 2.4 + time) * 0.13
-                            + Math.sin(p * Math.PI * 4.1 - time * 0.72) * 0.045;
+                        var kick = spikeAt(p);
+                        var waveY = Math.sin(p * Math.PI * 2.4 + time) * 0.07
+                            + Math.sin(p * Math.PI * 4.1 - time * 0.72) * 0.025;
                         var twist = Math.cos(p * Math.PI * 2.4 + time * 0.85);
-                        var y = height * (0.6 + waveY * flow) + spread * (0.25 + Math.abs(twist) * 0.85);
+                        var y = height * (0.66 + waveY * flow - kick * 0.34)
+                            + spread * (0.22 + Math.abs(twist) * 0.7 + kick * 0.55);
                         if (x === 0) draw.moveTo(x, y);
                         else draw.lineTo(x, y);
                     }
