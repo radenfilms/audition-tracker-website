@@ -296,25 +296,34 @@
                     for (var n = 0; n < count; n++) bars.push(0.05);
                 }
                 var centerY = height * 0.58;
-                var maxH = height * 0.24;
+                var maxH = height * 0.3;
                 var gap = width / count;
-                var punch = playing ? 0.85 + bass * 1.35 : 0.28;
+                var raw = [];
+                var total = 0;
+                for (var s = 0; s < count; s++) {
+                    var sample = 0;
+                    if (wave && playing) {
+                        var at = Math.floor((s / (count - 1)) * (wave.length - 1));
+                        sample = Math.abs(wave[at] - 128) / 128;
+                    }
+                    raw.push(sample);
+                    total += sample;
+                }
+                var average = total / count;
                 draw.clearRect(0, 0, width, height);
                 draw.lineCap = "round";
 
                 for (var i = 0; i < count; i++) {
                     var across = i / (count - 1);
-                    var sample = 0;
-                    if (wave && playing) {
-                        var at = Math.floor(across * (wave.length - 1));
-                        sample = Math.abs(wave[at] - 128) / 128;
-                        var next = Math.abs(wave[Math.min(wave.length - 1, at + 8)] - 128) / 128;
-                        sample = Math.max(sample, next * 0.85);
-                    }
-                    var shaped = Math.min(1, Math.pow(Math.max(sample, 0.015), 0.48) * 1.55);
-                    var idle = 0.16 + 0.14 * Math.abs(Math.sin(across * Math.PI * 5 + now * 0.001));
-                    var target = Math.min(1, (playing ? shaped : idle) * punch);
-                    var rate = reduceMotion ? 0.08 : (target > bars[i] ? 0.62 : 0.16);
+                    var left = raw[Math.max(0, i - 2)];
+                    var right = raw[Math.min(count - 1, i + 2)];
+                    var peak = raw[i] >= left && raw[i] >= right && raw[i] > average * 1.25;
+                    var above = Math.max(0, (raw[i] - average) / Math.max(0.08, 1 - average));
+                    var spike = peak ? Math.pow(above, 1.15) : above * 0.08;
+                    if (playing && bass > 0.42 && peak) spike = Math.min(1, spike * (1.15 + bass * 1.7));
+                    var idle = 0.05 + (Math.sin(across * 40 + now * 0.002) > 0.92 ? 0.22 : 0);
+                    var target = Math.min(1, playing ? 0.045 + spike * 0.96 : idle);
+                    var rate = reduceMotion ? 0.08 : (target > bars[i] ? 0.8 : 0.22);
                     bars[i] += (target - bars[i]) * rate;
                     var barH = Math.max(3, bars[i] * maxH);
                     var x = i * gap + gap * 0.5;
