@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audition Tracker Connect — Casting requests for agents &amp; actors</title>
-    <meta name="description" content="Connect turns casting emails into ready audition requests. Agents import sides and send; actors get them in Audition Tracker. From £24/month with 3 months free.">
+    <meta name="description" content="Connect turns casting emails into audition requests, then shows the same live progress to agents and actors. From £24/month with 3 months free.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://auditiontracker.co.uk/connect/">
     <meta name="theme-color" content="#000000">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="en_GB">
     <meta property="og:url" content="https://auditiontracker.co.uk/connect/">
     <meta property="og:title" content="Audition Tracker Connect — Casting requests for agents &amp; actors">
-    <meta property="og:description" content="Forward a casting email. Connect drafts the request with sides and links. Send it to your actor in the app.">
+    <meta property="og:description" content="Forward a casting email. Connect drafts the request, sends it to the actor, and shows live progress until the outcome.">
     <meta property="og:image" content="https://auditiontracker.co.uk/assets/og-share.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Audition Tracker Connect">
-    <meta name="twitter:description" content="Casting email in. Audition request out — for agencies and their actors.">
+    <meta name="twitter:description" content="Casting email in. Live progress back — for agencies and their actors.">
     <meta name="twitter:image" content="https://auditiontracker.co.uk/assets/og-share.jpg">
     <link rel="icon" type="image/png" href="../assets/at-logo-stars-bg.png">
     <link rel="apple-touch-icon" href="../assets/at-logo-stars-bg.png">
@@ -39,7 +39,7 @@
           "name": "Audition Tracker Connect",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Web",
-          "description": "Agency dashboard that turns casting emails into audition requests for actors using Audition Tracker.",
+          "description": "Agency dashboard that turns casting emails into audition requests and shows live progress for actors using Audition Tracker.",
           "url": "https://auditiontracker.co.uk/connect/",
           "offers": [
             {
@@ -71,7 +71,7 @@
               "name": "What is Audition Tracker Connect?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Connect is the agency side of Audition Tracker. Agents import casting emails, attach sides, and send requests. Actors receive them in the Audition Tracker app."
+                "text": "Connect is the agency side of Audition Tracker. Agents import casting emails, attach sides, and send requests. Actors receive them in the Audition Tracker app and update live progress the agency sees on the same request."
               }
             },
             {
@@ -96,6 +96,14 @@
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "£29 per month, or £288 per year (£24/month). New agencies get 3 months free on either plan; the card is charged after the trial."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What statuses does live progress show?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Self-tape requests show Accepted, Submitted, and Finished. In-person auditions, fittings, and recalls show Accepted, On the way, Attending, and Finished. After Finished the request is Pending outcome until the actor or the agency marks Booked or Not booked."
               }
             }
           ]
@@ -334,6 +342,44 @@
         }
         .connect-split article li { margin-bottom: 0.4rem; }
 
+        .connect-journeys {
+            display: grid;
+            gap: 1rem;
+            max-width: 40rem;
+            margin: 0 auto;
+        }
+        .connect-journey {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 1.15rem 1.2rem 1.25rem;
+            background: rgba(18, 18, 18, 0.55);
+            text-align: left;
+        }
+        .connect-journey h3 {
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            margin: 0 0 0.75rem;
+        }
+        .connect-track {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .connect-track li {
+            color: #d8d8d8;
+            font-size: 0.92rem;
+            border: 1px solid rgba(29, 233, 182, 0.4);
+            background: rgba(29, 233, 182, 0.08);
+            border-radius: 999px;
+            padding: 0.28rem 0.72rem;
+        }
+
         .connect-pricing {
             display: grid;
             gap: 1.25rem;
@@ -467,7 +513,7 @@
                 <p class="connect-brand-name">Audition Tracker<span>CONNECT</span></p>
             </div>
             <h1>Casting email in. Audition request out.</h1>
-            <p class="lead">Agents import the brief with sides and links, then send it straight to actors in Audition Tracker.</p>
+            <p class="lead">Agents import the brief with sides and links, send it to actors in Audition Tracker, and follow the same live progress.</p>
             <div class="connect-cta-row">
                 <a class="btn btn-primary" href="https://connect.auditiontracker.co.uk" target="_blank" rel="noopener">Start free trial</a>
                 <a class="btn-ghost" href="#how">See how it works</a>
@@ -490,10 +536,37 @@
                     <p>Connect fills project, role, instructions, upload links, and forms. Add or swap the PDF, then pick the actor from your roster.</p>
                 </li>
                 <li>
-                    <h3>Send to the app</h3>
-                    <p>Your actor gets the request in Audition Tracker — accept, decline, self-tape, or mark tape sent. You see the status update.</p>
+                    <h3>Follow live progress</h3>
+                    <p>Your actor accepts or declines in Audition Tracker. Self-tapes move through Submitted, then Finished. In-person auditions, fittings, and recalls move through On the way, Attending, and Finished. You see the same status.</p>
                 </li>
             </ol>
+        </div>
+    </section>
+
+    <section id="progress" class="connect-section reveal" style="padding-top: 1rem;">
+        <div class="container">
+            <h2>Live progress</h2>
+            <p class="section-lead">The actor updates the request in the app. You see the same status in Connect, along with messages and the self-tape when they send it.</p>
+            <div class="connect-journeys">
+                <article class="connect-journey">
+                    <h3>Self-tape</h3>
+                    <ol class="connect-track">
+                        <li>Accepted</li>
+                        <li>Submitted</li>
+                        <li>Finished</li>
+                    </ol>
+                </article>
+                <article class="connect-journey">
+                    <h3>In person, fitting, or recall</h3>
+                    <ol class="connect-track">
+                        <li>Accepted</li>
+                        <li>On the way</li>
+                        <li>Attending</li>
+                        <li>Finished</li>
+                    </ol>
+                </article>
+            </div>
+            <p class="section-lead" style="margin-top: 1.5rem; margin-bottom: 0;">After Finished the request shows Pending outcome until the actor or the agency marks Booked or Not booked.</p>
         </div>
     </section>
 
@@ -508,7 +581,7 @@
                     <ul>
                         <li>Private inbound email for attached sides</li>
                         <li>Gmail extension and bookmark import</li>
-                        <li>Roster invites and request status</li>
+                        <li>Live progress, messages, and returned self-tapes</li>
                     </ul>
                 </article>
                 <article>
@@ -517,7 +590,7 @@
                     <ul>
                         <li>Accept or decline in the app</li>
                         <li>Sides, links, and instructions in one place</li>
-                        <li>Keeps your audition log current</li>
+                        <li>Update progress and message your agent</li>
                     </ul>
                 </article>
             </div>
@@ -555,13 +628,19 @@
                 <details open>
                     <summary>Is Connect the same as the actor app?</summary>
                     <div class="faq-body">
-                        <p>No. <strong>Connect</strong> is the agency web dashboard. <strong>Audition Tracker</strong> is the actor app on iPhone and iPad. Together they carry the request from casting email to actor.</p>
+                        <p>No. <strong>Connect</strong> is the agency web dashboard. <strong>Audition Tracker</strong> is the actor app on iPhone and iPad. Together they carry the request from casting email to actor, then share live progress on it.</p>
                     </div>
                 </details>
                 <details>
                     <summary>What’s the best way to import sides PDFs?</summary>
                     <div class="faq-body">
                         <p>Forward the casting email to your private Connect address (shown under Import after you sign in). That’s the reliable path for attachments. The Gmail extension is faster for breakdown text and links.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>What statuses does live progress show?</summary>
+                    <div class="faq-body">
+                        <p>Self-tape: Accepted, Submitted, Finished. In person, fitting, or recall: Accepted, On the way, Attending, Finished. After Finished the request is Pending outcome until the actor or the agency marks Booked or Not booked.</p>
                     </div>
                 </details>
                 <details>
@@ -582,7 +661,7 @@
 
     <section class="connect-final reveal">
         <h2>Ready when the next casting email lands</h2>
-        <p>Start a free trial, invite your actors, and send the next brief without rebuilding it by hand.</p>
+        <p>Start a free trial, invite your actors, and follow the next brief from the casting email through to the outcome.</p>
         <div class="connect-cta-row">
             <a class="btn btn-primary" href="https://connect.auditiontracker.co.uk" target="_blank" rel="noopener">Open Connect</a>
             <a class="btn-ghost" href="https://apps.apple.com/gb/app/audition-tracker/id6740004926?platform=iphone" target="_blank" rel="noopener">Get the actor app</a>
