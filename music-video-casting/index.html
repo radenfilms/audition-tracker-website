@@ -277,79 +277,114 @@
                 draw.setTransform(ratio, 0, 0, ratio, 0, 0);
             }
 
-            var bars = [];
+            var glowLevel = 0.2;
+
+            function approach(current, target) {
+                return current + (target - current) * (reduceMotion ? 0.04 : 0.08);
+            }
+
+            function threadY(x, width, height, thread, time, lift) {
+                var across = x / width;
+                var drift = reduceMotion ? thread.phase : time * thread.speed + thread.phase;
+                return height * thread.y
+                    + Math.sin(across * Math.PI * thread.folds + drift) * height * (thread.amp + lift * 0.05)
+                    + Math.sin(across * Math.PI * thread.folds * 0.45 - drift * 0.6) * height * thread.amp * 0.45;
+            }
+
+            function traceThread(width, height, thread, time, lift) {
+                var step = Math.max(12, width / 24);
+                var previousX = 0;
+                var previousY = threadY(0, width, height, thread, time, lift);
+                draw.beginPath();
+                draw.moveTo(previousX, previousY);
+                for (var x = step; x <= width + step; x += step) {
+                    var clamped = Math.min(x, width);
+                    var y = threadY(clamped, width, height, thread, time, lift);
+                    var midX = (previousX + clamped) / 2;
+                    var midY = (previousY + y) / 2;
+                    draw.quadraticCurveTo(previousX, previousY, midX, midY);
+                    previousX = clamped;
+                    previousY = y;
+                }
+            }
 
             function paint(now) {
                 requestAnimationFrame(paint);
                 var width = canvas.clientWidth;
                 var height = canvas.clientHeight;
                 if (!width || !height) return;
-                if (analyser && !audio.paused) {
-                    analyser.getByteFrequencyData(freq);
-                    analyser.getByteTimeDomainData(wave);
-                }
+                if (analyser && !audio.paused) analyser.getByteFrequencyData(freq);
                 var playing = ready && !audio.paused && !audio.ended;
-                var bass = playing ? band(1, 6) : 0;
-                var count = Math.max(70, Math.min(140, Math.floor(width / 5)));
-                if (bars.length !== count) {
-                    bars = [];
-                    for (var n = 0; n < count; n++) bars.push(0.05);
-                }
-                var centerY = height * 0.58;
-                var maxH = height * 0.3;
-                var gap = width / count;
-                var raw = [];
-                var total = 0;
-                for (var s = 0; s < count; s++) {
-                    var sample = 0;
-                    if (wave && playing) {
-                        var at = Math.floor((s / (count - 1)) * (wave.length - 1));
-                        sample = Math.abs(wave[at] - 128) / 128;
-                    }
-                    raw.push(sample);
-                    total += sample;
-                }
-                var average = total / count;
+                var bass = playing ? band(2, 10) : 0.12;
+                glowLevel = approach(glowLevel, playing ? 0.28 + bass * 0.7 : 0.22);
                 draw.clearRect(0, 0, width, height);
+                draw.globalCompositeOperation = "lighter";
                 draw.lineCap = "round";
+                draw.lineJoin = "round";
 
-                for (var i = 0; i < count; i++) {
-                    var across = i / (count - 1);
-                    var left = raw[Math.max(0, i - 2)];
-                    var right = raw[Math.min(count - 1, i + 2)];
-                    var peak = raw[i] >= left && raw[i] >= right && raw[i] > average * 1.25;
-                    var above = Math.max(0, (raw[i] - average) / Math.max(0.08, 1 - average));
-                    var spike = peak ? Math.pow(above, 1.15) : above * 0.08;
-                    if (playing && bass > 0.42 && peak) spike = Math.min(1, spike * (1.15 + bass * 1.7));
-                    var idle = 0.05 + (Math.sin(across * 40 + now * 0.002) > 0.92 ? 0.22 : 0);
-                    var target = Math.min(1, playing ? 0.045 + spike * 0.96 : idle);
-                    var rate = reduceMotion ? 0.08 : (target > bars[i] ? 0.8 : 0.22);
-                    bars[i] += (target - bars[i]) * rate;
-                    var barH = Math.max(3, bars[i] * maxH);
-                    var x = i * gap + gap * 0.5;
-                    var drift = reduceMotion ? 0.6 : now * 0.00115;
-                    var sway = Math.sin(across * Math.PI * 2.4 + drift) * height * 0.075
-                        + Math.sin(across * Math.PI * 5.2 - drift * 0.65) * height * 0.028;
-                    var y = centerY + sway;
-                    var grad = draw.createLinearGradient(x, y - barH, x, y + barH);
-                    grad.addColorStop(0, "rgba(29, 233, 182, 0)");
-                    grad.addColorStop(0.12, "rgba(29, 233, 182, 0.85)");
-                    grad.addColorStop(0.3, "rgba(255, 94, 155, 0.95)");
-                    grad.addColorStop(0.5, "rgba(244, 214, 150, 1)");
-                    grad.addColorStop(0.7, "rgba(255, 94, 155, 0.95)");
-                    grad.addColorStop(0.88, "rgba(29, 233, 182, 0.85)");
-                    grad.addColorStop(1, "rgba(29, 233, 182, 0)");
-                    draw.strokeStyle = grad;
-                    draw.shadowColor = "rgba(255, 94, 155, 0.55)";
-                    draw.shadowBlur = reduceMotion ? 0 : 10;
-                    draw.lineWidth = Math.max(1.4, gap * 0.42);
-                    var lean = Math.cos(across * Math.PI * 2.4 + drift) * 5;
+                var curtains = [
+                    { rgb: "29, 233, 182", crest: 0.5, reach: 0.22, folds: 1.7, speed: 0.00036, phase: 0.4 },
+                    { rgb: "255, 94, 155", crest: 0.6, reach: 0.18, folds: 2.2, speed: 0.00048, phase: 1.8 },
+                    { rgb: "244, 214, 150", crest: 0.7, reach: 0.12, folds: 1.3, speed: 0.00028, phase: 3.1 }
+                ];
+                curtains.forEach(function (curtain) {
                     draw.beginPath();
-                    draw.moveTo(x - lean, y - barH);
-                    draw.lineTo(x + lean, y + barH);
+                    draw.moveTo(0, height);
+                    var step = Math.max(14, width / 20);
+                    for (var x = 0; x <= width; x += step) {
+                        var across = x / width;
+                        var drift = reduceMotion ? curtain.phase : now * curtain.speed + curtain.phase;
+                        var fold = 0.5 + 0.5 * Math.sin(across * Math.PI * curtain.folds + drift);
+                        var y = height * (curtain.crest - curtain.reach * (0.45 + glowLevel) * fold);
+                        draw.lineTo(x, y);
+                    }
+                    draw.lineTo(width, height);
+                    draw.closePath();
+                    var wash = draw.createLinearGradient(0, height * 0.35, 0, height);
+                    wash.addColorStop(0, "rgba(" + curtain.rgb + ", 0)");
+                    wash.addColorStop(0.55, "rgba(" + curtain.rgb + ", " + (0.14 + glowLevel * 0.22) + ")");
+                    wash.addColorStop(1, "rgba(" + curtain.rgb + ", 0)");
+                    draw.fillStyle = wash;
+                    draw.fill();
+                });
+
+                var threads = [
+                    { rgb: "29, 233, 182", y: 0.58, amp: 0.05, folds: 1.5, speed: 0.0004, phase: 0.2, width: 14, alpha: 0.42 },
+                    { rgb: "255, 94, 155", y: 0.66, amp: 0.045, folds: 2.1, speed: 0.00052, phase: 1.5, width: 12, alpha: 0.36 },
+                    { rgb: "244, 214, 150", y: 0.5, amp: 0.036, folds: 1.15, speed: 0.0003, phase: 2.7, width: 10, alpha: 0.3 },
+                    { rgb: "29, 233, 182", y: 0.74, amp: 0.032, folds: 2.6, speed: 0.00046, phase: 4.1, width: 11, alpha: 0.28 },
+                    { rgb: "255, 94, 155", y: 0.46, amp: 0.03, folds: 1.8, speed: 0.00034, phase: 5.2, width: 9, alpha: 0.24 }
+                ];
+                threads.forEach(function (thread) {
+                    traceThread(width, height, thread, now, glowLevel);
+                    draw.strokeStyle = "rgba(" + thread.rgb + ", " + (thread.alpha + glowLevel * 0.18) + ")";
+                    draw.shadowColor = "rgba(" + thread.rgb + ", 0.85)";
+                    draw.shadowBlur = reduceMotion ? 0 : 16;
+                    draw.lineWidth = thread.width;
+                    draw.stroke();
+                });
+
+                for (var v = 0; v < 5; v++) {
+                    var rgb = v % 2 === 0 ? "29, 233, 182" : "255, 94, 155";
+                    if (v === 2) rgb = "244, 214, 150";
+                    draw.beginPath();
+                    var base = ((v + 0.5) / 5) * width;
+                    for (var yy = height * 0.34; yy <= height; yy += height / 16) {
+                        var across = yy / height;
+                        var drift = reduceMotion ? v : now * 0.00042 + v;
+                        var x = base + Math.sin(across * Math.PI * 2.2 + drift) * width * 0.06;
+                        if (yy === height * 0.34) draw.moveTo(x, yy);
+                        else draw.lineTo(x, yy);
+                    }
+                    draw.strokeStyle = "rgba(" + rgb + ", " + (0.16 + glowLevel * 0.16) + ")";
+                    draw.shadowColor = "rgba(" + rgb + ", 0.8)";
+                    draw.shadowBlur = reduceMotion ? 0 : 18;
+                    draw.lineWidth = 8;
                     draw.stroke();
                 }
+
                 draw.shadowBlur = 0;
+                draw.globalCompositeOperation = "source-over";
             }
 
             resizeWaves();
